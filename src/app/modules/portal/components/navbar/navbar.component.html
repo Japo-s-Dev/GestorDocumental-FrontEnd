@@ -1,0 +1,17 @@
+<div class="sidebar">
+  <img src="../../../../../assets/images/EvolucionaLogo.jpeg" alt="Logo empresa" routerLink="/portal/">
+
+  <div class="spacer"></div>
+
+  <h4>MENÚ</h4>
+
+  <div class="box" (click)="toggleSearch('/portal/search')">Search</div>
+
+  <div class="box" (click)="toggleAdd('/portal/add')">Add</div>
+
+  <div *ngIf="showAdd">
+    <div class="sub-box" routerLink="/portal/add/file-entry">File Entry</div>
+    <div class="sub-box" routerLink="/portal/add">Upload Documents</div>
+  </div>
+
+</div>

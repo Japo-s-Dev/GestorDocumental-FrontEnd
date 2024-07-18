@@ -1,0 +1,32 @@
+[
+  {
+      "correlativo": 1,
+      "proyectoId": 301,
+      "nombre": "Número de Orden",
+      "tipo": "number"
+  },
+  {
+      "correlativo": 2,
+      "proyectoId": 301,
+      "nombre": "Cliente",
+      "tipo": "input"
+  },
+  {
+      "correlativo": 3,
+      "proyectoId": 301,
+      "nombre": "Fecha de Entrega",
+      "tipo": "date"
+  },
+  {
+    "correlativo": 2,
+    "proyectoId": 201,
+    "nombre": "Telefono",
+    "tipo": "input"
+},
+  {
+      "correlativo": 5,
+      "proyectoId": 301,
+      "nombre": "Comentarios",
+      "tipo": "textarea"
+  }
+]

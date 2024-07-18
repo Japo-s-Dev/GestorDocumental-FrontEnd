@@ -1,0 +1,26 @@
+[
+  {
+      "correlativo": 1,
+      "proyectoId": 201,
+      "nombre": "Id Transacción",
+      "tipo": "number"
+  },
+  {
+      "correlativo": 2,
+      "proyectoId": 201,
+      "nombre": "Email Contacto",
+      "tipo": "email"
+  },
+  {
+      "correlativo": 3,
+      "proyectoId": 201,
+      "nombre": "Fecha Inicio",
+      "tipo": "date"
+  },
+  {
+      "correlativo": 4,
+      "proyectoId": 201,
+      "nombre": "Confirmado",
+      "tipo": "checkbox"
+  }
+]

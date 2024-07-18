@@ -1,0 +1,20 @@
+[
+  {
+      "correlativo": 1,
+      "proyectoId": 201,
+      "nombre": "Id Liquidación",
+      "tipo": "number"
+  },
+  {
+      "correlativo": 2,
+      "proyectoId": 201,
+      "nombre": "Nombre",
+      "tipo": "input"
+  },
+  {
+      "correlativo": 3,
+      "proyectoId": 201,
+      "nombre": "Fecha",
+      "tipo": "date"
+  }
+]
