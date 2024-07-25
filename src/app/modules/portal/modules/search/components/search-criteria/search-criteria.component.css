@@ -20,6 +20,8 @@
 }
 
 
+
+
 .project-select{
   margin-top: 2%;
   display: flex;
@@ -39,19 +41,17 @@
 
 }
 
-#project{
+#project {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; /* Asegura que el contenido esté centrado verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  text-align-last: center; /* Centra el texto en navegadores que lo soportan, como Chrome */
   width: 500px;
-  max-width: 500px;
   height: 30px;
   margin-left: 20%;
   margin-right: 20%;
   border-radius: 4px;
   border: #969696 1px solid;
-  text-align: center; /* Intenta centrar el texto */
-  align-items: center;
 }
 
 /* Para asegurarte que el ícono de despliegue se vea adecuadamente */
@@ -96,32 +96,6 @@
   font-style: normal;
 }
 
-.attributeForm > input{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 500px;
-  max-width: 500px;
-  height: 30px;
-  margin-left: 20%;
-  margin-right: 20%;
-  border-radius: 4px;
-  border: #969696 1px solid;
-}
-
-.attributeForm > select{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 500px;
-  height: 30px;
-  max-width: 500px;
-  margin-left: 20%;
-  margin-right: 20%;
-  border-radius: 4px;
-  border: #969696 1px solid;
-}
-
 .navigation {
   display: flex;
   justify-content: center;
@@ -156,6 +130,11 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-style: normal;
+}
+
+.form-class label {
+  margin-right: 50px; /* Ajusta este valor según tus necesidades */
+  display: inline-block; /* Asegura que el margin se aplique correctamente */
 }
 
 
