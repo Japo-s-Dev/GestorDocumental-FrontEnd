@@ -1,0 +1,41 @@
+<!-- users.component.html -->
+<div class="users-container">
+  <header>
+    <h1>Users</h1>
+  </header>
+  <button class="add-user-button" (click)="addUser()"><i class="fa-solid fa-plus"></i> Agregar Usuario</button>
+
+  <input
+    type="text"
+    placeholder="Buscar usuario"
+    [(ngModel)]="searchTerm"
+    class="search-input"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Password</th>
+        <th>Rol</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers(); let i = index">
+        <td>{{ user.username }}</td>
+        <td class="password-col">
+          <span>{{ showPassword[i] ? user.password : '••••••••••••••••' }}</span>
+          <i class="fa-solid" [class.fa-eye]="!showPassword[i]" [class.fa-eye-slash]="showPassword[i]" (click)="togglePasswordVisibility(i)"></i>
+        </td>
+        <td>{{ user.role }}</td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="delete" (click)="deleteUser(user)"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
