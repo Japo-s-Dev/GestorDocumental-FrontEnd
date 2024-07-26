@@ -36,6 +36,10 @@
   font-style: normal;
 }
 
+.box > i {
+  margin-right: 5px;
+}
+
 .box:hover {
   background-color: #ededed;
   border-radius: 10px;
@@ -67,6 +71,10 @@
   font-style: normal;
 }
 
+.sub-box > i {
+  margin-right: 5px;
+}
+
 .sub-box:hover {
   background-color: #f0f0f0;
 
@@ -76,3 +84,5 @@
   background-color: #f0f0f0;
   text-decoration: underline;
 }
+
+

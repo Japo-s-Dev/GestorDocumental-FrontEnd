@@ -13,7 +13,7 @@ export class FormConfigService {
   constructor(private http: HttpClient) { }
 
   getFormConfig(projectId: string | undefined): Observable<any> {
-    const effectiveProjectId = projectId ?? 'default';
+    const effectiveProjectId = projectId ?? 'default';  // 'default' es un ID o nombre de archivo predeterminado
     return this.http.get<any[]>(`${this.baseUrl}/${effectiveProjectId}.json`).pipe(
       map(data => data.map(item => this.toFormlyFieldConfig(item)))
     );
@@ -31,7 +31,7 @@ export class FormConfigService {
         required: false,
         className: 'custom-input-class',
         attributes: {
-          style: 'text-align: center; display: block; margin-left: auto; margin-right: auto;'
+          style: 'text-align: center; display: block; margin-left: auto'  // Centra el texto y asegura que el input es un bloque
         }
       }
     };
