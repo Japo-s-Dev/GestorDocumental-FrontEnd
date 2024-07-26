@@ -1,0 +1,103 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    /* Making text bold */
+}
+
+.storage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 600px;
+    margin-top: -200px;
+    /* Adjust this value to move the container up */
+}
+
+.storage-info {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    /* Making text bold */
+}
+
+.label-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    /* Making text bold */
+}
+
+.left-label,
+.right-label {
+    display: inline-block;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 8px;
+    display: flex;
+    position: relative;
+}
+
+.progress-bar-used {
+    background-color: #007bff;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s ease;
+    font-weight: bold;
+    /* Making text bold */
+}
+
+.progress-bar-remaining {
+    background-color: #f0f0f0;
+    height: 100%;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s ease;
+    font-weight: bold;
+    /* Making text bold */
+}
+
+.storage-details {
+    font-size: 18px;
+    font-weight: bold;
+    /* Making text bold */
+}
