@@ -30,13 +30,13 @@ export class SearchCriteriaComponent {
 
   onProjectChange(newValue: number) {
     console.log("Project changed to:", newValue);
-    this.loadFormConfig(newValue.toString()); // Recargar configuración de Formly según el proyecto
+    this.loadFormConfig(newValue.toString());
   }
 
   onSubmit() {
     console.log("Selected Project ID:", this.selectedProject);
-    console.log(this.model); // También enviar otros datos del formulario si es necesario
-    // Aquí implementa la lógica para enviar datos al servidor
+    console.log(this.model);
+
   }
 
   onSave() {

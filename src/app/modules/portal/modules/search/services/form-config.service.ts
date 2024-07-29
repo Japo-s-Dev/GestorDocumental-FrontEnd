@@ -1,4 +1,3 @@
-// form-config.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,7 +17,7 @@ export class FormConfigService {
     return this.http.get<any[]>(`${this.baseUrl}/${effectiveProjectId}.json`).pipe(
       map(data => data.map(item => this.toFormlyFieldConfig(item)))
     );
-}
+  }
 
   private toFormlyFieldConfig(item: any): FormlyFieldConfig {
     return {
@@ -30,11 +29,11 @@ export class FormConfigService {
         label: item.nombre,
         placeholder: `Ingrese ${item.nombre}`,
         required: false,
-        className: 'custom-input-class'
+        className: 'custom-input-class',
+        attributes: {
+          style: 'text-align: center; display: block; margin-left: auto'  // Centra el texto y asegura que el input es un bloque
+        }
       }
     };
   }
-
 }
-
-

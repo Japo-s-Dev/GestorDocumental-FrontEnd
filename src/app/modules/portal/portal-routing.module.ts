@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'add', // Esta ruta ahora cargará el módulo 'search' de manera perezosa
         loadChildren: () => import('./modules/add-file/add-file.module').then(m => m.AddFileModule)
       },
+      {
+        path: 'admin', // Esta ruta ahora cargará el módulo 'admin' de manera perezosa
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+      }
     ]
   }
 ];
@@ -30,4 +34,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PortalRoutingModule { }
+
 
