@@ -1,0 +1,37 @@
+<div class="result-criteria">
+  <header>
+    <h1>Results Criteria</h1>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nombre</th>
+        <th>Status</th>
+        <th>idLiquidacion</th>
+        <th>Transaccion</th>
+        <th>Fecha</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of results">
+        <td><input type="checkbox" /></td>
+        <td>{{ result.nombre }}</td>
+        <td>
+          <span [ngClass]="result.statusClass">{{ result.status }}</span>
+        </td>
+        <td>{{ result.idLiquidacion }}</td>
+        <td>{{ result.transaccion }}</td>
+        <td>{{ result.fecha }}</td>
+        <td>
+          <button (click)="edit(result)">✏️</button>
+          <button (click)="view(result)">🔍</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="button-container">
+    <button class="button-search" (click)="search()">Search</button>
+  </div>
+</div>
