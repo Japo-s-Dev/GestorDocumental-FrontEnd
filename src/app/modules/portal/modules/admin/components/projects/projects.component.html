@@ -1,1 +1,41 @@
-<p>projects works!</p>
+<div class="projects-container">
+  <header>
+    <h1>Projects</h1>
+  </header>
+  <button class="add-project-button" (click)="addProject()">
+    <i class="fa-solid fa-plus"></i> Agregar proyecto
+  </button>
+
+  <input
+    [(ngModel)]="searchTerm"
+    class="search-input"
+    placeholder="Buscar proyectos"
+    type="text"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th class="id-col">ID</th>
+        <th>Nombre</th>
+        <th class="id-edits-projects"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of filteredProjects(); let i = index">
+        <td>{{ project.proyectoId }}</td>
+        <td>{{ project.nombre }}</td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editProject(project)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteProject(project)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

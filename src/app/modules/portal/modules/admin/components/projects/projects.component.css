@@ -1,0 +1,137 @@
+/* Estilos Generales */
+.projects-container {
+    padding: 20px;
+  }
+  
+  .projects-container i {
+    margin-right: 5px !important;
+  }
+  
+  /* Estilos para el encabezado */
+  header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el botón de agregar proyecto */
+  .add-project-button {
+    float: right;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .add-project-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Estilos para el buscador */
+  .search-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .search-input {
+    background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 10px 50%;
+    background-size: 25px;
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: black;
+  }
+  
+  /* Estilos para la tabla */
+  table {
+    margin-top: 30px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid black;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  th {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Ajustar ancho de la columna de ID */
+  th.id-col, td:first-child {
+    width: 100px;
+  }
+
+  th.id-edits-projects, td:first-child {
+    width: 100px;
+  }
+  
+  /* Estilos para botones de acción */
+  .actions-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  button.edit {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  button.edit:hover {
+    background-color: #23272b;
+  }
+  
+  button.delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  button.delete:hover {
+    background-color: #c82333;
+  }
+  
