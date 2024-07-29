@@ -5,7 +5,12 @@
   <main>
     <div class="project-select">
       <label for="project">Proyecto</label>
-      <select id="project" [(ngModel)]="selectedProject" (ngModelChange)="onProjectChange($event)" name="project">
+      <select
+        id="project"
+        [(ngModel)]="selectedProject"
+        (ngModelChange)="onProjectChange($event)"
+        name="project"
+      >
         <option value="1">Proyecto 1</option>
         <option value="2">Proyecto 2</option>
         <option value="3">Proyecto 3</option>
@@ -14,11 +19,24 @@
     <!-- Formulario controlado por Formly -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-class">
       <!-- Campos dinámicos generados por Formly -->
-      <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+      <formly-form
+        [form]="form"
+        [fields]="fields"
+        [model]="model"
+      ></formly-form>
       <!-- Botones de Acción -->
       <div class="navigation">
-        <button class="btn submit" type="submit" [disabled]="!form.valid">Search</button>
-        <button class="btn save" type="button" (click)="onSave()">Save Search</button>
+        <button
+          class="btn submit"
+          type="submit"
+          [disabled]="!form.valid"
+          routerLink="/portal/search/result"
+        >
+          Search
+        </button>
+        <button class="btn save" type="button" (click)="onSave()">
+          Save Search
+        </button>
       </div>
     </form>
   </main>
