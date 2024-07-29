@@ -5,9 +5,10 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { SearchCriteriaComponent } from './components/search-criteria/search-criteria.component';
 import { SearchRoutingModule } from './search-routing.module';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
-  declarations: [SearchCriteriaComponent],
+  declarations: [SearchCriteriaComponent, SearchResultComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
