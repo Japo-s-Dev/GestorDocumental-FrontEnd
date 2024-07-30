@@ -9,7 +9,7 @@ describe('AddFileHomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AddFileHomeComponent ],
-      imports: [ ReactiveFormsModule ]
+      imports: [ ReactiveFormsModule ] // Importa ReactiveFormsModule para manejar los formularios reactivos
     })
     .compileComponents();
   });
@@ -23,5 +23,4 @@ describe('AddFileHomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

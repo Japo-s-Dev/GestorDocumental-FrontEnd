@@ -3,57 +3,55 @@
     <h1>File Entry</h1>
   </div>
   <section>
-    <div class="proyect-select">
-      <label for="proyect">Proyect</label>
-      <select id="proyect" formControlName="proyect">
+    <form [formGroup]="form" class="form-class" method="post">
+      <div class="proyect-select">
+        <label for="proyect">Proyect</label>
+        <select id="proyect" formControlName="project">
+          <!-- Opciones -->
+        </select>
+      </div>
 
-      </select>
-    </div>
-
-
-    <div class="boxform">
-      <form class="form-class" method="post">
+      <div class="boxform">
         <div class="attributeForm">
           <label for="idLiquidacion">Id Liquidación:</label><br>
-          <input type="text" id="idLiquidacion" name="idLiquidacion"><br>
+          <input type="text" id="idLiquidacion" formControlName="idLiquidacion"><br>
         </div>
 
         <div class="attributeForm">
           <label for="nombre">Nombre:</label><br>
-          <input type="text" id="nombre" name="nombre"><br>
+          <input type="text" id="nombre" formControlName="nombre"><br>
         </div>
 
         <div class="attributeForm">
           <label for="transaccion">Transacción:</label><br>
-          <input type="text" id="transaccion" name="transaccion"><br>
+          <input type="text" id="transaccion" formControlName="transaccion"><br>
         </div>
 
         <div class="attributeForm">
           <label for="fecha">Fecha:</label><br>
-          <input type="date" id="fecha" name="fecha"><br>
+          <input type="date" id="fecha" formControlName="fecha"><br>
         </div>
 
         <div class="attributeForm">
           <label for="status">Status:</label><br>
-          <select id="status" name="status">
-        </select><br><br>
-        </div>
-      </form>
-
-      <div class="uploadfile">
-        <div class="containerfile">
-          <label for="file">Document Status</label><br>
-          <input type="file" id="file" name="file"><br>
+          <select id="status" formControlName="status">
+            <!-- Opciones -->
+          </select><br><br>
         </div>
 
+        <div class="uploadfile">
+          <div class="containerfile">
+            <label for="file">Document Status</label><br>
+            <input type="file" id="file" name="file"><br>
+          </div>
+        </div>
       </div>
-    </div>
 
-
+      <div class="navigation">
+        <button class="submit" type="submit">Save</button>
+        <button class="save" type="button">Save Search</button>
+        <button class="cancel" type="button">Cancel</button>
+      </div>
+    </form>
   </section>
-  <div class="navigation">
-    <button class="submit" type="submit">Save</button>
-    <button class="save" type="button" >Save Search</button>
-    <button class="cancel" type="button" >Cancel</button>
-  </div>
 </div>

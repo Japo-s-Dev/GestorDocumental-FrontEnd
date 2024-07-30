@@ -16,5 +16,23 @@
       "proyectoId": 201,
       "nombre": "Fecha",
       "tipo": "date"
+  },
+  {
+    "correlativo": 4,
+    "proyectoId": 201,
+    "nombre": "Id Liquidación",
+    "tipo": "number"
+  },
+  {
+    "correlativo": 5,
+    "proyectoId": 201,
+    "nombre": "Id Liquidación",
+    "tipo": "number"
+  },
+  {
+    "correlativo": 6,
+    "proyectoId": 201,
+    "nombre": "Id Liquidación",
+    "tipo": "number"
   }
 ]
