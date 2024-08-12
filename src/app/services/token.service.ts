@@ -5,19 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class TokenService {
 
-  // Método para guardar el token en localStorage o sessionStorage
+  // Método para guardar el token en sessionStorage
   saveToken(token: string): void {
-    localStorage.setItem('auth-token', token);
+    sessionStorage.setItem('auth-token', token);
   }
 
-  // Método para obtener el token desde localStorage o sessionStorage
+  // Método para obtener el token desde sessionStorage
   getToken(): string | null {
-    return localStorage.getItem('auth-token');
+    return sessionStorage.getItem('auth-token');
   }
 
   // Método para eliminar el token (logout)
   clearToken(): void {
-    localStorage.removeItem('auth-token');
+    sessionStorage.removeItem('auth-token');
   }
 
   // Método para verificar si el token está presente
