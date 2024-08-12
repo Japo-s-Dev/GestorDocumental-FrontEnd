@@ -1,0 +1,9 @@
+{
+  "LOGIN": "****************************************************LOGIN****************************************************",
+  "title:login": "Iniciar Sesión",
+  "input:login_username": "Nombre de Usuario",
+  "input:login_password": "Contraseña",
+  "btn:login": "Ingresar",
+  "btn:forgot": "Olvidaste tu contraseña?",
+  "alert:login_error": "Usuario o contraseña incorrectos"
+}

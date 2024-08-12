@@ -1,30 +1,35 @@
 <div class="background">
+  <!-- Selector de idioma -->
+  <div class="language-selector">
+    <button [class.selected]="currentLanguage === 'en'" (click)="switchLanguage('en')">EN</button>
+    <button [class.selected]="currentLanguage === 'es'" (click)="switchLanguage('es')">ES</button>
+  </div>
+
   <div class="container">
-      <h2>Login to your Account</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
-          <div class="inputBox">
-              <label>Username</label>
-              <input type="text" formControlName="username" required>
-          </div>
-          <div class="inputBox">
-              <div class="inputLabel">
-                  <label>Password</label>
-                  <a href="#">Forgot?</a>
-              </div>
-              <input [type]="hide ? 'password' : 'text'" formControlName="password" required>
+    <h2>{{ 'title:login' | translate }}</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="inputBox">
+        <label>{{ 'input:login_username' | translate }}</label>
+        <input type="text" formControlName="username" required>
+      </div>
+      <div class="inputBox">
+        <div class="inputLabel">
+          <label>{{ 'input:login_password' | translate }}</label>
+          <a href="#">{{ 'btn:forgot' | translate }}</a>
+        </div>
+        <input [type]="hide ? 'password' : 'text'" formControlName="password" required>
+      </div>
 
-          </div>
+      <!-- Alerta personalizada -->
+      <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="msg">{{ alertMessage }}</span>
+        <div class="close-btn" (click)="closeAlert()">
+          <span class="fas fa-times"></span>
+        </div>
+      </div>
 
-          <!-- Alerta personalizada -->
-          <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
-             <span class="fas fa-exclamation-circle"></span>
-             <span class="msg">{{ alertMessage }}</span>
-             <div class="close-btn" (click)="closeAlert()">
-                <span class="fas fa-times"></span>
-             </div>
-          </div>
-
-          <button type="submit" [disabled]="!loginForm.valid">Iniciar sesión</button>
-      </form>
+      <button type="submit" [disabled]="!loginForm.valid">{{ 'btn:login' | translate }}</button>
+    </form>
   </div>
 </div>

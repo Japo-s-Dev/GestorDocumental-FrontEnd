@@ -1,0 +1,10 @@
+{
+  "LOGIN": "****************************************************LOGIN****************************************************",
+  "title:login": "Login",
+  "input:login_username": "Username",
+  "input:login_password": "Password",
+  "btn:login": "Enter",
+  "btn:forgot": "Forgot your password?",
+  "alert:login_error": "Incorrect username or password"
+}
+
