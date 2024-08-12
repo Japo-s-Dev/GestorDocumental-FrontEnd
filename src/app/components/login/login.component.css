@@ -1,126 +1,176 @@
-
 .background {
-    width: 100%;
-    height: 100dvh;
-    background-color: #222222;
-    display: grid;
-    place-items: center;
+  width: 100%;
+  height: 100dvh;
+  background-color: #222222;
+  display: grid;
+  place-items: center;
 }
 
 .container {
-    position: relative;
-    width: 90%;
-    max-width: 450px;
-    text-align: center;
-    padding: 35px;
-    background-color: #f4f4f4;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  padding: 35px;
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .container > h2 {
-    margin-bottom: 20px;
-    font-size: 28px;
-    font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .inputBox {
-    text-align: left;
-    position: relative;
+  text-align: left;
+  position: relative;
 }
 
 .inputBox > label,
 .inputBox > div > label {
-    display: block;
-    font-weight: 600;
-    margin-top: 0px;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    color: #666666;
+  display: block;
+  font-weight: 600;
+  margin-top: 0px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: #666666;
 }
 
-
 .inputBox > div {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .inputBox > div > label,
 .inputBox > div > a {
-    margin-top: 10px;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    color: #000000;
-
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: #000000;
 }
 
 .inputBox > div > a {
-    font-size: 1.0rem;
-    color: #000000;
-    text-decoration: none;
-    margin-right: 5px;
-    margin-top: 13px;
-    &:hover {
-        text-decoration: underline;
-    }
+  font-size: 1.0rem;
+  color: #000000;
+  text-decoration: none;
+  margin-right: 5px;
+  margin-top: 13px;
+  &:hover {
+      text-decoration: underline;
+  }
 }
 
 .inputBox > input {
-    width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 1.2rem;
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1.2rem;
 }
 
 form > button {
-    width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    border: none;
-    border-radius: 10px;
-    background-color: #000000;
-    color: #fff;
-    font-size: 1.2rem;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #000000;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 form > button:hover {
-    background-color: #333333;
+  background-color: #333333;
 }
 
 form > button:disabled {
-    background-color: #666666;
-    cursor: not-allowed;
+  background-color: #666666;
+  cursor: not-allowed;
 }
 
 input[type="password"] {
-    padding-right: 50px;
-    width: 100%;
-    height: 40px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
+  padding-right: 50px;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
 }
 
 #toggleButton {
-    position: absolute;
-    right: 5px;
-    top: 15px;
-    border: none;
-    background-color: transparent;
-    outline: none;
-    cursor: pointer;
-    height: 100%;
-    width: 40px;
-    text-align: center;
+  position: absolute;
+  right: 5px;
+  top: 15px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  height: 100%;
+  width: 40px;
+  text-align: center;
 }
 
 button i {
-    color: #888;
-    scale: 1.2;
+  color: #888;
+  scale: 1.2;
+}
+
+/* Estilos para la alerta de error */
+.alert {
+  background: #f8d7da; /* Fondo rojo claro */
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border-left: 8px solid #f5c6cb; /* Borde rojo oscuro */
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.alert.showAlert {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.alert .fa-exclamation-circle {
+  margin-right: 10px;
+  color: #721c24; /* Icono rojo oscuro */
+  font-size: 20px;
+}
+
+.alert .msg {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #721c24; /* Texto rojo oscuro */
+}
+
+.alert .close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #721c24; /* Botón de cierre rojo oscuro */
+  font-size: 16px;
+  padding: 0;
+}
+
+.alert .close-btn:hover {
+  color: #491217; /* Botón de cierre en hover más oscuro */
+}
+
+.alert .close-btn .fas {
+  font-size: 20px;
 }

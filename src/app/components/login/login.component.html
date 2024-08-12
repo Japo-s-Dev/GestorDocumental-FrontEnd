@@ -1,23 +1,30 @@
 <div class="background">
-    <div class="container">
-        <h2>Login to your Account</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="inputBox">
-                <label>Username</label>
-                <input type="text" formControlName="username" required>
-            </div>
-            <div class="inputBox">
-                <div class="inputLabel">
-                    <label>Password</label>
-                    <a href="#">Forgot?</a>
-                </div>
-                <input [type]="hide ? 'password' : 'text'" formControlName="password" required>
-                <button (click)="toggleVisibility()" type="button" id="toggleButton">
-                    <i [class]="hide ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
-                </button>
-            </div>
-            <button type="submit" [disabled]="!loginForm.valid" [routerLink]="['/portal/']">Iniciar sesión</button>
-        </form>
+  <div class="container">
+      <h2>Login to your Account</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="inputBox">
+              <label>Username</label>
+              <input type="text" formControlName="username" required>
+          </div>
+          <div class="inputBox">
+              <div class="inputLabel">
+                  <label>Password</label>
+                  <a href="#">Forgot?</a>
+              </div>
+              <input [type]="hide ? 'password' : 'text'" formControlName="password" required>
 
-    </div>
+          </div>
+
+          <!-- Alerta personalizada -->
+          <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+             <span class="fas fa-exclamation-circle"></span>
+             <span class="msg">{{ alertMessage }}</span>
+             <div class="close-btn" (click)="closeAlert()">
+                <span class="fas fa-times"></span>
+             </div>
+          </div>
+
+          <button type="submit" [disabled]="!loginForm.valid">Iniciar sesión</button>
+      </form>
+  </div>
 </div>
