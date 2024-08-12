@@ -22,6 +22,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@ngx-formly/bootstrap": "^6.3.0",
     "@ngx-formly/core": "^6.3.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",

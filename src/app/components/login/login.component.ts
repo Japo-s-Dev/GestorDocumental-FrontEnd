@@ -5,6 +5,7 @@ import { ParameterManagerService } from '../../services/parameter-manager.servic
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent {
   hide = true;
-  showWarningAlert = false;  // Para controlar la visibilidad de la alerta
-  alertMessage = '';         // Para mostrar el mensaje en la alerta
+  showWarningAlert = false;
+  alertMessage = '';
+  currentLanguage: string;
+
+  constructor(
+    private authService: AuthService,
+    private parameterManager: ParameterManagerService,
+    private router: Router,
+    private translate: TranslateService
+  ) {
+    this.currentLanguage = this.translate.getDefaultLang() || 'es';
+    this.translate.setDefaultLang(this.currentLanguage);
+  }
 
   toggleVisibility(): void {
     this.hide = !this.hide;
@@ -25,20 +37,13 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  constructor(
-    private authService: AuthService,
-    private parameterManager: ParameterManagerService,
-    private router: Router
-  ) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   login() {
     const loginRequest: LoginRequest = {
       username: this.loginForm.value.username ?? '',
       pwd: this.loginForm.value.password ?? ''
     };
-    console.log(loginRequest);
     this.authService.login(loginRequest).subscribe({
       next: (response) => {
         if (response.result && response.result.success) {
@@ -49,11 +54,11 @@ export class LoginComponent {
           });
           this.router.navigate(['/portal']);
         } else {
-          this.showAlert('Credenciales incorrectas');
+          this.showAlert(this.translate.instant('alert:login_error'));
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.showAlert('Credenciales incorrectas');
+        this.showAlert(this.translate.instant('alert:login_error'));
       }
     });
   }
@@ -64,10 +69,15 @@ export class LoginComponent {
 
     setTimeout(() => {
       this.closeAlert();
-    }, 10000); // La alerta se ocultará automáticamente después de 5 segundos
+    }, 10000);
   }
 
   closeAlert(): void {
     this.showWarningAlert = false;
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    this.currentLanguage = language;
   }
 }
