@@ -1,6 +1,6 @@
-// users.component.ts
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../interfaces/user.interface';
+import { UserCrudService } from './services/users-crud.service';
 
 
 @Component({
@@ -9,24 +9,29 @@ import { IUser } from '../../interfaces/user.interface';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: IUser[] = [
-    { username: 'admin', password: 'admin', role: 'admin' },
-    { username: 'gabriel', password: 'password1', role: 'usuario' },
-    { username: 'sergio', password: 'password2', role: 'usuario' },
-    { username: 'andre', password: 'password3', role: 'usuario' },
-    { username: 'nelson', password: 'password4', role: 'usuario' },
-    { username: 'joaquin', password: 'password5', role: 'usuario' }
-  ];
-
+  users: IUser[] = [];
   searchTerm: string = '';
-  showPassword: boolean[] = new Array(this.users.length).fill(false);
+  showPassword: boolean[] = [];
 
   constructor(
-
+    private userCrudService: UserCrudService
   ) { }
 
   ngOnInit(): void {
-    // cargar los datos de los usuarios desde el backend cuando esté disponible
+    this.loadUsers();
+  }
+
+  // Método para cargar los usuarios desde el servicio
+  loadUsers(): void {
+    this.userCrudService.listUsers().subscribe(
+      (response) => {
+        this.users = response; // Asigna los usuarios obtenidos del servicio
+        this.showPassword = new Array(this.users.length).fill(false); // Ajustar el array para la visibilidad de la contraseña
+      },
+      (error) => {
+        console.error('Error al obtener los usuarios:', error);
+      }
+    );
   }
 
   addUser(): void {
