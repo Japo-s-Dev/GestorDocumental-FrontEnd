@@ -25,8 +25,9 @@ export class UsersComponent implements OnInit {
   loadUsers(): void {
     this.userCrudService.listUsers().subscribe(
       (response) => {
-        this.users = response; // Asigna los usuarios obtenidos del servicio
-        this.showPassword = new Array(this.users.length).fill(false); // Ajustar el array para la visibilidad de la contraseña
+        console.log(response)
+        //this.users = response; // Asigna los usuarios obtenidos del servicio
+        //this.showPassword = new Array(this.users.length).fill(false); // Ajustar el array para la visibilidad de la contraseña
       },
       (error) => {
         console.error('Error al obtener los usuarios:', error);
