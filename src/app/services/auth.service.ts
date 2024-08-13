@@ -9,7 +9,7 @@ import { LoginRequest } from '../interfaces/login-request.interface';
 })
 export class AuthService {
 
-  private loginUrl = `http://184.168.64.136/api/login`;
+  private loginUrl = `http://127.0.0.1:8080/api/login`;
 
   constructor(private http: HttpClient) { }
 
@@ -22,13 +22,14 @@ export class AuthService {
       .pipe(
         tap((response) => {
           // Extraer la cookie manualmente
-          const cookies = response.headers.get('set-cookie');
-          if (cookies) {
-            const authToken = this.getCookieFromString(cookies, 'auth-token');
-            if (authToken) {
-              sessionStorage.setItem('auth-token', authToken); // Guarda el token en sessionStorage
-            }
-          }
+          //const cookies = response.headers.get('set-cookie');
+          //if (cookies) {
+          //  const authToken = this.getCookieFromString(cookies, 'auth-token');
+          //  if (authToken) {
+          //    sessionStorage.setItem('auth-token', authToken); // Guarda el token en sessionStorage
+          //  }
+          //}
+          console.log(response)
         })
       );
   }
