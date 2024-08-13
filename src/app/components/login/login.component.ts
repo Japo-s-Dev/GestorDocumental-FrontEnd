@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ParameterManagerService } from '../../services/parameter-manager.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request.interface';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -44,21 +44,22 @@ export class LoginComponent {
       username: this.loginForm.value.username ?? '',
       pwd: this.loginForm.value.password ?? ''
     };
+
     this.authService.login(loginRequest).subscribe({
-      next: (response) => {
-        if (response.result && response.result.success) {
+      next: (response: HttpResponse<any>) => {
+        if (response.body.result && response.body.result.success) {
           this.parameterManager.sendParameters({
             userStatus: {
-              username: response.result.username
+              username: response.body.result.username
             }
           });
           this.router.navigate(['/portal']);
         } else {
-          this.showAlert(this.translate.instant('alert:login_error'));
+          this.showAlert('Credenciales incorrectas');
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.showAlert(this.translate.instant('alert:login_error'));
+        this.showAlert('Credenciales incorrectas');
       }
     });
   }

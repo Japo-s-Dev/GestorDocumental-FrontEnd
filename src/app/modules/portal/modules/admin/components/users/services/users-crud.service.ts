@@ -1,43 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AppConstants } from '../../../../../../../enums/app.constants';
-
+import { TokenService } from '../../../../../../../services/token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserCrudService {
 
-  private apiUrl = `${AppConstants.BASE_URL}/api/rpc`;
+  private apiUrl = `http://184.168.64.136/api/rpc`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService
+  ) {}
 
-  // Crear Usuario
-  createUser(data: { username: string, pwd_clear: string, email: string }): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'create_user',
-      params: {
-        data
-      }
-    };
-    return this.http.post<any>(this.apiUrl, payload, this.getHeaders());
+  private getHeaders() {
+    const token = this.tokenService.getToken() // Asegúrate de que el token esté en sessionStorage
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cookie': `auth-token=${token}` // Agrega la cookie con el token
+    });
+    return { headers };
   }
 
-  // Eliminar Usuario
-  deleteUser(userId: number): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'delete_user',
-      params: {
-        id: userId
-      }
-    };
-    return this.http.post<any>(this.apiUrl, payload, this.getHeaders());
-  }
-
-  // Listar Usuarios
   listUsers(): Observable<any> {
     const payload = {
       id: 1,
@@ -46,24 +32,5 @@ export class UserCrudService {
     return this.http.post<any>(this.apiUrl, payload, this.getHeaders());
   }
 
-  // Actualizar Usuario
-  updateUser(userId: number, data: { username?: string, email?: string }): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'update_user',
-      params: {
-        id: userId,
-        data
-      }
-    };
-    return this.http.post<any>(this.apiUrl, payload, this.getHeaders());
-  }
 
-  // Método para obtener los headers comunes
-  private getHeaders() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return { headers };
-  }
 }
