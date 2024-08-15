@@ -83,13 +83,17 @@
           </select>
         </div>
 
+        <!-- Sección de estado del documento y subida -->
         <div class="upload-section">
           <label for="file" class="form-label">{{
             "file_entry:document_status" | translate
           }}</label>
-          <div class="file-upload">
-            <p>{{ "file_entry:documento_subido" | translate }}</p>
-            <input type="file" id="file" name="file" />
+          <div class="file-upload-container">
+            <p>{{ "file_entry:no_documents" | translate }}</p>
+            <div class="upload-button" (click)="navigateToUpload()">
+              {{ "file_entry:upload" | translate }}
+              <i class="fa-solid fa-upload"></i>
+            </div>
           </div>
         </div>
       </div>

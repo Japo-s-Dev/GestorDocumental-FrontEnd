@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-file-home',
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class AddFileHomeComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -24,5 +25,9 @@ export class AddFileHomeComponent implements OnInit {
 
   onSave() {
     // Add save logic here
+  }
+
+  navigateToUpload() {
+    this.router.navigate(['/portal/add/upload-document']);
   }
 }
