@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +10,14 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   showSearch = false;
   showAdd = false;
-  showAdmin = false; // Añadido para controlar el despliegue del menú de admin
-  isAdmin = true; // Simulación de que el usuario es administrador
+  showAdmin = false;
+  isAdmin = true;
+  currentLanguage: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private translate: TranslateService) {
+    this.currentLanguage = this.translate.getDefaultLang() || 'es';
+    this.translate.setDefaultLang(this.currentLanguage);
+  }
 
   toggleAdd(path: string) {
     this.showAdd = !this.showAdd;
@@ -35,5 +40,10 @@ export class NavbarComponent {
 
   navigate(path: string) {
     this.router.navigate([path]);
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    this.currentLanguage = language;
   }
 }

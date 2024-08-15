@@ -1,27 +1,64 @@
 <div class="sidebar">
-  <img src="../../../../../assets/images/EvolucionaLogo.jpeg" alt="Logo empresa" routerLink="/portal/">
+  <img
+    src="../../../../../assets/images/EvolucionaLogo.jpeg"
+    alt="Logo empresa"
+    routerLink="/portal/"
+  />
 
   <div class="spacer"></div>
 
-  <h4>MENÚ</h4>
+  <!-- Selector de idioma -->
+  <div class="language-selector">
+    <button
+      [class.selected]="currentLanguage === 'en'"
+      (click)="switchLanguage('en')"
+    >
+      EN
+    </button>
+    <button
+      [class.selected]="currentLanguage === 'es'"
+      (click)="switchLanguage('es')"
+    >
+      ES
+    </button>
+  </div>
 
-  <div class="box" (click)="toggleSearch('/portal/search')"><i class="fa-solid fa-magnifying-glass"></i>Search</div>
+  <h4>{{ "navbar:menu" | translate }}</h4>
 
-  <div class="box" (click)="toggleAdd('/portal/add')"><i class="fa-solid fa-plus"></i>Add</div>
+  <div class="box" (click)="toggleSearch('/portal/search')">
+    <i class="fa-solid fa-magnifying-glass"></i
+    >{{ "navbar:search" | translate }}
+  </div>
+
+  <div class="box" (click)="toggleAdd('/portal/add')">
+    <i class="fa-solid fa-plus"></i>{{ "navbar:add" | translate }}
+  </div>
 
   <div *ngIf="showAdd">
-    <div class="sub-box" routerLink="/portal/add/file-entry"><i class="fa-solid fa-file"></i>File Entry</div>
-    <div class="sub-box" routerLink="/portal/add"><i class="fa-solid fa-cloud-arrow-up"></i>Upload Documents</div>
+    <div class="sub-box" routerLink="/portal/add/file-entry">
+      <i class="fa-solid fa-file"></i>{{ "navbar:file_entry" | translate }}
+    </div>
+    <div class="sub-box" routerLink="/portal/add">
+      <i class="fa-solid fa-cloud-arrow-up"></i
+      >{{ "navbar:upload_documents" | translate }}
+    </div>
   </div>
 
-   <!-- Condicional para mostrar solo si es admin -->
   <div *ngIf="isAdmin" class="spacer"></div>
-  <h4 *ngIf="isAdmin">ADMIN</h4>
-  <div *ngIf="isAdmin" class="box" (click)="toggleAdmin('/portal/admin')"><i class="fa-solid fa-gears"></i>Options</div>
-  <div *ngIf="showAdmin">
-    <div class="sub-box" routerLink="/portal/admin/users"><i class="fa-solid fa-users"></i>Users</div>
-    <div class="sub-box" routerLink="/portal/admin/projects"><i class="fa-solid fa-diagram-project"></i>Projects</div>
-    <div class="sub-box" routerLink="/portal/admin/roles"><i class="fa-solid fa-user-shield"></i>Roles</div>
+  <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>
+  <div *ngIf="isAdmin" class="box" (click)="toggleAdmin('/portal/admin')">
+    <i class="fa-solid fa-gears"></i>{{ "navbar:options" | translate }}
   </div>
-
+  <div *ngIf="showAdmin">
+    <div class="sub-box" routerLink="/portal/admin/users">
+      <i class="fa-solid fa-users"></i>{{ "navbar:users" | translate }}
+    </div>
+    <div class="sub-box" routerLink="/portal/admin/projects">
+      <i class="fa-solid fa-diagram-project"></i
+      >{{ "navbar:projects" | translate }}
+    </div>
+    <div class="sub-box" routerLink="/portal/admin/roles">
+      <i class="fa-solid fa-user-shield"></i>{{ "navbar:roles" | translate }}
+    </div>
+  </div>
 </div>

@@ -5,6 +5,19 @@
   "input:login_password": "Password",
   "btn:login": "Enter",
   "btn:forgot": "Forgot your password?",
-  "alert:login_error": "Incorrect username or password"
+  "alert:login_error": "Incorrect username or password",
+  "home:title": "Home",
+  "home:storage": "Storage",
+  "home:used_storage": "Used Storage",
+  "home:available_storage": "Available Storage",
+  "navbar:menu": "MENU",
+  "navbar:search": "Search",
+  "navbar:add": "Add",
+  "navbar:file_entry": "File Entry",
+  "navbar:upload_documents": "Upload Documents",
+  "navbar:admin": "ADMIN",
+  "navbar:options": "Options",
+  "navbar:users": "Users",
+  "navbar:projects": "Projects",
+  "navbar:roles": "Roles"
 }
-

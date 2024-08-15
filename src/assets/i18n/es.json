@@ -5,5 +5,19 @@
   "input:login_password": "Contraseña",
   "btn:login": "Ingresar",
   "btn:forgot": "Olvidaste tu contraseña?",
-  "alert:login_error": "Usuario o contraseña incorrectos"
+  "alert:login_error": "Usuario o contraseña incorrectos",
+  "home:title": "Inicio",
+  "home:storage": "Almacenamiento",
+  "home:used_storage": "Almacenamiento usado",
+  "home:available_storage": "Almacenamiento disponible",
+  "navbar:menu": "MENÚ",
+  "navbar:search": "Buscar",
+  "navbar:add": "Agregar",
+  "navbar:file_entry": "Entrada de Archivo",
+  "navbar:upload_documents": "Subir Documentos",
+  "navbar:admin": "ADMIN",
+  "navbar:options": "Opciones",
+  "navbar:users": "Usuarios",
+  "navbar:projects": "Proyectos",
+  "navbar:roles": "Roles"
 }
