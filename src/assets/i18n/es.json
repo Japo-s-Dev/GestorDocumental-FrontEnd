@@ -49,5 +49,16 @@
   "field:numero_orden": "Número de Orden",
   "field:cliente": "Cliente",
   "field:fecha_entrega": "Fecha de Entrega",
-  "field:telefono": "Teléfono"
+  "field:telefono": "Teléfono",
+  
+  "result:criteria": "Criterios de Resultados",
+  "result:nombre": "Nombre",
+  "result:status": "Estado",
+  "result:idLiquidacion": "ID Liquidación",
+  "result:transaccion": "Transacción",
+  "result:fecha": "Fecha",
+  "result:opciones": "Opciones",
+  "status:approved": "Aprobado",
+  "status:pending": "Pendiente",
+  "status:not_started": "No Iniciado"
 }

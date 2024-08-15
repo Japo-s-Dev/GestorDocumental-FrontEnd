@@ -32,7 +32,7 @@
   "route:admin_users": "Admin > Users",
   "route:admin_projects": "Admin > Projects",
   "route:admin_roles": "Admin > Roles",
-
+  
   "search:search_criteria": "Search Criteria",
   "button:search": "Search",
   "button:save_search": "Save Search",
@@ -49,5 +49,17 @@
   "field:numero_orden": "Order Number",
   "field:cliente": "Client",
   "field:fecha_entrega": "Delivery Date",
-  "field:telefono": "Phone"
+  "field:telefono": "Phone",
+
+  "result:criteria": "Results Criteria",
+  "result:nombre": "Name",
+  "result:status": "Status",
+  "result:idLiquidacion": "Settlement ID",
+  "result:transaccion": "Transaction",
+  "result:fecha": "Date",
+  "result:opciones": "Options",
+  "status:approved": "Approved",
+  "status:pending": "Pending",
+  "status:not_started": "Not Started"
+  
 }
