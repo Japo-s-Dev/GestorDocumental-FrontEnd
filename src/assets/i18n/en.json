@@ -19,5 +19,15 @@
   "navbar:options": "Options",
   "navbar:users": "Users",
   "navbar:projects": "Projects",
-  "navbar:roles": "Roles"
+  "navbar:roles": "Roles",
+  "route:home": "Home",
+  "route:search_criteria": "Search > Criteria",
+  "route:search_result": "Search > Result",
+  "route:add": "Add",
+  "route:add_file_entry": "Add > File Entry",
+  "route:upload-documents": "Add > Upload Document",
+  "route:admin": "Admin",
+  "route:admin_users": "Admin > Users",
+  "route:admin_projects": "Admin > Projects",
+  "route:admin_roles": "Admin > Roles"
 }
