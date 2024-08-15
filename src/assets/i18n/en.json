@@ -75,5 +75,18 @@
   "projects:search_placeholder": "Search projects",
   "projects:id": "ID",
   "projects:nombre": "Name",
-  "projects:actions": "Actions"
+  "projects:actions": "Actions",
+  
+  "file_entry:title": "File Entry",
+  "file_entry:project_label": "Project",
+  "file_entry:id_liquidacion": "Settlement ID",
+  "file_entry:nombre": "Name",
+  "file_entry:transaccion": "Transaction",
+  "file_entry:fecha": "Date",
+  "file_entry:status": "Status",
+  "file_entry:document_status": "Document Status",
+  "file_entry:save_button": "Save",
+  "file_entry:cancel_button": "Cancel",
+  "file_entry:departamento": "Deparment",
+  "file_entry:documento_subido": "There are no documents uploaded"
 }
