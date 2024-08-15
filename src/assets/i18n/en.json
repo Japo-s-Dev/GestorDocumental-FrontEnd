@@ -60,6 +60,13 @@
   "result:opciones": "Options",
   "status:approved": "Approved",
   "status:pending": "Pending",
-  "status:not_started": "Not Started"
+  "status:not_started": "Not Started",
   
+  "users:title": "Users",
+  "users:add_user": "Add User",
+  "users:search_placeholder": "Search user",
+  "users:username": "Username",
+  "users:password": "Password",
+  "users:role": "Role",
+  "users:actions": "Actions"
 }

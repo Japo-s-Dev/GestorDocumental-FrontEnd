@@ -60,5 +60,14 @@
   "result:opciones": "Opciones",
   "status:approved": "Aprobado",
   "status:pending": "Pendiente",
-  "status:not_started": "No Iniciado"
+  "status:not_started": "No Iniciado",
+
+  "users:title": "Usuarios",
+  "users:add_user": "Agregar Usuario",
+  "users:search_placeholder": "Buscar usuario",
+  "users:username": "Usuario",
+  "users:password": "Contraseña",
+  "users:role": "Rol",
+  "users:actions": "Acciones"
+
 }

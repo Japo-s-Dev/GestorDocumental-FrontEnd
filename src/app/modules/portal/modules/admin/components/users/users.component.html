@@ -1,13 +1,14 @@
-<!-- users.component.html -->
 <div class="users-container">
   <header>
-    <h1>Users</h1>
+    <h1>{{ "users:title" | translate }}</h1>
   </header>
-  <button class="add-user-button" (click)="addUser()"><i class="fa-solid fa-plus"></i> Agregar Usuario</button>
+  <button class="add-user-button" (click)="addUser()">
+    <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
+  </button>
 
   <input
     type="text"
-    placeholder="Buscar usuario"
+    [placeholder]="'users:search_placeholder' | translate"
     [(ngModel)]="searchTerm"
     class="search-input"
   />
@@ -15,24 +16,35 @@
   <table>
     <thead>
       <tr>
-        <th>Usuario</th>
-        <th>Password</th>
-        <th>Rol</th>
-        <th></th>
+        <th>{{ "users:username" | translate }}</th>
+        <th>{{ "users:password" | translate }}</th>
+        <th>{{ "users:role" | translate }}</th>
+        <th>{{ "users:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of filteredUsers(); let i = index">
         <td>{{ user.username }}</td>
         <td class="password-col">
-          <span>{{ showPassword[i] ? user.password : '••••••••••••••••' }}</span>
-          <i class="fa-solid" [class.fa-eye]="!showPassword[i]" [class.fa-eye-slash]="showPassword[i]" (click)="togglePasswordVisibility(i)"></i>
+          <span>{{
+            showPassword[i] ? user.password : "••••••••••••••••"
+          }}</span>
+          <i
+            class="fa-solid"
+            [class.fa-eye]="!showPassword[i]"
+            [class.fa-eye-slash]="showPassword[i]"
+            (click)="togglePasswordVisibility(i)"
+          ></i>
         </td>
         <td>{{ user.role }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="delete" (click)="deleteUser(user)"><i class="fa-solid fa-trash"></i></button>
+            <button class="edit" (click)="editUser(user)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteUser(user)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </div>
         </td>
       </tr>
