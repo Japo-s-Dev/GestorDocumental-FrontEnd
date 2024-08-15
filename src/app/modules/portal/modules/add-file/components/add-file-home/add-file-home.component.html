@@ -1,56 +1,119 @@
 <div class="master">
   <div class="head">
-    <h1>File Entry</h1>
+    <h1>{{ "file_entry:title" | translate }}</h1>
   </div>
   <section>
     <form [formGroup]="form" class="form-class" method="post">
-      <div class="proyect-select">
-        <label for="proyect">Proyect</label>
-        <select id="proyect" formControlName="project">
+      <div class="project-name">
+        <label for="proyect" class="project-label">{{
+          "file_entry:project_label" | translate
+        }}</label>
+        <select id="proyect" formControlName="project" class="project-select">
           <!-- Opciones -->
         </select>
       </div>
 
-      <div class="boxform">
-        <div class="attributeForm">
-          <label for="idLiquidacion">Id Liquidación:</label><br>
-          <input type="text" id="idLiquidacion" formControlName="idLiquidacion"><br>
+      <div class="form-container">
+        <div class="attribute-form">
+          <label for="idLiquidacion" class="form-label">{{
+            "file_entry:id_liquidacion" | translate
+          }}</label>
+          <input
+            type="text"
+            id="idLiquidacion"
+            formControlName="idLiquidacion"
+            class="input-line"
+          />
         </div>
 
-        <div class="attributeForm">
-          <label for="nombre">Nombre:</label><br>
-          <input type="text" id="nombre" formControlName="nombre"><br>
+        <div class="attribute-form">
+          <label for="nombre" class="form-label">{{
+            "file_entry:nombre" | translate
+          }}</label>
+          <input
+            type="text"
+            id="nombre"
+            formControlName="nombre"
+            class="input-line"
+          />
         </div>
 
-        <div class="attributeForm">
-          <label for="transaccion">Transacción:</label><br>
-          <input type="text" id="transaccion" formControlName="transaccion"><br>
+        <div class="attribute-form">
+          <label for="transaccion" class="form-label">{{
+            "file_entry:transaccion" | translate
+          }}</label>
+          <input
+            type="text"
+            id="transaccion"
+            formControlName="transaccion"
+            class="input-line"
+          />
         </div>
 
-        <div class="attributeForm">
-          <label for="fecha">Fecha:</label><br>
-          <input type="date" id="fecha" formControlName="fecha"><br>
+        <div class="attribute-form">
+          <label for="departamento" class="form-label">{{
+            "file_entry:departamento" | translate
+          }}</label>
+          <input
+            type="text"
+            id="departamento"
+            formControlName="departamento"
+            class="input-line"
+          />
         </div>
 
-        <div class="attributeForm">
-          <label for="status">Status:</label><br>
-          <select id="status" formControlName="status">
+        <div class="attribute-form">
+          <label for="fecha" class="form-label">{{
+            "file_entry:fecha" | translate
+          }}</label>
+          <input
+            type="date"
+            id="fecha"
+            formControlName="fecha"
+            class="input-line"
+          />
+        </div>
+
+        <div class="attribute-form">
+          <label for="status" class="form-label">{{
+            "file_entry:status" | translate
+          }}</label>
+          <select id="status" formControlName="status" class="input-line">
             <!-- Opciones -->
-          </select><br><br>
+          </select>
         </div>
 
-        <div class="uploadfile">
-          <div class="containerfile">
-            <label for="file">Document Status</label><br>
-            <input type="file" id="file" name="file"><br>
+        <!-- Sección de estado del documento y subida -->
+        <div class="upload-section">
+          <label for="file" class="form-label">{{
+            "file_entry:document_status" | translate
+          }}</label>
+          <div
+            *ngIf="uploadedFileName; else noFileUploaded"
+            class="file-upload-container"
+          >
+            <p>{{ uploadedFileName }}</p>
+            <i class="fa-solid fa-check"></i>
           </div>
+          <ng-template #noFileUploaded>
+            <div class="file-upload-container">
+              <p>{{ "file_entry:no_documents" | translate }}</p>
+              <div class="upload-button" (click)="navigateToUpload()">
+                {{ "file_entry:upload" | translate }}
+                <i class="fa-solid fa-upload"></i>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
 
-      <div class="navigation">
-        <button class="submit" type="submit">Save</button>
-        <button class="save" type="button">Save Search</button>
-        <button class="cancel" type="button">Cancel</button>
+      <div class="navigation-buttons">
+        <button class="submit-btn" type="submit">
+          {{ "file_entry:save_button" | translate }}
+        </button>
+        <button class="cancel-btn" type="button">
+          {{ "file_entry:cancel_button" | translate }}
+        </button>
       </div>
     </form>
   </section>

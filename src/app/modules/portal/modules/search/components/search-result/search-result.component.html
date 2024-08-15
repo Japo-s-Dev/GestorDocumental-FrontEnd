@@ -1,17 +1,17 @@
 <div class="result-criteria">
   <header>
-    <h1>Results Criteria</h1>
+    <h1>{{ "result:criteria" | translate }}</h1>
   </header>
   <table>
     <thead>
       <tr>
         <th></th>
-        <th>Nombre</th>
-        <th>Status</th>
-        <th>idLiquidacion</th>
-        <th>Transaccion</th>
-        <th>Fecha</th>
-        <th>Opciones</th>
+        <th>{{ "result:nombre" | translate }}</th>
+        <th>{{ "result:status" | translate }}</th>
+        <th>{{ "result:idLiquidacion" | translate }}</th>
+        <th>{{ "result:transaccion" | translate }}</th>
+        <th>{{ "result:fecha" | translate }}</th>
+        <th>{{ "result:opciones" | translate }}</th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,10 @@
         <td><input type="checkbox" /></td>
         <td>{{ result.nombre }}</td>
         <td>
-          <span [ngClass]="result.statusClass">{{ result.status }}</span>
+          <span [ngClass]="result.statusClass">{{
+            "status:" + result.status.toLowerCase().replace(" ", "_")
+              | translate
+          }}</span>
         </td>
         <td>{{ result.idLiquidacion }}</td>
         <td>{{ result.transaccion }}</td>
@@ -32,6 +35,8 @@
     </tbody>
   </table>
   <div class="button-container">
-    <button class="button-search" (click)="search()">Search</button>
+    <button class="button-search" (click)="search()">
+      {{ "button:search" | translate }}
+    </button>
   </div>
 </div>

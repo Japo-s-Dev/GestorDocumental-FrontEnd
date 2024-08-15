@@ -1,20 +1,28 @@
 <div class="main-container">
-    <div class="home-title">Home</div>
-    <div class="storage-container">
-        <div class="storage-info">
-            <h2>Storage</h2>
-            <div class="label-container">
-                <span class="left-label">Almacenamiento usado</span>
-                <span class="right-label">Almacenamiento disponible</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar-used" [style.width]="getStoragePercentage() + '%'">
-                    {{ usedStorage }} GB
-                </div>
-                <div class="progress-bar-remaining" [style.width]="(100 - getStoragePercentage()) + '%'">
-                    {{ totalStorage - usedStorage }} GB
-                </div>
-            </div>
+  <div class="home-title">{{ "home:title" | translate }}</div>
+  <div class="storage-container">
+    <div class="storage-info">
+      <h2>{{ "home:storage" | translate }}</h2>
+      <div class="label-container">
+        <span class="left-label">{{ "home:used_storage" | translate }}</span>
+        <span class="right-label">{{
+          "home:available_storage" | translate
+        }}</span>
+      </div>
+      <div class="progress-bar-container">
+        <div
+          class="progress-bar-used"
+          [style.width]="getStoragePercentage() + '%'"
+        >
+          {{ usedStorage }} GB
         </div>
+        <div
+          class="progress-bar-remaining"
+          [style.width]="100 - getStoragePercentage() + '%'"
+        >
+          {{ totalStorage - usedStorage }} GB
+        </div>
+      </div>
     </div>
+  </div>
 </div>

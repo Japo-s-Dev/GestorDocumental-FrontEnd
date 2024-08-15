@@ -1,19 +1,19 @@
 <div class="container">
   <header>
-    <h1>Search Criteria</h1>
+    <h1>{{ "search:search_criteria" | translate }}</h1>
   </header>
   <main>
     <div class="project-select">
-      <label for="project">Proyecto</label>
+      <label for="project">{{ "project:label" | translate }}</label>
       <select
         id="project"
         [(ngModel)]="selectedProject"
         (ngModelChange)="onProjectChange($event)"
         name="project"
       >
-        <option value="1">Proyecto 1</option>
-        <option value="2">Proyecto 2</option>
-        <option value="3">Proyecto 3</option>
+        <option value="1">{{ "project:option1" | translate }}</option>
+        <option value="2">{{ "project:option2" | translate }}</option>
+        <option value="3">{{ "project:option3" | translate }}</option>
       </select>
     </div>
     <!-- Formulario controlado por Formly -->
@@ -32,10 +32,10 @@
           [disabled]="!form.valid"
           routerLink="/portal/search/result"
         >
-          Search
+          {{ "button:search" | translate }}
         </button>
         <button class="btn save" type="button" (click)="onSave()">
-          Save Search
+          {{ "button:save_search" | translate }}
         </button>
       </div>
     </form>

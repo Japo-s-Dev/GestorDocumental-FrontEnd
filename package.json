@@ -27,6 +27,7 @@
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
+    "ngx-doc-viewer": "^15.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.2"

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { RouteLabels } from '../../../../core/route-labels';
 
 @Component({
@@ -11,7 +12,7 @@ import { RouteLabels } from '../../../../core/route-labels';
 export class HeaderComponent implements OnInit {
   currentLabel: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
     // Inicializa la etiqueta tan pronto como el componente cargue
@@ -23,10 +24,17 @@ export class HeaderComponent implements OnInit {
     ).subscribe(() => {
       this.updateLabel(this.router.url);
     });
+
+    // Escucha los cambios de idioma y actualiza la etiqueta
+    this.translate.onLangChange.subscribe(() => {
+      this.updateLabel(this.router.url);
+    });
   }
 
   private updateLabel(url: string) {
-    // Asegúrate de usar una función para limpiar o ajustar la URL si es necesario
-    this.currentLabel = RouteLabels[url] || 'Page Not Found';
+    const labelKey = RouteLabels[url] || 'route:not_found';
+    this.translate.get(labelKey).subscribe(translatedLabel => {
+      this.currentLabel = translatedLabel;
+    });
   }
 }
