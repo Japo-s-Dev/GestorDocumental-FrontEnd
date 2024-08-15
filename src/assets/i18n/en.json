@@ -89,5 +89,12 @@
   "file_entry:no_documents": "There are no documents uploaded",
   "file_entry:upload": "Upload",
   "file_entry:save_button": "Save",
-  "file_entry:cancel_button": "Cancel"
+  "file_entry:cancel_button": "Cancel",
+
+  "upload_document:title": "Upload Documents",
+  "upload_document:drag_drop": "Drag & Drop or select files from device",
+  "upload_document:max_size": "max. 50MB",
+  "upload_document:preview": "Preview document",
+  "upload_document:no_preview_available": "No preview available for this file type",
+  "upload_document:save_button": "Save Document"
 }
