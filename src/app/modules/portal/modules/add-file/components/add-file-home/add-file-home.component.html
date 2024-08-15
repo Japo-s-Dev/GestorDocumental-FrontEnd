@@ -88,13 +88,22 @@
           <label for="file" class="form-label">{{
             "file_entry:document_status" | translate
           }}</label>
-          <div class="file-upload-container">
-            <p>{{ "file_entry:no_documents" | translate }}</p>
-            <div class="upload-button" (click)="navigateToUpload()">
-              {{ "file_entry:upload" | translate }}
-              <i class="fa-solid fa-upload"></i>
-            </div>
+          <div
+            *ngIf="uploadedFileName; else noFileUploaded"
+            class="file-upload-container"
+          >
+            <p>{{ uploadedFileName }}</p>
+            <i class="fa-solid fa-check"></i>
           </div>
+          <ng-template #noFileUploaded>
+            <div class="file-upload-container">
+              <p>{{ "file_entry:no_documents" | translate }}</p>
+              <div class="upload-button" (click)="navigateToUpload()">
+                {{ "file_entry:upload" | translate }}
+                <i class="fa-solid fa-upload"></i>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
 

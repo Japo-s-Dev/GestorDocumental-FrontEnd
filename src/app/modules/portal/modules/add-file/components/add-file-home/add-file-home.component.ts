@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AddFileHomeComponent implements OnInit {
   form!: FormGroup;
+  uploadedFileName: string | null = null;
 
   constructor(private fb: FormBuilder, private router: Router) { }
 
@@ -21,6 +22,7 @@ export class AddFileHomeComponent implements OnInit {
       fecha: [''],
       status: ['']
     });
+    this.uploadedFileName = localStorage.getItem('uploadedFile');
   }
 
   onSave() {

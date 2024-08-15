@@ -7,6 +7,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UploadDocumentComponent } from './components/upload-document/upload-document.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 // Función necesaria para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -28,7 +29,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    NgxDocViewerModule
   ]
 })
 export class AddFileModule { }
