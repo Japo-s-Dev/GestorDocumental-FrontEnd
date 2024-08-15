@@ -1,24 +1,24 @@
 <div class="projects-container">
   <header>
-    <h1>Projects</h1>
+    <h1>{{ "projects:title" | translate }}</h1>
   </header>
   <button class="add-project-button" (click)="addProject()">
-    <i class="fa-solid fa-plus"></i> Agregar proyecto
+    <i class="fa-solid fa-plus"></i> {{ "projects:add_project" | translate }}
   </button>
 
   <input
     [(ngModel)]="searchTerm"
     class="search-input"
-    placeholder="Buscar proyectos"
+    [placeholder]="'projects:search_placeholder' | translate"
     type="text"
   />
 
   <table>
     <thead>
       <tr>
-        <th class="id-col">ID</th>
-        <th>Nombre</th>
-        <th class="id-edits-projects"></th>
+        <th class="id-col">{{ "projects:id" | translate }}</th>
+        <th>{{ "projects:nombre" | translate }}</th>
+        <th class="id-edits-projects">{{ "projects:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>

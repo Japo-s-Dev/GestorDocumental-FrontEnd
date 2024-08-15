@@ -68,5 +68,12 @@
   "users:username": "Username",
   "users:password": "Password",
   "users:role": "Role",
-  "users:actions": "Actions"
+  "users:actions": "Actions",
+  
+  "projects:title": "Projects",
+  "projects:add_project": "Add Project",
+  "projects:search_placeholder": "Search projects",
+  "projects:id": "ID",
+  "projects:nombre": "Name",
+  "projects:actions": "Actions"
 }

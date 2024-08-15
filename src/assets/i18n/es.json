@@ -68,6 +68,13 @@
   "users:username": "Usuario",
   "users:password": "Contraseña",
   "users:role": "Rol",
-  "users:actions": "Acciones"
-
+  "users:actions": "Acciones",
+  
+  "projects:title": "Proyectos",
+  "projects:add_project": "Agregar proyecto",
+  "projects:search_placeholder": "Buscar proyectos",
+  "projects:id": "ID",
+  "projects:nombre": "Nombre",
+  "projects:actions": "Acciones"
+  
 }
