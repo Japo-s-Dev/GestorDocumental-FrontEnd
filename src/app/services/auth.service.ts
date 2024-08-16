@@ -9,7 +9,7 @@ import { LoginRequest } from '../interfaces/login-request.interface';
 })
 export class AuthService {
 
-  private loginUrl = `http://127.0.0.1:8080/api/login`;
+  private loginUrl = `https://server.evoluciona.com.gt/api/login`;
 
   constructor(private http: HttpClient) { }
 
@@ -21,28 +21,9 @@ export class AuthService {
     return this.http.post<any>(this.loginUrl, loginRequest, { headers, observe: 'response', withCredentials: true })
       .pipe(
         tap((response) => {
-          // Extraer la cookie manualmente
-          //const cookies = response.headers.get('set-cookie');
-          //if (cookies) {
-          //  const authToken = this.getCookieFromString(cookies, 'auth-token');
-          //  if (authToken) {
-          //    sessionStorage.setItem('auth-token', authToken); // Guarda el token en sessionStorage
-          //  }
-          //}
-          console.log(response)
+          // Browser will handle cookies, check for success and route accordingly
+          console.log('Login successful, response:', response);
         })
       );
-  }
-
-  // Función para extraer la cookie específica del string de cookies
-  private getCookieFromString(cookieString: string, cookieName: string): string | null {
-    const cookiesArray = cookieString.split(';');
-    for (const cookie of cookiesArray) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null;
   }
 }
