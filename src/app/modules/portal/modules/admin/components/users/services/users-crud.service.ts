@@ -7,28 +7,26 @@ import { Observable } from 'rxjs';
 })
 export class UserCrudService {
 
-    private apiUrl = `http://127.0.0.1:8080/api/rpc`;
+    private apiUrl = `https://server.evoluciona.com.gt/api/rpc`;
 
   constructor(
     private http: HttpClient,
   ) {}
 
-  private getHeaders() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      //'Cookie': `auth-token=${token}` // Agrega la cookie con el token
-    });
-    return { headers };
-  }
+ listUsers(): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
-  listUsers(): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'list_users'
-    };
-    return this.http.post<any>(this.apiUrl, payload, {
-      ...this.getHeaders(),
-      withCredentials: true
-    });
-  }
+  const payload = {
+    id: 1,
+    method: 'list_users'
+  };
+
+  return this.http.post<any>(this.apiUrl, payload, {
+    headers,
+    observe: 'response',
+    withCredentials: true // Ensures cookies are sent
+  });
+}
 }
