@@ -1,0 +1,7 @@
+<div class="alert-box" [ngClass]="alertType">
+  <i class="alert-icon fa" [ngClass]="iconType"></i>
+  <div>
+    <strong>{{ title }}</strong> {{ message }}
+  </div>
+  <span class="alert-close" (click)="close()">&times;</span>
+</div>

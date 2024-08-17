@@ -12,7 +12,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 
-// Función necesaria para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -21,8 +20,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomePortalComponent
+    HomePortalComponent,
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
