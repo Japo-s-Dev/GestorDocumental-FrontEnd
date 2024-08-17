@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../../../../../../enums/app.constants';
+import { CreateUserRequest } from '../interfaces/create-user.interface';
+import { UpdateUserRequest } from '../interfaces/update-user.interface';
+import { IDeleteUserRequest } from '../interfaces/delete-user.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,49 +29,65 @@ export class UserCrudService {
     return this.http.post<any>(this.apiUrl, payload, {
       headers,
       observe: 'response',
-      withCredentials: true // Ensures cookies are sent
-    });
-  }
-
-  createUser(data: { username: string, pwd_clear: string, email: string }): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    const payload = {
-      id: 1,
-      method: 'create_user',
-      params: {
-        data
-      }
-    };
-
-    return this.http.post<any>(this.apiUrl, payload, {
-      headers,
       withCredentials: true
     });
   }
 
-  updateUser(userId: number, data: { username?: string, email?: string }): Observable<any> {
+  createUser(userData: CreateUserRequest): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_user',
+      params: { data: userData }
+    };
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
+    return this.http.post<any>(this.apiUrl, payload, {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  updateUser(userId: number, userData: UpdateUserRequest): Observable<any> {
     const payload = {
       id: 1,
       method: 'update_user',
       params: {
         id: userId,
-        data
+        data: userData
       }
     };
 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
     return this.http.post<any>(this.apiUrl, payload, {
       headers,
+      observe: 'response',
       withCredentials: true
     });
   }
 
+  deleteUser(userId: number): Observable<any> {
+    const payload: IDeleteUserRequest = {
+      id: 1,
+      method: 'delete_user',
+      params: { id: userId }
+    };
 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(this.apiUrl, payload, {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
 
 }
