@@ -1,14 +1,19 @@
-// admin-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UsersComponent } from './components/users/users.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { RolesComponent } from './components/roles/roles.component';
 
 const routes: Routes = [
-  { path: 'users', component: UsersComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'roles', component: RolesComponent },
+  {
+    path: 'users',
+    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+  },
+  {
+    path: 'projects',
+    loadChildren: () => import('./modules/projects/projects.module').then(m => m.ProjectsModule)
+  },
+  {
+    path: 'roles',
+    loadChildren: () => import('./modules/roles/roles.module').then(m => m.RolesModule)
+  },
   { path: '', redirectTo: 'users', pathMatch: 'full' } // Ruta por defecto
 ];
 
@@ -17,4 +22,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }
-

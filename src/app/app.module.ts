@@ -10,9 +10,9 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { HomePortalComponent } from './components/home-portal/home-portal.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from './shared/shared.module';
 
 
-// Función necesaria para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -21,10 +21,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomePortalComponent
+    HomePortalComponent,
   ],
+
   imports: [
     BrowserModule,
+    SharedModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,

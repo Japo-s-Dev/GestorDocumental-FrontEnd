@@ -1,0 +1,55 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditMode ? 'Editar Usuario' : 'Agregar Usuario' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="userForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input id="username" formControlName="username" type="text" class="form-control" />
+          <div *ngIf="userForm.get('username')?.hasError('usernameExists')" class="alert">
+            El nombre de usuario ya existe.
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="!isEditMode">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" formControlName="password" type="password" class="form-control" />
+          <div *ngIf="userForm.get('password')?.hasError('passwordWeak')" class="alert">
+            La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial.
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="!isEditMode">
+          <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+          <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" formControlName="email" type="email" class="form-control" />
+          <div *ngIf="userForm.get('email')?.hasError('emailExists')" class="alert">
+            El correo electrónico ya está registrado.
+          </div>
+          <div *ngIf="userForm.get('email')?.hasError('email')" class="alert">
+            Por favor ingrese un correo electrónico válido.
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
+      <button type="button" class="add-user-button btn" (click)="save()">{{ isEditMode ? 'Guardar Cambios' : 'Agregar Usuario' }}</button>
+    </div>
+  </div>
+</div>

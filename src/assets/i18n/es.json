@@ -32,7 +32,7 @@
   "route:admin_users": "Admin > Usuarios",
   "route:admin_projects": "Admin > Proyectos",
   "route:admin_roles": "Admin > Roles",
-  
+
   "search:search_criteria": "Criterios de Búsqueda",
   "button:search": "Buscar",
   "button:save_search": "Guardar Búsqueda",
@@ -50,7 +50,7 @@
   "field:cliente": "Cliente",
   "field:fecha_entrega": "Fecha de Entrega",
   "field:telefono": "Teléfono",
-  
+
   "result:criteria": "Criterios de Resultados",
   "result:nombre": "Nombre",
   "result:status": "Estado",
@@ -66,10 +66,10 @@
   "users:add_user": "Agregar Usuario",
   "users:search_placeholder": "Buscar usuario",
   "users:username": "Usuario",
-  "users:password": "Contraseña",
+  "users:email": "Correo Electrónico",
   "users:role": "Rol",
   "users:actions": "Acciones",
-  
+
   "projects:title": "Proyectos",
   "projects:add_project": "Agregar proyecto",
   "projects:search_placeholder": "Buscar proyectos",

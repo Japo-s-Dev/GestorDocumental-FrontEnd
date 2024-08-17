@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { UsersComponent } from './components/users/users.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { RolesComponent } from './components/roles/roles.component';
-import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -16,14 +12,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    UsersComponent,
-    ProjectsComponent,
-    RolesComponent
-  ],
   imports: [
     CommonModule,
-    FormsModule,
     AdminRoutingModule,
     TranslateModule.forChild({
       loader: {

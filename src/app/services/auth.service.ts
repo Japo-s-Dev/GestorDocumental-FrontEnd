@@ -1,25 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { LoginRequest } from '../interfaces/login-request.interface';
-import { AppConstants } from '../enums/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loginUrl = `${AppConstants.BASE_URL}/api/login`;
+  private loginUrl = `https://server.evoluciona.com.gt/api/login`;
 
   constructor(private http: HttpClient) { }
 
-  login(loginRequest: LoginRequest): Observable<any> {
-    // Definir los encabezados
+  login(loginRequest: LoginRequest): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     });
 
-    // Realizar la solicitud POST con los encabezados
-    return this.http.post<any>(this.loginUrl, loginRequest, { headers });
+    return this.http.post<any>(this.loginUrl, loginRequest, { headers, observe: 'response', withCredentials: true })
+      .pipe(
+        tap((response) => {
+          // Browser will handle cookies, check for success and route accordingly
+          console.log('Login successful, response:', response);
+        })
+      );
   }
 }
