@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../interfaces/user.interface';
-import { UserCrudService } from './services/users-crud.service';
+import { UserCrudService } from '../../services/users-crud.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -11,10 +12,10 @@ import { UserCrudService } from './services/users-crud.service';
 export class UsersComponent implements OnInit {
   users: IUser[] = [];
   searchTerm: string = '';
-  showPassword: boolean[] = [];
 
   constructor(
-    private userCrudService: UserCrudService
+    private userCrudService: UserCrudService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -26,8 +27,10 @@ export class UsersComponent implements OnInit {
     this.userCrudService.listUsers().subscribe(
       (response) => {
         console.log(response)
-        //this.users = response; // Asigna los usuarios obtenidos del servicio
-        //this.showPassword = new Array(this.users.length).fill(false); // Ajustar el array para la visibilidad de la contraseña
+        if (response && response.body.result) {
+          this.users = response.body.result;
+
+        }
       },
       (error) => {
         console.error('Error al obtener los usuarios:', error);
@@ -35,24 +38,6 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  addUser(): void {
-    // Lógica para agregar un usuario
-    console.log('Agregar Usuario');
-  }
-
-  editUser(user: IUser): void {
-    // Lógica para editar un usuario
-    console.log('Editar Usuario', user);
-  }
-
-  deleteUser(user: IUser): void {
-    // Lógica para eliminar un usuario
-    console.log('Eliminar Usuario', user);
-  }
-
-  togglePasswordVisibility(index: number): void {
-    this.showPassword[index] = !this.showPassword[index];
-  }
 
   filteredUsers(): IUser[] {
     if (!this.searchTerm) {

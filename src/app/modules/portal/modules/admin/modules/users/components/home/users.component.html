@@ -2,7 +2,7 @@
   <header>
     <h1>{{ "users:title" | translate }}</h1>
   </header>
-  <button class="add-user-button" (click)="addUser()">
+  <button class="add-user-button" >
     <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
   </button>
 
@@ -18,31 +18,19 @@
       <tr>
         <th>{{ "users:username" | translate }}</th>
         <th>{{ "users:password" | translate }}</th>
-        <th>{{ "users:role" | translate }}</th>
         <th>{{ "users:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of filteredUsers(); let i = index">
         <td>{{ user.username }}</td>
-        <td class="password-col">
-          <span>{{
-            showPassword[i] ? user.password : "••••••••••••••••"
-          }}</span>
-          <i
-            class="fa-solid"
-            [class.fa-eye]="!showPassword[i]"
-            [class.fa-eye-slash]="showPassword[i]"
-            (click)="togglePasswordVisibility(i)"
-          ></i>
-        </td>
-        <td>{{ user.role }}</td>
+        <td>{{ user.email }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editUser(user)">
+            <button class="edit" >
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="delete" (click)="deleteUser(user)">
+            <button class="delete">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
