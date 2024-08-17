@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
     private authService: AuthService,
     private parameterManager: ParameterManagerService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private loaderService: LoaderService
   ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
     this.translate.setDefaultLang(this.currentLanguage);
@@ -40,6 +42,8 @@ export class LoginComponent {
   ngOnInit() {}
 
   login() {
+
+
     const loginRequest: LoginRequest = {
       username: this.loginForm.value.username ?? '',
       pwd: this.loginForm.value.password ?? ''
@@ -53,13 +57,16 @@ export class LoginComponent {
               username: response.body.result.username
             }
           });
+          this.loaderService.showLoader();
           this.router.navigate(['/portal']);
         } else {
           this.showAlert('Credenciales incorrectas');
+          this.loaderService.hideLoader();
         }
       },
       error: (error: HttpErrorResponse) => {
         this.showAlert('Credenciales incorrectas');
+        this.loaderService.hideLoader();
       }
     });
   }

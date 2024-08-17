@@ -10,6 +10,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { HomePortalComponent } from './components/home-portal/home-portal.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from './shared/shared.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   imports: [
     BrowserModule,
+    SharedModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,

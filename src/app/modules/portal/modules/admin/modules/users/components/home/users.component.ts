@@ -4,6 +4,7 @@ import { UserCrudService } from '../../services/users-crud.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersModalComponent } from '../users-modal/users-modal.component';
 import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
+import { LoaderService } from '../../../../../../../../services/loader.service';
 
 @Component({
   selector: 'app-users',
@@ -23,11 +24,17 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userCrudService: UserCrudService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
+    this.loaderService.showLoader();
     this.loadUsers();
+    setTimeout(() => {
+      this.loaderService.hideLoader();
+    }, 2000);
+
   }
 
   loadUsers(): void {
@@ -53,9 +60,17 @@ export class UsersComponent implements OnInit {
       if (result) {
         this.loadUsers();
         if (result === 'created') {
+          this.loaderService.showLoader();
           this.showAlert('Agregación', 'Usuario creado con éxito.', 'success');
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         } else if (result === 'updated') {
+          this.loaderService.showLoader();
           this.showAlert('Actualización', 'Usuario actualizado con éxito.', 'warning');
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 1000);
         }
       }
     }).catch((error) => {
@@ -78,12 +93,20 @@ export class UsersComponent implements OnInit {
       if (result === 'confirm') {
         this.userCrudService.deleteUser(user.id).subscribe(
           () => {
+            this.loaderService.showLoader();
             this.showAlert('Eliminación', 'Usuario eliminado con éxito.', 'info');
             this.loadUsers(); // Recargar los usuarios después de eliminar
+            setTimeout(() => {
+              this.loaderService.hideLoader();
+            }, 1000);
           },
           (error) => {
+            this.loaderService.showLoader();
             this.showAlert('Error', 'Error al eliminar el usuario.', 'danger');
             console.error('Error al eliminar el usuario:', error);
+            setTimeout(() => {
+              this.loaderService.hideLoader();
+            }, 1000);
           }
         );
       }

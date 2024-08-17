@@ -14,7 +14,10 @@ export class NavbarComponent {
   isAdmin = true;
   currentLanguage: string;
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(
+    private router: Router,
+     private translate: TranslateService
+    ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
     this.translate.setDefaultLang(this.currentLanguage);
   }
