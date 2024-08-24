@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoginRequest } from '../interfaces/login-request.interface';
+import { LoginRequest, LogOffRequest } from '../interfaces/login-request.interface';
+import { AppConstants } from '../enums/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loginUrl = `https://server.evoluciona.com.gt/api/login`;
+  private loginUrl = `${AppConstants.BASE_URL}/api/login`;
+  private logoutUrl = `${AppConstants.BASE_URL}/api/logoff`;
 
   constructor(private http: HttpClient) { }
 
@@ -26,4 +28,15 @@ export class AuthService {
         })
       );
   }
+
+  logoff(logOffRequest: LogOffRequest): Observable<HttpResponse<any>> {
+    return this.http.post<any>(this.logoutUrl, logOffRequest, { observe: 'response', withCredentials: true })
+      .pipe(
+        tap((response) => {
+          // Aquí puedes manejar cualquier lógica adicional que necesites
+          console.log('Logoff successful, response:', response);
+        })
+      );
+  }
+
 }
