@@ -1,1 +1,41 @@
-<p>roles works!</p>
+<div class="roles-container">
+  <header>
+    <h1>Roles</h1>
+  </header>
+  <button class="add-role-button" (click)="addRole()">
+    <i class="fa-solid fa-plus"></i> Agregar Rol
+  </button>
+
+  <input
+    type="text"
+    placeholder="Buscar rol..."
+    [(ngModel)]="searchTerm"
+    class="search-input"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre del Rol</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of filteredRoles(); let i = index">
+        <td>{{ role.role_name }}</td>
+        <td>{{ role.description }}</td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editRole(role)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteRole(role)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

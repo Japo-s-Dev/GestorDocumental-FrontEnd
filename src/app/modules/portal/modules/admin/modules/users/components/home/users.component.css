@@ -138,8 +138,3 @@ tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.fa-eye, .fa-eye-slash {
-  cursor: pointer;
-  margin-left: 10px;
-  color: #6c757d;
-}

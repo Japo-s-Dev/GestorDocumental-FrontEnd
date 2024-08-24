@@ -42,6 +42,7 @@ export class UsersComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.users = response.body.result;
+          console.log('Usuarios:', this.users);
         }
       },
       (error) => {
@@ -122,7 +123,7 @@ export class UsersComponent implements OnInit {
     return this.users.filter(user =>
       user.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.role?.toLowerCase().includes(this.searchTerm.toLowerCase())
+      user.assigned_role?.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
