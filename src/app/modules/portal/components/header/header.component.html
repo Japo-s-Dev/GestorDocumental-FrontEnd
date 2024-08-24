@@ -2,5 +2,14 @@
   <div class="header-path">
     {{ currentLabel }}
   </div>
-  <div></div>
+  <div class="user-menu-container">
+    <div class="user-icon" (click)="toggleUserMenu()">
+      <i class="fa-solid fa-user-circle"></i>
+      <span class="username">{{ username }}</span>
+    </div>
+    <div class="dropdown-menu" *ngIf="userMenuOpen">
+      <a (click)="viewProfile()">{{ 'Ver Perfil' }}</a>
+      <a (click)="logout()">{{ 'Cerrar Sesión' }}</a>
+    </div>
+  </div>
 </div>
