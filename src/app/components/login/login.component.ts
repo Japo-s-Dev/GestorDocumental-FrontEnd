@@ -23,7 +23,7 @@ export class LoginComponent {
     private authService: AuthService,
     private parameterManager: ParameterManagerService,
     private router: Router,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private loaderService: LoaderService
   ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
