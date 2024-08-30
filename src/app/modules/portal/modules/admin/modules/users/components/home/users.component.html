@@ -27,6 +27,7 @@
       <tr>
         <th>{{ "users:username" | translate }}</th>
         <th>{{ "users:email" | translate }}</th>
+        <th>{{ "users:role" | translate }}</th>
         <th>{{ "users:actions" | translate }}</th>
       </tr>
     </thead>
@@ -34,6 +35,7 @@
       <tr *ngFor="let user of filteredUsers(); let i = index">
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
+        <td>{{ user.assigned_role }}</td>
         <td>
           <div class="actions-buttons">
             <button class="edit" (click)="editUser(user)">
@@ -47,4 +49,5 @@
       </tr>
     </tbody>
   </table>
+
 </div>

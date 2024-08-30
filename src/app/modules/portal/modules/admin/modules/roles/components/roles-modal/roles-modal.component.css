@@ -57,14 +57,12 @@
   opacity: 0.75;
 }
 
-
 .modal-body {
   padding: 1rem;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-style: normal;
 }
-
 
 .form-label {
   display: block;
@@ -95,7 +93,6 @@
   margin-bottom: 0.5rem; /* Puedes ajustar este valor para más o menos espacio */
 }
 
-
 .modal-footer {
   display: flex;
   justify-content: space-between; /* Esto asegura que los botones estén en lados opuestos */
@@ -120,100 +117,12 @@ button.cancel-button:hover {
   background-color: #c82333;
 }
 
-button.add-user-button {
+button.add-role-button {
   background-color: #28a745;
   color: white;
   border: none;
 }
 
-button.add-user-button:hover {
+button.add-role-button:hover {
   background-color: #218838;
-}
-
-/* Aquí puedes reutilizar el estilo de la alerta personalizada */
-
-/* Ajuste del tamaño de las alertas */
-.alert {
-  background: #f8d7da;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border-left: 5px solid #f5c6cb;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Espacia los elementos hacia los lados opuestos */
-}
-
-.alert .msg {
-  flex-grow: 1;
-}
-
-.alert .close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #721c24;
-  font-size: 16px;
-  padding: 0;
-  margin-left: auto; /* Mueve el botón de cierre hacia la derecha */
-}
-
-.alert .close-btn:hover {
-  color: #491217;
-}
-
-.alert .close-btn .fas {
-  font-size: 20px;
-}
-
-
-.text-danger {
-  color: #721c24;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-/* Modificación de la alerta superior para que no sea tan grande */
-.alert.showAlert {
-  display: flex;
-  font-size: 14px;
-  padding: 8px 15px;
-}
-
-.alert.hide {
-  display: none;
-}
-
-/* Estilo del dropdown */
-select.form-control {
-  appearance: none; /* Remueve el estilo nativo del navegador */
-  padding: 0.5rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-select.form-control:focus {
-  border-color: #80bdff;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-select.form-control option {
-  padding: 0.5rem;
-  background-color: white;
-  color: black;
-}
-
-select.form-control option:hover {
-  background-color: #e9ecef;
 }

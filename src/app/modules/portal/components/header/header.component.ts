@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { RouteLabels } from '../../../../core/route-labels';
+import { LogOffRequest } from '../../../../interfaces/login-request.interface';
+import { AuthService } from '../../../../services/auth.service';
+import { LoaderService } from '../../../../services/loader.service';
 
 @Component({
   selector: 'app-header',
@@ -11,30 +14,71 @@ import { RouteLabels } from '../../../../core/route-labels';
 })
 export class HeaderComponent implements OnInit {
   currentLabel: string = '';
+  userMenuOpen: boolean = false; // Controla si el menú está abierto o cerrado
+  username: string = 'demo1'; // Aquí deberías obtener el nombre del usuario real
 
-  constructor(private router: Router, private translate: TranslateService) {}
+  constructor(private router: Router,
+     private translate: TranslateService,
+      private authService: AuthService,
+      private loaderService: LoaderService
+    ) {}
 
   ngOnInit(): void {
-    // Inicializa la etiqueta tan pronto como el componente cargue
     this.updateLabel(this.router.url);
 
-    // Escucha los cambios de ruta y actualiza la etiqueta
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.updateLabel(this.router.url);
     });
 
-    // Escucha los cambios de idioma y actualiza la etiqueta
     this.translate.onLangChange.subscribe(() => {
       this.updateLabel(this.router.url);
     });
   }
 
-  private updateLabel(url: string) {
+  updateLabel(url: string) {
     const labelKey = RouteLabels[url] || 'route:not_found';
     this.translate.get(labelKey).subscribe(translatedLabel => {
       this.currentLabel = translatedLabel;
+    });
+  }
+
+  toggleUserMenu(): void {
+    this.userMenuOpen = !this.userMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const clickedInside = target.closest('.user-menu-container');
+    if (!clickedInside) {
+      this.userMenuOpen = false;
+    }
+  }
+
+  viewProfile(): void {
+    // Lógica para ver el perfil del usuario
+    this.router.navigate(['/profile']);
+  }
+
+  logout(): void {
+    const logOffRequest: LogOffRequest = {
+      logoff: true,
+    };
+
+    this.authService.logoff(logOffRequest).subscribe({
+      next: (response) => {
+        this.loaderService.showLoader();
+        this.router.navigate(['/login']).then(() => {
+          setTimeout(() => {
+            this.loaderService.hideLoader();
+          }, 2000);
+        });
+      },
+      error: (error) => {
+        console.error('Error during logoff:', error);
+      }
     });
   }
 }

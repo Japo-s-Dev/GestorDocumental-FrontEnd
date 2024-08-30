@@ -15,7 +15,7 @@ export class UploadDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     // Asignar una URL de prueba al filePreviewUrl
-    this.filePreviewUrl = 'https://sergioale210.github.io/mis-archivo/CC3054.docx';
+    this.filePreviewUrl = 'https://sergioale210.github.io/mis-archivo/P4M7.xlsx';
   }
 
   onFileSelected(event: any): void {
@@ -33,7 +33,7 @@ export class UploadDocumentComponent implements OnInit {
           this.filePreviewUrl = null;
         }
       };
-      
+
       reader.readAsDataURL(file);
     }
   }

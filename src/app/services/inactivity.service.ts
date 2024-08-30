@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenService } from './token.service';
+import { AuthService } from './auth.service';
+import { LogOffRequest } from '../interfaces/login-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,16 @@ export class InactivityService {
   private readonly INACTIVITY_LIMIT = 15 * 60 * 1000;
 
 
-  constructor(private tokenService: TokenService, private router: Router, private ngZone: NgZone) {
+  constructor( private router: Router,
+     private ngZone: NgZone,
+     private authService: AuthService
+
+    ) {
     this.setupActivityListeners();
   }
 
   private setupActivityListeners(): void {
-    this.resetLogoutTimer(); // Inicializar el temporizador
+    this.resetLogoutTimer();
     const events = ['mousemove', 'keydown', 'click'];
 
     events.forEach(event => {
@@ -23,7 +28,6 @@ export class InactivityService {
     });
   }
 
-  // Reiniciar el temporizador de inactividad
   private resetLogoutTimer(): void {
     if (this.logoutTimer) {
       clearTimeout(this.logoutTimer);
@@ -35,8 +39,20 @@ export class InactivityService {
   }
 
   private handleLogout(): void {
-    this.tokenService.clearToken();
-    this.router.navigate(['/login']);
-    alert('Has sido desconectado por inactividad.');
+    const logOffRequest: LogOffRequest = {
+      logoff: true,
+    };
+
+    this.authService.logoff(logOffRequest).subscribe({
+      next: (response) => {
+        // Redirigir al login solo después de que el logoff haya sido exitoso
+        this.router.navigate(['/login']);
+        alert('Has sido desconectado por inactividad.');
+      },
+      error: (error) => {
+        console.error('Error during logoff:', error);
+        // Manejar errores si es necesario
+      }
+    });
   }
 }
