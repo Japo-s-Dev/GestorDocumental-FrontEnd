@@ -16,12 +16,16 @@ export class HeaderComponent implements OnInit {
   currentLabel: string = '';
   userMenuOpen: boolean = false; // Controla si el menú está abierto o cerrado
   username: string = 'demo1'; // Aquí deberías obtener el nombre del usuario real
+  currentLanguage: string;
 
   constructor(private router: Router,
      private translate: TranslateService,
       private authService: AuthService,
       private loaderService: LoaderService
-    ) {}
+    ) {
+      this.currentLanguage = this.translate.getDefaultLang() || 'es';
+      this.translate.setDefaultLang(this.currentLanguage);
+    }
 
   ngOnInit(): void {
     this.updateLabel(this.router.url);
@@ -42,6 +46,11 @@ export class HeaderComponent implements OnInit {
     this.translate.get(labelKey).subscribe(translatedLabel => {
       this.currentLabel = translatedLabel;
     });
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    this.currentLanguage = language;
   }
 
   toggleUserMenu(): void {
