@@ -15,7 +15,8 @@ export class UploadDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     // Asignar una URL de prueba al filePreviewUrl
-    this.filePreviewUrl = 'https://sergioale210.github.io/mis-archivo/P4M7.xlsx';
+    //this.filePreviewUrl = 'https://sergioale210.github.io/mis-archivo/P4M7.xlsx';
+    this.filePreviewUrl = 'file:///C:/Users/sergi/Downloads/5.%20Quinto%20Sprint.pdf'
   }
 
   onFileSelected(event: any): void {
@@ -23,18 +24,20 @@ export class UploadDocumentComponent implements OnInit {
     if (file) {
       this.selectedFile = file;
       this.fileUploaded = true;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        // Asegúrate de que filePreviewUrl sea siempre una cadena
-        if (typeof reader.result === 'string') {
-          this.filePreviewUrl = reader.result;
-        } else {
-          this.filePreviewUrl = null;
-        }
-      };
-
-      reader.readAsDataURL(file);
+  
+      if (file.type === 'application/pdf') {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (typeof reader.result === 'string') {
+            this.filePreviewUrl = reader.result;
+          } else {
+            this.filePreviewUrl = null;
+          }
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.filePreviewUrl = null;  // No preview available for non-PDF files
+      }
     }
   }
 
