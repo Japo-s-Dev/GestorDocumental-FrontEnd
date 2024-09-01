@@ -19,6 +19,7 @@ export class AddFileHomeComponent implements OnInit {
       idLiquidacion: [''],
       nombre: [''],
       transaccion: [''],
+      departamento: [''],
       fecha: [''],
       status: ['']
     });
