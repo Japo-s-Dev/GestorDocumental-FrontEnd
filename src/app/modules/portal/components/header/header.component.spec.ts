@@ -6,6 +6,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { LoaderService } from '../../../../services/loader.service';
 import { HeaderComponent } from './header.component';
 import { RouteLabels } from '../../../../core/route-labels';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -17,11 +18,14 @@ describe('HeaderComponent', () => {
   let routerEventsSubject: Subject<any>;
 
   const translateServiceMock = {
+    currentLang: 'en',
+    onLangChange: new EventEmitter<LangChangeEvent>(),
+    use: jasmine.createSpy('use').and.returnValue(of('')),  // Esto está bien
+    get: jasmine.createSpy('get').and.returnValue(of('translated label')),  // Esto está bien
     getDefaultLang: jasmine.createSpy('getDefaultLang').and.returnValue('en'),
-    use: jasmine.createSpy('use').and.returnValue(of('en')),
-    get: jasmine.createSpy('get').and.callFake((key: any) => of('translated label')),
-    onLangChange: new Subject<LangChangeEvent>(),
-    setDefaultLang: jasmine.createSpy('setDefaultLang')
+    setDefaultLang: jasmine.createSpy('setDefaultLang').and.returnValue('es'),
+    onTranslationChange: new EventEmitter(),
+    onDefaultLangChange: new EventEmitter(),
   };
 
   beforeEach(async () => {
@@ -30,7 +34,7 @@ describe('HeaderComponent', () => {
     router = {
       events: routerEventsSubject.asObservable(),
       navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)),
-      url: '/home' // Simulate the current URL
+      url: '/portal/search' // Simulate the current URL
     } as any;
 
     authService = {
@@ -49,22 +53,16 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: router },
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: AuthService, useValue: authService },
-        { provide: LoaderService, useValue: loaderService },
-        {
-          provide: RouteLabels, useValue: {
-            '/home': 'home',
-            '/profile': 'profile',
-            '/login': 'login'
-          }
-        }
-      ]
+        { provide: LoaderService, useValue: loaderService }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges();  // Esto se asegura de que los bindings se actualicen
   });
 
   it('should create', () => {
@@ -72,10 +70,10 @@ describe('HeaderComponent', () => {
   });
 
   it('should update label on navigation end', () => {
-    routerEventsSubject.next(new NavigationEnd(1, '/home', '/home'));
+    routerEventsSubject.next(new NavigationEnd(1, '/portal/search', '/portal/search'));
     fixture.detectChanges();
-
-    expect(translateService.get).toHaveBeenCalledWith('home');
+  
+    expect(translateServiceMock.get).toHaveBeenCalledWith('route:search_criteria');
     expect(component.currentLabel).toBe('translated label');
   });
 
@@ -108,17 +106,16 @@ describe('HeaderComponent', () => {
 
   it('should switch language and update currentLanguage', () => {
     component.switchLanguage('en');
-    expect(translateService.use).toHaveBeenCalledWith('en');
+    expect(translateServiceMock.use).toHaveBeenCalledWith('en');
     expect(component.currentLanguage).toBe('en');
   });
 
   it('should update label on language change', () => {
-    component.switchLanguage('en');
     const langChangeEvent: LangChangeEvent = { lang: 'en', translations: {} };
-    translateService.onLangChange.next(langChangeEvent);
+    translateServiceMock.onLangChange.emit(langChangeEvent);  // Asegúrate de usar el mock
     fixture.detectChanges();
 
-    expect(translateService.get).toHaveBeenCalledWith('home');
+    expect(translateServiceMock.get).toHaveBeenCalledWith('route:search_criteria');
     expect(component.currentLabel).toBe('translated label');
   });
 });
