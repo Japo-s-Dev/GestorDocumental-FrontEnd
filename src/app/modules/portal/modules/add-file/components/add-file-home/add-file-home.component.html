@@ -1,3 +1,14 @@
+<!-- Modal for Error Message -->
+<div *ngIf="errorMessage" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="errorMessage = null">&times;</span>
+    <p>{{ "file_entry:form_incomplete" | translate }}</p>
+    <button class="ok-button" (click)="errorMessage = null">
+      {{ "file_entry:ok_button" | translate }}
+    </button>
+  </div>
+</div>
+
 <div class="master">
   <div class="head">
     <h1>{{ "file_entry:title" | translate }}</h1>
@@ -8,9 +19,22 @@
         <label for="proyect" class="project-label">{{
           "file_entry:project_label" | translate
         }}</label>
-        <select id="proyect" formControlName="project" class="project-select">
-          <!-- Opciones -->
+        <select
+          id="proyect"
+          formControlName="project"
+          class="project-select"
+          required
+        >
+          <option value="1">{{ "project:option1" | translate }}</option>
+          <option value="2">{{ "project:option2" | translate }}</option>
+          <option value="3">{{ "project:option3" | translate }}</option>
         </select>
+        <small
+          class="error-message-project"
+          *ngIf="form.get('project')?.invalid && form.get('project')?.touched"
+        >
+          {{ "file_entry:required" | translate }}
+        </small>
       </div>
 
       <div class="form-container">
@@ -23,7 +47,17 @@
             id="idLiquidacion"
             formControlName="idLiquidacion"
             class="input-line"
+            required
           />
+          <small
+            class="error-message"
+            *ngIf="
+              form.get('idLiquidacion')?.invalid &&
+              form.get('idLiquidacion')?.touched
+            "
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <div class="attribute-form">
@@ -35,7 +69,14 @@
             id="nombre"
             formControlName="nombre"
             class="input-line"
+            required
           />
+          <small
+            class="error-message"
+            *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched"
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <div class="attribute-form">
@@ -47,7 +88,17 @@
             id="transaccion"
             formControlName="transaccion"
             class="input-line"
+            required
           />
+          <small
+            class="error-message"
+            *ngIf="
+              form.get('transaccion')?.invalid &&
+              form.get('transaccion')?.touched
+            "
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <div class="attribute-form">
@@ -59,7 +110,17 @@
             id="departamento"
             formControlName="departamento"
             class="input-line"
+            required
           />
+          <small
+            class="error-message"
+            *ngIf="
+              form.get('departamento')?.invalid &&
+              form.get('departamento')?.touched
+            "
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <div class="attribute-form">
@@ -71,16 +132,36 @@
             id="fecha"
             formControlName="fecha"
             class="input-line"
+            required
           />
+          <small
+            class="error-message"
+            *ngIf="form.get('fecha')?.invalid && form.get('fecha')?.touched"
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <div class="attribute-form">
           <label for="status" class="form-label">{{
             "file_entry:status" | translate
           }}</label>
-          <select id="status" formControlName="status" class="input-line">
-            <!-- Opciones -->
+          <select
+            id="status"
+            formControlName="status"
+            class="input-line"
+            required
+          >
+            <option value="1">{{ "status:option1" | translate }}</option>
+            <option value="2">{{ "status:option2" | translate }}</option>
+            <option value="3">{{ "status:option3" | translate }}</option>
           </select>
+          <small
+            class="error-message"
+            *ngIf="form.get('status')?.invalid && form.get('status')?.touched"
+          >
+            {{ "file_entry:required" | translate }}
+          </small>
         </div>
 
         <!-- Sección de estado del documento y subida -->
@@ -104,11 +185,14 @@
               </div>
             </div>
           </ng-template>
+          <small class="error-message" *ngIf="!uploadedFileName">
+            {{ "file_entry:document_required" | translate }}
+          </small>
         </div>
       </div>
 
       <div class="navigation-buttons">
-        <button class="submit-btn" type="submit">
+        <button class="submit-btn" type="button" (click)="onSave()">
           {{ "file_entry:save_button" | translate }}
         </button>
         <button class="cancel-btn" type="button">
