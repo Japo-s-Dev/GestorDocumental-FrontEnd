@@ -90,6 +90,13 @@
   "file_entry:upload": "Subir",
   "file_entry:save_button": "Guardar",
   "file_entry:cancel_button": "Cancelar",
+  "file_entry:form_incomplete": "Por favor complete todos los campos y cargue un documento antes de guardar.",
+  "file_entry:ok_button": "Acceptar",
+  "file_entry:required": "Este campo es requerido",
+  "file_entry:document_required": "El documento es requerido",
+  "status:option1": "Revisado",
+  "status:option2": "Pendiente",
+  "status:option3": "En proceso de revisión",
 
   "upload_document:title": "Subir Documentos",
   "upload_document:drag_drop": "Arrastra y suelta o selecciona archivos desde el dispositivo",

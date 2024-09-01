@@ -90,10 +90,17 @@
   "file_entry:upload": "Upload",
   "file_entry:save_button": "Save",
   "file_entry:cancel_button": "Cancel",
+  "file_entry:form_incomplete": "Please complete all fields and upload a document before saving.",
+  "file_entry:required": "This field is required",
+  "file_entry:document_required": "The document is required",
+  "file_entry:ok_button": "Accept",
+  "status:option1": "Revised",
+  "status:option2": "Pending",
+  "status:option3": "Under review",
 
   "upload_document:title": "Upload Documents",
   "upload_document:drag_drop": "Drag & Drop or select files from device",
-  "upload_document:max_size": "max. 50MB",
+  "upload_document:max_size": "max. 10MB",
   "upload_document:preview": "Preview document",
   "upload_document:no_preview_available": "No preview available for this file type",
   "upload_document:save_button": "Save Document"
