@@ -76,6 +76,7 @@
   cursor: pointer;
   background-color: #f0f0f0;
   color: #333;
+  border-radius: 5px;
 }
 
 .language-selector button.selected {
@@ -83,4 +84,8 @@
   color: white;
   font-weight: bold;
   border-radius: 5px;
+}
+
+.language-selector button:hover {
+  background-color: #a1a1a1;
 }
