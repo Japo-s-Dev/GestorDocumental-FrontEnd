@@ -15,8 +15,6 @@ export class UploadDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     // Asignar una URL de prueba al filePreviewUrl
-    //this.filePreviewUrl = 'https://sergioale210.github.io/mis-archivo/P4M7.xlsx';
-    this.filePreviewUrl = 'file:///C:/Users/sergi/Downloads/5.%20Quinto%20Sprint.pdf'
   }
 
   onFileSelected(event: any): void {
