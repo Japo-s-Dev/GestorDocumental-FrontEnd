@@ -7,6 +7,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RolesModalComponent } from './components/roles-modal/roles-modal.component';
+import { SharedModule } from '../../../../../../shared/shared.module';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -23,6 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RolesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     HttpClientModule,
     TranslateModule.forChild({
       loader: {

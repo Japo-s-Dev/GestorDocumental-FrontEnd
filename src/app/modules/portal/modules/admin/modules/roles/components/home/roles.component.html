@@ -1,3 +1,13 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()">
+</app-alert>
+
+
 <div class="roles-container">
   <header>
     <h1>Roles</h1>
