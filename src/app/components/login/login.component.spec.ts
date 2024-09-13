@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpResponse, HttpHeaders, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../services/auth.service';
@@ -22,19 +22,18 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      imports: [
-        ReactiveFormsModule,
+    declarations: [LoginComponent],
+    imports: [ReactiveFormsModule,
         RouterModule.forRoot([]),
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         AuthService,
         ParameterManagerService,
-        LoaderService
-      ]
-    })
+        LoaderService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
   });
 

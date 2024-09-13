@@ -7,29 +7,16 @@
 
   <div class="spacer"></div>
 
-  <!-- Selector de idioma
-  <div class="language-selector">
-    <button
-      [class.selected]="currentLanguage === 'en'"
-      (click)="switchLanguage('en')"
-    >
-      EN
-    </button>
-    <button
-      [class.selected]="currentLanguage === 'es'"
-      (click)="switchLanguage('es')"
-    >
-      ES
-    </button>
-  </div>
-
-  -->
-
   <h4>{{ "navbar:menu" | translate }}</h4>
 
   <div class="box" (click)="toggleSearch('/portal/search')">
     <i class="fa-solid fa-magnifying-glass"></i
     >{{ "navbar:search" | translate }}
+  </div>
+
+  <!-- Nueva opción para el Gestor Documental -->
+  <div class="box" (click)="navigate('/portal/document-management')">
+    <i class="fa-solid fa-folder-tree"></i>{{ "navbar:document_manager" | translate }}
   </div>
 
   <div class="box" (click)="toggleAdd('/portal/add')">

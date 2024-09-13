@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 import { SearchCriteriaComponent } from './search-criteria.component';
 import { FormConfigService } from '../../services/form-config.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SearchCriteriaComponent', () => {
   let component: SearchCriteriaComponent;
@@ -13,16 +14,14 @@ describe('SearchCriteriaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchCriteriaComponent ],
-      imports: [
-        ReactiveFormsModule, // Importa ReactiveFormsModule
-        FormsModule, // Importa FormsModule para [(ngModel)]
-        HttpClientTestingModule, // Importa HttpClientTestingModule
+    declarations: [SearchCriteriaComponent],
+    imports: [ReactiveFormsModule, // Importa ReactiveFormsModule
+        FormsModule, // Importa HttpClientTestingModule
         FormlyModule.forRoot(), // Importa FormlyModule
         FormlyBootstrapModule // Importa FormlyBootstrapModule si los usas en tu componente
-      ],
-      providers: [FormConfigService] // Proporciona el servicio utilizado por el componente
-    })
+    ],
+    providers: [FormConfigService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()] // Proporciona el servicio utilizado por el componente
+})
     .compileComponents();
   });
 

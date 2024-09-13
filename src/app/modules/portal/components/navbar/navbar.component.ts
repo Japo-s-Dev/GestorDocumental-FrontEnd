@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth.service';
-import { LogOffRequest } from '../../../../interfaces/login-request.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +19,7 @@ export class NavbarComponent {
     private router: Router,
     private translate: TranslateService,
     private authService: AuthService
-    ) {
+  ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
     this.translate.setDefaultLang(this.currentLanguage);
   }

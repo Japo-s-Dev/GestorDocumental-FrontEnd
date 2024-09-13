@@ -4,7 +4,7 @@ import { HeaderComponent } from '../header/header.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientModule } from '@angular/common/http'; // Importa el módulo HttpClient
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Importa el módulo HttpClient
 
 describe('FrameComponent', () => {
   let component: FrameComponent;
@@ -12,13 +12,11 @@ describe('FrameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FrameComponent, HeaderComponent, NavbarComponent ],
-      imports: [
-        RouterModule.forRoot([]),
-        TranslateModule.forRoot(),
-        HttpClientModule // Importa HttpClientModule
-      ]
-    })
+    declarations: [FrameComponent, HeaderComponent, NavbarComponent],
+    imports: [RouterModule.forRoot([]),
+        TranslateModule.forRoot()],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+})
     .compileComponents();
   });
 
