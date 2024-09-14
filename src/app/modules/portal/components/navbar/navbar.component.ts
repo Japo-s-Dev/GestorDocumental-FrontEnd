@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
     if (userStatus) {
       const parsedStatus = JSON.parse(userStatus);
       this.username = parsedStatus.username;
-      this.isAdmin = parsedStatus.role === 'ADMIN';
+      this.isAdmin = parsedStatus.role === 'ADMIN' || parsedStatus.role === 'ADMIN JUNIOR';
     }
   }
 
