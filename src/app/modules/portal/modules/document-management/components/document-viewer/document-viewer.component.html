@@ -1,16 +1,12 @@
-<div class="document-viewer-layout">
-  <div class="file-tree-panel">
-    <!-- Aquí va el árbol de archivos -->
-    <app-file-tree (fileSelected)="onFileSelected($event)"></app-file-tree>
+<div class="viewer-container">
+  <div class="file-tree-container">
+    <app-file-tree></app-file-tree>
   </div>
-  <div class="document-display-panel">
-    <!-- Aquí se muestra el archivo seleccionado -->
+  <div class="file-display-container">
     <ng-container *ngIf="selectedDocument">
-      <h2>{{ selectedDocument.name }}</h2>
-      <!-- Dependiendo del tipo de archivo, usa componentes o métodos adecuados para mostrar el contenido -->
+      <!-- Aquí irá el visor de archivos seleccionado -->
       <iframe *ngIf="selectedDocument.type === 'pdf'" [src]="selectedDocument.url | safeUrl"></iframe>
-      <img *ngIf="selectedDocument.type === 'image'" [src]="selectedDocument.url" alt="Document Image">
+      <!-- Otros tipos de archivos se pueden mostrar de forma similar -->
     </ng-container>
-    <p *ngIf="!selectedDocument">Selecciona un archivo del árbol para verlo.</p>
   </div>
 </div>

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ExpedientListComponent
   },
   {
-    path: 'viewer/:id',
+    path: 'viewer',
     component: DocumentViewerComponent
   }
 
