@@ -59,6 +59,9 @@ export class LoginComponent {
             role: response.body.result.role
           }));
 
+          const currentDateTime = new Date().toLocaleString();
+          localStorage.setItem('lastLogin', currentDateTime);
+
           this.loaderService.showLoader();
           this.router.navigate(['/portal']);
         } else {

@@ -7,16 +7,16 @@
   padding: 30px;
   z-index: 1;
   position: relative;
-  background-color: #fff; /* Fondo blanco para consistencia */
-  border-bottom: 2px solid #ededed; /* Línea sutil de separación */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera para efecto de profundidad */
+  background-color: #fff;
+  border-bottom: 2px solid #ededed;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-path {
-  color: #444; /* Ajuste de color para que combine con el login */
+  color: #444;
   font-size: 18px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 600; /* Ajuste de peso para mayor coherencia con el login */
+  font-weight: 600;
 }
 
 .user-menu-container {
@@ -30,20 +30,20 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 18px; /* Ajuste del tamaño del icono */
+  font-size: 18px;
   gap: 0.5rem;
-  color: #F1842C; /* Color principal del login */
+  color: #F1842C;
   transition: color 0.3s;
 }
 
 .user-icon:hover {
-  color: #ce7125; /* Color de hover para resaltar interacción */
+  color: #ce7125;
 }
 
 .username {
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
-  font-weight: 500; /* Ajuste para más consistencia con el estilo del login */
+  font-weight: 500;
   color: #333;
 }
 
@@ -54,7 +54,7 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para mayor profundidad */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   width: 180px;
   font-family: 'Poppins', sans-serif;
@@ -73,7 +73,7 @@
 
 .dropdown-menu a:hover {
   background-color: #f0f0f0;
-  color: #ce7125; /* Cambia el color al pasar el ratón para mayor interacción */
+  color: #ce7125;
 }
 
 .language-selector {
@@ -87,7 +87,7 @@
   cursor: pointer;
   background-color: #f0f0f0;
   color: #333;
-  border-radius: 50px; /* Botones más redondeados como en el login */
+  border-radius: 50px;
   transition: background-color 0.3s, color 0.3s;
   font-family: 'Poppins', sans-serif;
 }
@@ -100,20 +100,17 @@
 }
 
 .language-selector button:hover {
-  background-color: #ce7125; /* Consistente con el estilo de hover del login */
+  background-color: #ce7125;
 }
 
-/* Estilo para usuarios regulares */
 .regular-user-style {
-  color: #333; /* Color de texto normal */
+  color: #333;
 }
 
-/* Estilo para ADMIN JUNIOR */
 .admin-junior-style {
-  color: #135394; /* Color destacado */
+  color: #135394;
 }
 
-/* Estilo para ADMIN */
 .admin-style {
-  color: #a50101; /* Color dorado para mayor privilegio */
+  color: #a50101;
 }

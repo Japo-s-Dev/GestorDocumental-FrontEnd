@@ -6,6 +6,9 @@ import { RouteLabels } from '../../../../core/route-labels';
 import { LogOffRequest } from '../../../../interfaces/login-request.interface';
 import { AuthService } from '../../../../services/auth.service';
 import { LoaderService } from '../../../../services/loader.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
+
 
 @Component({
   selector: 'app-header',
@@ -25,9 +28,10 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private authService: AuthService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private modalService: NgbModal
   ) {
-    // Intenta obtener el idioma guardado en localStorage, si no existe, usa 'es' por defecto
+
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
     this.currentLanguage = savedLanguage;
     this.translate.setDefaultLang(savedLanguage);
@@ -76,7 +80,7 @@ export class HeaderComponent implements OnInit {
   switchLanguage(language: string) {
     this.translate.use(language);
     this.currentLanguage = language;
-    localStorage.setItem('selectedLanguage', language); // Guarda el idioma seleccionado en localStorage
+    localStorage.setItem('selectedLanguage', language);
   }
 
   toggleUserMenu(): void {
@@ -93,7 +97,14 @@ export class HeaderComponent implements OnInit {
   }
 
   viewProfile(): void {
-    this.router.navigate(['/profile']);
+    const modalRef = this.modalService.open(ProfileModalComponent, { centered: true, size: 'lg' });
+    modalRef.result.then((result) => {
+      if (result === 'logout') {
+        this.logout();
+      }
+    }).catch((error) => {
+      console.error('Error al cerrar el modal:', error);
+    });
   }
 
   logout(): void {
