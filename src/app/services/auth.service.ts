@@ -23,8 +23,6 @@ export class AuthService {
     return this.http.post<any>(this.loginUrl, loginRequest, { headers, observe: 'response', withCredentials: true })
       .pipe(
         tap((response) => {
-          // Browser will handle cookies, check for success and route accordingly
-          console.log('Login successful, response:', response);
         })
       );
   }
@@ -33,8 +31,7 @@ export class AuthService {
     return this.http.post<any>(this.logoutUrl, logOffRequest, { observe: 'response', withCredentials: true })
       .pipe(
         tap((response) => {
-          // Aquí puedes manejar cualquier lógica adicional que necesites
-          console.log('Logoff successful, response:', response);
+          localStorage.clear();
         })
       );
   }
