@@ -1,203 +1,213 @@
-.background {
-  width: 100%;
-  height: 100dvh;
-  background-color: #222222;
-  display: grid;
-  place-items: center;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
   position: relative;
-  width: 90%;
-  max-width: 450px;
-  text-align: center;
-  padding: 35px;
-  background-color: #f4f4f4;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.container > h2 {
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.inputBox {
-  text-align: left;
-  position: relative;
-}
-
-.inputBox > label,
-.inputBox > div > label {
-  display: block;
-  font-weight: 600;
-  margin-top: 0px;
-  font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  color: #666666;
-}
-
-.inputBox > div {
+  width: 100%;
+  min-height: 100vh;
   display: flex;
-  justify-content: space-between;
+  overflow: hidden;
+  background-color: #fff;
 }
 
-.inputBox > div > label,
-.inputBox > div > a {
-  margin-top: 10px;
-  font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  color: #000000;
-}
-
-.inputBox > div > a {
-  font-size: 1.0rem;
-  color: #000000;
-  text-decoration: none;
-  margin-right: 5px;
-  margin-top: 13px;
-  &:hover {
-      text-decoration: underline;
-  }
-}
-
-.inputBox > input {
-  width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 1.2rem;
-}
-
-form > button {
-  width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border: none;
-  border-radius: 10px;
-  background-color: #000000;
+.panels-container {
+  position: relative;
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  background-color: #F1842C;
   color: #fff;
-  font-size: 1.2rem;
-  cursor: pointer;
 }
 
-form > button:hover {
-  background-color: #333333;
-}
 
-form > button:disabled {
-  background-color: #666666;
-  cursor: not-allowed;
-}
-
-input[type="password"] {
-  padding-right: 50px;
-  width: 100%;
-  height: 40px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-}
-
-#toggleButton {
-  position: absolute;
-  right: 5px;
-  top: 15px;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
-  height: 100%;
-  width: 40px;
+.panel.left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-button i {
-  color: #888;
-  scale: 1.2;
+
+
+.panel .content {
+  text-align: center;
+  max-width: 300px;
+  margin-bottom: 20px;
 }
 
-/* Estilos para la alerta de error */
-.alert {
-  background: #f8d7da; /* Fondo rojo claro */
-  padding: 10px 20px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  border-left: 8px solid #f5c6cb; /* Borde rojo oscuro */
+.panel .content .title-panel{
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.panel .image {
+  width: 100%;
+  max-width: 300px;
+}
+
+.forms-container {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding: 20px;
+}
+
+.signin-signup {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-field {
+  position: relative;
   display: flex;
   align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-style: normal;
+  margin-bottom: 15px;
+  background: #f0f0f0;
+  border-radius: 50px;
+  padding: 0 15px;
+  height: 50px;
 }
 
-.alert.showAlert {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.alert .fa-exclamation-circle {
+.input-field i {
+  color: #acacac;
   margin-right: 10px;
-  color: #721c24; /* Icono rojo oscuro */
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
-.alert .msg {
-  flex-grow: 1;
-  font-size: 16px;
-  color: #721c24; /* Texto rojo oscuro */
+.input-field input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  padding: 0 10px;
+  font-size: 1rem;
+  color: #333;
 }
 
-.alert .close-btn {
+.btn.solid {
+  background-color: #F1842C;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 15px 0;
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn.solid:hover {
+  background-color: #ce7125;
+}
+
+
+.forgot-password {
+  display: block;
+  text-align: center; /* Centra el texto */
+  font-size: 0.9rem;
+  color: #F1842C;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: color 0.3s; /* Transición para el hover */
+}
+
+.forgot-password:hover {
+  color: #ce7125; /* Cambia de color al pasar el cursor */
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #333;
+}
+
+.info-item i {
+  color: #F1842C;
+}
+
+.language-switch {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.language-switch button {
+  border: none;
   background: none;
-  border: none;
+  color: #444;
+  font-weight: 600;
   cursor: pointer;
-  color: #721c24; /* Botón de cierre rojo oscuro */
-  font-size: 16px;
-  padding: 0;
+  margin-left: 10px;
+  transition: color 0.3s;
 }
 
-.alert .close-btn:hover {
-  color: #491217; /* Botón de cierre en hover más oscuro */
+.language-switch button.active {
+  color: #F1842C; /* Resalta el idioma seleccionado */
 }
 
-.alert .close-btn .fas {
-  font-size: 20px;
+.language-switch button:hover {
+  color: #ce7125; /* Cambia de color al pasar el cursor */
 }
 
-.language-selector {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* Ajusta el tamaño de la alerta y la fuente */
+app-alert {
+  font-size: 0.85rem; /* Ajusta el tamaño de la fuente */
+  padding: 10px 15px; /* Reduce el padding para hacerla más compacta */
 }
 
-.language-selector button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  cursor: pointer;
-  background-color: #f0f0f0; /* Color por defecto */
-  color: #333; /* Color de texto por defecto */
+app-alert .alert {
+  padding: 8px 10px; /* Ajusta el padding interno de la alerta */
+  border-left-width: 4px; /* Ajusta el grosor de la barra lateral */
+  margin-bottom: 10px; /* Ajusta el margen inferior */
 }
 
-.language-selector button.selected {
-  background-color: #000000; /* Color para el botón seleccionado */
-  color: white; /* Color de texto para el botón seleccionado */
-  font-weight: bold;
-  border-radius: 5px;
+app-alert .alert-title {
+  font-size: 0.9rem; /* Ajusta el tamaño de la fuente del título */
+  font-weight: 600; /* Mantén el título negrita para resaltar */
 }
 
+app-alert .msg {
+  font-size: 0.85rem; /* Ajusta el tamaño de la fuente del mensaje */
+}
 
-.language-selector button:hover {
-  text-decoration: underline;
+app-alert .close-btn {
+  font-size: 0.8rem; /* Ajusta el tamaño del botón de cierre */
 }

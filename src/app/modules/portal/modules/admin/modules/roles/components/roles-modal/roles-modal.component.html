@@ -7,20 +7,38 @@
       </button>
     </div>
 
+    <!-- Alerta personalizada -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+
     <div class="modal-body">
       <form [formGroup]="roleForm">
         <div class="mb-3">
           <label for="role_name" class="form-label">Nombre del Rol</label>
           <input id="role_name" formControlName="role_name" type="text" class="form-control" />
-          <div *ngIf="roleForm.get('role_name')?.invalid && roleForm.get('role_name')?.touched" class="alert">
+          <div *ngIf="roleForm.get('role_name')?.hasError('required') && roleForm.get('role_name')?.touched" class="alert">
             El nombre del rol es requerido.
           </div>
+          <div *ngIf="roleForm.get('role_name')?.hasError('adminNameNotAllowed') && roleForm.get('role_name')?.touched" class="alert">
+            No se permite usar "ADMIN" como nombre de rol.
+          </div>
+          <div *ngIf="roleForm.get('role_name')?.hasError('duplicateName') && roleForm.get('role_name')?.touched" class="alert">
+            Ya existe un rol con este nombre.
+          </div>
         </div>
+
         <div class="mb-3">
           <label for="description" class="form-label">Descripción</label>
           <input id="description" formControlName="description" type="text" class="form-control" />
-          <div *ngIf="roleForm.get('description')?.invalid && roleForm.get('description')?.touched" class="alert">
+          <div *ngIf="roleForm.get('description')?.hasError('required') && roleForm.get('description')?.touched" class="alert">
             La descripción es requerida.
+          </div>
+          <div *ngIf="roleForm.get('description')?.hasError('maxlength') && roleForm.get('description')?.touched" class="alert">
+            La descripción no puede exceder los 60 caracteres.
           </div>
         </div>
       </form>

@@ -1,6 +1,8 @@
 {
   "LOGIN": "****************************************************LOGIN****************************************************",
   "title:login": "Login",
+  "label:login_title":"Welcome to the Document Manager",
+  "label:login_message":"Organize, manage and access your documents securely and efficiently.",
   "input:login_username": "Username",
   "input:login_password": "Password",
   "btn:login": "Enter",
@@ -12,6 +14,7 @@
   "home:available_storage": "Available Storage",
 
   "navbar:menu": "MENU",
+  "navbar:document_manager": "Document Manager",
   "navbar:search": "Search",
   "navbar:add": "Add",
   "navbar:file_entry": "File Entry",
@@ -23,6 +26,8 @@
   "navbar:roles": "Roles",
 
   "route:home": "Home",
+  "route:document_management": "Document Management",
+  "route:document_viewer": "Document Management > Viewer",
   "route:search_criteria": "Search > Criteria",
   "route:search_result": "Search > Result",
   "route:add": "Add",

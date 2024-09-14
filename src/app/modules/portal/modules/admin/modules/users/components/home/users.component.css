@@ -1,4 +1,4 @@
-/*Estilos Generales */
+/* Estilos Generales */
 .users-container {
   padding: 20px;
 }
@@ -7,7 +7,7 @@
   margin-right: 5px !important;
 }
 
-/*Estilos para boton de Agregar */
+/* Estilos para botón de Agregar */
 .add-user-button {
   float: right;
   margin-bottom: 10px;
@@ -27,24 +27,16 @@
   background-color: #218838;
 }
 
-/*Estilos para buscador */
+/* Estilos para buscador */
 .search-container {
   position: relative;
   width: 100%;
   margin-bottom: 10px;
 }
 
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  color: #6c757d;
-  font-size: 1rem;
-}
-
 .search-input {
-  background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 10px 5px;
+  background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png)
+    no-repeat 10px 5px;
   background-size: 25px;
   width: 100%;
   padding: 10px 10px 10px 35px;
@@ -60,20 +52,28 @@
   border-color: black;
 }
 
-/*Estilos para Tabla */
+/* Estilos para Tabla */
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   text-align: left;
   font-family: 'Poppins', sans-serif;
+}
+
+td:last-child {
+  width: 100px; /* Ajusta el ancho de la columna para hacerla más estrecha */
+  text-align: center;
 }
 
 th {
@@ -83,15 +83,6 @@ th {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-style: normal;
-}
-
-td.password-col {
-  width: 200px;
-}
-
-td:last-child {
-  width: 100px;
-  text-align: center;
 }
 
 button {
@@ -124,7 +115,7 @@ button.delete:hover {
   background-color: #c82333;
 }
 
-.actions-buttons{
+.actions-buttons {
   display: flex !important;
   justify-content: center;
   padding: 0%;
@@ -138,3 +129,14 @@ tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+/* Estilo para filas deshabilitadas */
+tr.disabled {
+  background-color: #e0e0e0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../../../../../../enums/app.constants';
 import { CreateUserRequest } from '../interfaces/create-user.interface';
 import { UpdateUserRequest } from '../interfaces/update-user.interface';
 import { IDeleteUserRequest } from '../interfaces/delete-user.interface';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserCrudService {
+  private apiUrl = `${AppConstants.BASE_URL}/api/rpc`;
 
-    private apiUrl = `${AppConstants.BASE_URL}/api/rpc`;
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  private createFormData(payload: any): FormData {
+    const formData = new FormData();
+    formData.append('json', JSON.stringify(payload));
+    return formData;
+  }
 
   listUsers(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
     const payload = {
       id: 1,
       method: 'list_users'
     };
-
-    return this.http.post<any>(this.apiUrl, payload, {
-      headers,
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
@@ -39,13 +38,8 @@ export class UserCrudService {
       method: 'create_user',
       params: { data: userData }
     };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<any>(this.apiUrl, payload, {
-      headers,
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
@@ -60,13 +54,8 @@ export class UserCrudService {
         data: userData
       }
     };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<any>(this.apiUrl, payload, {
-      headers,
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
@@ -78,16 +67,10 @@ export class UserCrudService {
       method: 'delete_user',
       params: { id: userId }
     };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<any>(this.apiUrl, payload, {
-      headers,
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
   }
-
 }

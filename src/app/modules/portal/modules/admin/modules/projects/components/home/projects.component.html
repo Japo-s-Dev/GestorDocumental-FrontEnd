@@ -1,31 +1,37 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()">
+</app-alert>
+
 <div class="projects-container">
   <header>
-    <h1>{{ "projects:title" | translate }}</h1>
+    <h1>Proyectos</h1>
   </header>
-
   <button class="add-project-button" (click)="addProject()">
-    <i class="fa-solid fa-plus"></i> {{ "projects:add_project" | translate }}
+    <i class="fa-solid fa-plus"></i> Agregar Proyecto
   </button>
 
   <input
+    type="text"
+    placeholder="Buscar proyecto..."
     [(ngModel)]="searchTerm"
     class="search-input"
-    [placeholder]="'projects:search_placeholder' | translate"
-    type="text"
   />
 
   <table>
     <thead>
       <tr>
-        <th class="id-col">{{ "projects:id" | translate }}</th>
-        <th>{{ "projects:nombre" | translate }}</th>
-        <th class="id-edits-projects">{{ "projects:actions" | translate }}</th>
+        <th>Nombre del Proyecto</th>
+        <th class="actions-col">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let project of filteredProjects(); let i = index">
-        <td>{{ project.proyectoId }}</td>
-        <td>{{ project.projectData }}</td>
+        <td>{{ project.project_name }}</td>
         <td>
           <div class="actions-buttons">
             <button class="edit" (click)="editProject(project)">
@@ -39,13 +45,4 @@
       </tr>
     </tbody>
   </table>
-
-  <!-- Aquí va el modal -->
-  <app-projects-modal
-    *ngIf="isModalOpen"
-    [project]="selectedProject"
-    (projectSaved)="saveProject()"
-    (modalClosed)="closeModal()"
-  >
-  </app-projects-modal>
 </div>

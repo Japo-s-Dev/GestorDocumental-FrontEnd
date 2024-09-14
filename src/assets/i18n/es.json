@@ -1,6 +1,8 @@
 {
   "LOGIN": "****************************************************LOGIN****************************************************",
   "title:login": "Iniciar Sesión",
+  "label:login_title":"Bienvenido al Gestor Documental",
+  "label:login_message":"Organiza, gestiona y accede a tus documentos de manera segura y eficiente.",
   "input:login_username": "Nombre de Usuario",
   "input:login_password": "Contraseña",
   "btn:login": "Ingresar",
@@ -12,6 +14,7 @@
   "home:available_storage": "Almacenamiento disponible",
 
   "navbar:menu": "MENÚ",
+  "navbar:document_manager": "Gestor de Documentos",
   "navbar:search": "Buscar",
   "navbar:add": "Agregar",
   "navbar:file_entry": "Entrada de Archivo",
@@ -22,7 +25,10 @@
   "navbar:projects": "Proyectos",
   "navbar:roles": "Roles",
 
+
   "route:home": "Inicio",
+  "route:document_management": "Gestor de Documentos",
+  "route:document_viewer": "Gestor de Documentos > Visor",
   "route:search_criteria": "Buscar > Criterios",
   "route:search_result": "Buscar > Resultados",
   "route:add": "Agregar",

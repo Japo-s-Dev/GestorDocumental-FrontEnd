@@ -1,0 +1,12 @@
+<div class="viewer-container">
+  <div class="file-tree-container">
+    <app-file-tree></app-file-tree>
+  </div>
+  <div class="file-display-container">
+    <ng-container *ngIf="selectedDocument">
+      <!-- Aquí irá el visor de archivos seleccionado -->
+      <iframe *ngIf="selectedDocument.type === 'pdf'" [src]="selectedDocument.url | safeUrl"></iframe>
+      <!-- Otros tipos de archivos se pueden mostrar de forma similar -->
+    </ng-container>
+  </div>
+</div>

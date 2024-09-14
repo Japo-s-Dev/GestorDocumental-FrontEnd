@@ -9,21 +9,25 @@ const routes: Routes = [
     component: FrameComponent,
     children: [
       {
-        path: '',  // Ruta predeterminada dentro de FrameComponent
-        component: HomePortalComponent,  // Configura HomePortalComponent como predeterminado
+        path: '',
+        component: HomePortalComponent,
         pathMatch: 'full'
       },
       {
-        path: 'search', // Esta ruta ahora cargará el módulo 'search' de manera perezosa
+        path: 'search',
         loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule)
       },
       {
-        path: 'add', // Esta ruta ahora cargará el módulo 'search' de manera perezosa
+        path: 'add',
         loadChildren: () => import('./modules/add-file/add-file.module').then(m => m.AddFileModule)
       },
       {
-        path: 'admin', // Esta ruta ahora cargará el módulo 'admin' de manera perezosa
+        path: 'admin',
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+      },
+      {
+        path: 'document-management',
+        loadChildren: () => import('./modules/document-management/document-management.module').then(m => m.DocumentManagementModule)
       }
     ]
   }
@@ -34,5 +38,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PortalRoutingModule { }
-
-

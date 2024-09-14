@@ -1,3 +1,13 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()">
+</app-alert>
+
+
 <div class="roles-container">
   <header>
     <h1>Roles</h1>
@@ -22,15 +32,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let role of filteredRoles(); let i = index">
+      <tr *ngFor="let role of filteredRoles()" [class.disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'">
         <td>{{ role.role_name }}</td>
         <td>{{ role.description }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editRole(role)">
+            <button
+              class="edit"
+              (click)="editRole(role)"
+              [disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'"
+            >
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="delete" (click)="deleteRole(role)">
+            <button
+              class="delete"
+              (click)="deleteRole(role)"
+              [disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'"
+            >
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -39,3 +57,4 @@
     </tbody>
   </table>
 </div>
+

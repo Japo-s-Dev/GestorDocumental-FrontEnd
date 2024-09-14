@@ -22,17 +22,30 @@
       </label>
     </div>
     <div class="preview-document">
-      <p>{{ "upload_document:preview" | translate }}</p>
-      <ngx-doc-viewer
-        *ngIf="filePreviewUrl"
-        [url]="filePreviewUrl"
-        viewer="url"
-        style="width: 100%; height: 400px"
-      ></ngx-doc-viewer>
-      <p *ngIf="!filePreviewUrl && fileUploaded">
-        {{ "upload_document:no_preview_available" | translate }}
+      <p>Vista previa del documento</p>
+      <!-- Mostrar PDF en iframe -->
+      <iframe
+        *ngIf="filePreviewUrl && selectedFile && selectedFile.type === 'application/pdf'"
+        [src]="filePreviewUrl"
+        style="width: 100%; height: 400px; border: none;"
+      ></iframe>
+
+      <!-- Mostrar imagen -->
+      <img
+        *ngIf="filePreviewUrl && selectedFile && selectedFile.type.startsWith('image/')"
+        [src]="filePreviewUrl"
+        style="width: 100%; max-height: 400px; object-fit: contain;"
+      />
+
+      <!-- Mostrar contenido de archivos Excel, Word y texto -->
+      <pre *ngIf="filePreviewContent">{{ filePreviewContent }}</pre>
+
+      <!-- Mensaje si no hay vista previa disponible -->
+      <p *ngIf="!filePreviewUrl && !filePreviewContent && fileUploaded">
+        No hay vista previa disponible para este tipo de archivo.
       </p>
     </div>
+
   </div>
 
   <div class="button-container">

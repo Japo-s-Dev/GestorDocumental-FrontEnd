@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './components/home/projects.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProjectsModalComponent } from './components/projects-modal/projects-modal.component';
+import { SharedModule } from '../../../../../../shared/shared.module';
 
 // Función para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -16,20 +17,22 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     ProjectsComponent,
-    ProjectsModalComponent
+    ProjectsModalComponent,
   ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
     FormsModule,
-    HttpClientModule,
+    ReactiveFormsModule,
+    SharedModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ]
+        deps: [HttpClient],
+      },
+    }),
+  ],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
-export class ProjectsModule { }
+export class ProjectsModule {}

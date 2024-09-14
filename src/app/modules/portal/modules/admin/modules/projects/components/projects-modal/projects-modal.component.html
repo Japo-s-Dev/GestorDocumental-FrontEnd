@@ -1,36 +1,41 @@
-<div class="modal" *ngIf="project">
-  <div class="modal-content">
-    <header>
-      <h2>
-        {{
-          project.proyectoId
-            ? ("projects:edit" | translate)
-            : ("projects:add_project" | translate)
-        }}
-      </h2>
-    </header>
-    <form (ngSubmit)="saveProject()">
-      <label for="projectName">{{
-        "projects:title_project" | translate
-      }}</label>
-      <input
-        id="projectName"
-        [(ngModel)]="project.projectData"
-        name="projectName"
-        required
-      />
-      <div class="modal-actions">
-        <button type="submit">
-          {{
-            project.proyectoId
-              ? ("projects:update" | translate)
-              : ("projects:create" | translate)
-          }}
-        </button>
-        <button type="button" (click)="closeModal()">
-          {{ "projects:cancel" | translate }}
-        </button>
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">
+        <span class="fas fa-times"></span>
       </div>
-    </form>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="projectForm">
+        <div class="mb-3">
+          <label for="project_name" class="form-label">Nombre del Proyecto</label>
+          <input id="project_name" formControlName="project_name" type="text" class="form-control" />
+          <div *ngIf="projectForm.get('project_name')?.hasError('required') && projectForm.get('project_name')?.touched" class="alert">
+            El nombre del proyecto es requerido.
+          </div>
+          <div *ngIf="projectForm.get('project_name')?.hasError('maxlength') && projectForm.get('project_name')?.touched" class="alert">
+            El nombre del proyecto no puede exceder los 20 caracteres.
+          </div>
+          <div *ngIf="projectForm.get('project_name')?.hasError('projectNameExists') && projectForm.get('project_name')?.touched" class="alert">
+            Ya existe un proyecto con este nombre.
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
+      <button type="button" class="add-project-button btn" (click)="save()">{{ isEditMode ? 'Guardar Cambios' : 'Agregar Proyecto' }}</button>
+    </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
+// LoginComponent.ts
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { ParameterManagerService } from '../../services/parameter-manager.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
@@ -15,19 +15,24 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class LoginComponent {
   hide = true;
-  showWarningAlert = false;
+  alertVisible = false;
+  alertTitle = '';
   alertMessage = '';
+  alertType = 'alert-danger';
+  alertIcon = 'icon-danger';
   currentLanguage: string;
 
   constructor(
     private authService: AuthService,
-    private parameterManager: ParameterManagerService,
     private router: Router,
     public translate: TranslateService,
     private loaderService: LoaderService
   ) {
-    this.currentLanguage = this.translate.getDefaultLang() || 'es';
-    this.translate.setDefaultLang(this.currentLanguage);
+    // Recuperar el idioma del localStorage si está disponible, o usar 'es' por defecto
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+    this.currentLanguage = savedLanguage;
+    this.translate.setDefaultLang(savedLanguage);
+    this.translate.use(savedLanguage);
   }
 
   toggleVisibility(): void {
@@ -39,11 +44,7 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  ngOnInit() {}
-
   login() {
-
-
     const loginRequest: LoginRequest = {
       username: this.loginForm.value.username ?? '',
       pwd: this.loginForm.value.password ?? ''
@@ -52,40 +53,45 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.body.result && response.body.result.success) {
-          this.parameterManager.sendParameters({
-            userStatus: {
-              username: response.body.result.username
-            }
-          });
+          // Guardar los parámetros en localStorage
+          localStorage.setItem('userStatus', JSON.stringify({
+            username: response.body.result.username,
+            role: response.body.result.role
+          }));
+
           this.loaderService.showLoader();
           this.router.navigate(['/portal']);
         } else {
-          this.showAlert('Credenciales incorrectas');
+          this.showAlert('Error', 'Credenciales incorrectas', 'danger');
           this.loaderService.hideLoader();
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.showAlert('Credenciales incorrectas');
+        this.showAlert('Error', 'Credenciales incorrectas', 'danger');
         this.loaderService.hideLoader();
       }
     });
   }
 
-  showAlert(message: string): void {
+  showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
+    this.alertTitle = title;
     this.alertMessage = message;
-    this.showWarningAlert = true;
+    this.alertType = `alert-${type}`;
+    this.alertIcon = `fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}`;
+    this.alertVisible = true;
 
     setTimeout(() => {
-      this.closeAlert();
+      this.alertVisible = false;
     }, 10000);
   }
 
-  closeAlert(): void {
-    this.showWarningAlert = false;
+  handleAlertClosed(): void {
+    this.alertVisible = false;
   }
 
   switchLanguage(language: string) {
     this.translate.use(language);
     this.currentLanguage = language;
+    localStorage.setItem('selectedLanguage', language); // Guarda el idioma seleccionado en localStorage
   }
 }

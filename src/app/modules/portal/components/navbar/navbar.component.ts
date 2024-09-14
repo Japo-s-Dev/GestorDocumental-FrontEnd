@@ -1,28 +1,36 @@
-import { Component } from '@angular/core';
+// NavbarComponent.ts
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../../../services/auth.service';
-import { LogOffRequest } from '../../../../interfaces/login-request.interface';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   showSearch = false;
   showAdd = false;
   showAdmin = false;
-  isAdmin = true;
+  isAdmin = false;
+  username: string | null = null;
   currentLanguage: string;
 
   constructor(
     private router: Router,
-    private translate: TranslateService,
-    private authService: AuthService
-    ) {
+    private translate: TranslateService
+  ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
     this.translate.setDefaultLang(this.currentLanguage);
+  }
+
+  ngOnInit(): void {
+    const userStatus = localStorage.getItem('userStatus');
+    if (userStatus) {
+      const parsedStatus = JSON.parse(userStatus);
+      this.username = parsedStatus.username;
+      this.isAdmin = parsedStatus.role === 'ADMIN' || parsedStatus.role === 'ADMIN JUNIOR';
+    }
   }
 
   toggleAdd(path: string) {
@@ -40,7 +48,7 @@ export class NavbarComponent {
     }
   }
 
-  toggleAdmin(path: string) {
+  toggleAdmin() {
     this.showAdmin = !this.showAdmin;
   }
 

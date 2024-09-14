@@ -14,31 +14,56 @@ import { LoaderService } from '../../../../services/loader.service';
 })
 export class HeaderComponent implements OnInit {
   currentLabel: string = '';
-  userMenuOpen: boolean = false; // Controla si el menú está abierto o cerrado
-  username: string = 'demo1'; // Aquí deberías obtener el nombre del usuario real
+  userMenuOpen: boolean = false;
   currentLanguage: string;
+  username: string | null = null;
+  userRole: string | null = null;
+  usernameStyle: string = '';
+  roleIcon: string = '';
 
-  constructor(private router: Router,
-     private translate: TranslateService,
-      private authService: AuthService,
-      private loaderService: LoaderService
-    ) {
-      this.currentLanguage = this.translate.getDefaultLang() || 'es';
-      this.translate.setDefaultLang(this.currentLanguage);
-    }
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+    private authService: AuthService,
+    private loaderService: LoaderService
+  ) {
+    // Intenta obtener el idioma guardado en localStorage, si no existe, usa 'es' por defecto
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+    this.currentLanguage = savedLanguage;
+    this.translate.setDefaultLang(savedLanguage);
+    this.translate.use(savedLanguage);
+  }
 
   ngOnInit(): void {
     this.updateLabel(this.router.url);
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.updateLabel(this.router.url);
-    });
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateLabel(this.router.url);
+      });
 
     this.translate.onLangChange.subscribe(() => {
       this.updateLabel(this.router.url);
     });
+
+    const userStatus = localStorage.getItem('userStatus');
+    if (userStatus) {
+      const parsedStatus = JSON.parse(userStatus);
+      this.username = parsedStatus.username;
+      this.userRole = parsedStatus.role;
+
+      if (this.userRole === 'ADMIN') {
+        this.usernameStyle = 'admin-style';
+        this.roleIcon = 'fa-crown';
+      } else if (this.userRole === 'ADMIN JUNIOR') {
+        this.usernameStyle = 'admin-junior-style';
+        this.roleIcon = 'fa-star';
+      } else {
+        this.usernameStyle = 'regular-user-style';
+        this.roleIcon = '';
+      }
+    }
   }
 
   updateLabel(url: string) {
@@ -51,6 +76,7 @@ export class HeaderComponent implements OnInit {
   switchLanguage(language: string) {
     this.translate.use(language);
     this.currentLanguage = language;
+    localStorage.setItem('selectedLanguage', language); // Guarda el idioma seleccionado en localStorage
   }
 
   toggleUserMenu(): void {
@@ -67,17 +93,13 @@ export class HeaderComponent implements OnInit {
   }
 
   viewProfile(): void {
-    // Lógica para ver el perfil del usuario
     this.router.navigate(['/profile']);
   }
 
   logout(): void {
-    const logOffRequest: LogOffRequest = {
-      logoff: true,
-    };
-
+    const logOffRequest: LogOffRequest = { logoff: true };
     this.authService.logoff(logOffRequest).subscribe({
-      next: (response) => {
+      next: () => {
         this.loaderService.showLoader();
         this.router.navigate(['/login']).then(() => {
           setTimeout(() => {
