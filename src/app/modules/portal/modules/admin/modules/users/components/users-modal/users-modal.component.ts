@@ -1,3 +1,4 @@
+// UsersModalComponent.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -5,7 +6,6 @@ import { UserCrudService } from '../../services/users-crud.service';
 import { RolesCrudService } from '../../../roles/services/roles-crud.service';
 import { IRole } from '../../../roles/interfaces/role.interface';
 import { IUser } from '../../interfaces/user.interface';
-
 
 @Component({
   selector: 'app-user-modal',
@@ -21,27 +21,24 @@ export class UsersModalComponent implements OnInit {
   alertMessage = '';
 
   existingUsers: IUser[] = [];
-  roles: IRole[] = [];  // <-- Arreglo para almacenar los roles
+  roles: IRole[] = [];
 
   constructor(
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     private userCrudService: UserCrudService,
-    private rolesCrudService: RolesCrudService  // <-- Inyecta el servicio de roles
+    private rolesCrudService: RolesCrudService
   ) { }
 
   ngOnInit(): void {
-    // Obtener todos los usuarios para realizar las validaciones
     this.userCrudService.listUsers().subscribe(response => {
       if (response && response.body.result) {
         this.existingUsers = response.body.result;
       }
     });
 
-    // Obtener todos los roles y filtrar el rol "ADMIN"
     this.rolesCrudService.listRoles().subscribe(response => {
       if (response && response.body.result) {
-        // Filtrar el rol "ADMIN" para que no aparezca en el select
         this.roles = response.body.result.filter((role: IRole) => role.role_name.toUpperCase() !== 'ADMIN');
       }
     });
@@ -51,11 +48,9 @@ export class UsersModalComponent implements OnInit {
       password: ['', !this.isEditMode ? [Validators.required, this.passwordValidator] : []],
       confirmPassword: ['', !this.isEditMode ? Validators.required : []],
       email: [this.userData?.email || '', [Validators.required, Validators.email, this.emailExistsValidator.bind(this)]],
-      assigned_role: [this.userData?.assigned_role || '', [Validators.required]]  // <-- Nuevo campo para el rol
+      assigned_role: [this.userData?.assigned_role || '', [Validators.required]]
     });
   }
-
-
 
   save() {
     if (this.userForm.valid) {
@@ -70,7 +65,7 @@ export class UsersModalComponent implements OnInit {
         username: formValue.username,
         pwd_clear: formValue.password,
         email: formValue.email,
-        assigned_role: formValue.assigned_role  // <-- Incluye el rol asignado
+        assigned_role: formValue.assigned_role
       };
 
       if (this.isEditMode) {
@@ -96,6 +91,8 @@ export class UsersModalComponent implements OnInit {
       }
     } else {
       this.showAlert('Por favor, completa el formulario correctamente');
+      // Marcar todos los campos como tocados para mostrar las alertas de requerido
+      this.userForm.markAllAsTouched();
     }
   }
 
@@ -138,7 +135,7 @@ export class UsersModalComponent implements OnInit {
       const hasSpecialChar = /[!@$?]/.test(password);
 
       if (password.length < 8 || !hasUpperCase || !hasNumber || !hasSpecialChar) {
-        return { passwordWeak: true };
+        return { passwordWeak: true, message: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (!, @, $, ?).' };
       }
     }
     return null;
