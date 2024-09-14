@@ -7,47 +7,56 @@
   padding: 30px;
   z-index: 1;
   position: relative;
+  background-color: #fff; /* Fondo blanco para consistencia */
+  border-bottom: 2px solid #ededed; /* Línea sutil de separación */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera para efecto de profundidad */
 }
 
 .header-path {
-  color: #000000;
-  font-size: 16px;
+  color: #444; /* Ajuste de color para que combine con el login */
+  font-size: 18px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 750;
-  font-style: normal;
+  font-weight: 600; /* Ajuste de peso para mayor coherencia con el login */
 }
 
 .user-menu-container {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 20px; /* Añade un espacio entre el selector de idioma y el icono de usuario */
+  gap: 20px;
 }
 
 .user-icon {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 36px;
+  font-size: 1.5rem; /* Ajuste del tamaño del icono */
   gap: 0.5rem;
+  color: #F1842C; /* Color principal del login */
+  transition: color 0.3s;
+}
+
+.user-icon:hover {
+  color: #ce7125; /* Color de hover para resaltar interacción */
 }
 
 .username {
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500; /* Ajuste para más consistencia con el estilo del login */
+  color: #333;
 }
 
 .dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para mayor profundidad */
   z-index: 1000;
-  width: 150px;
+  width: 180px;
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -55,37 +64,41 @@
 
 .dropdown-menu a {
   display: block;
-  padding: 10px 15px;
-  color: black;
+  padding: 12px 20px;
+  color: #333;
   text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
 }
 
 .dropdown-menu a:hover {
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
+  color: #ce7125; /* Cambia el color al pasar el ratón para mayor interacción */
 }
 
 .language-selector {
   display: flex;
-  gap: 10px; /* Espacio entre los botones de idioma */
+  gap: 10px;
 }
 
 .language-selector button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
   cursor: pointer;
   background-color: #f0f0f0;
   color: #333;
-  border-radius: 5px;
+  border-radius: 50px; /* Botones más redondeados como en el login */
+  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Poppins', sans-serif;
 }
 
 .language-selector button.selected {
-  background-color: #000000;
-  color: white;
+  background-color: #F1842C;
+  color: #fff;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .language-selector button:hover {
-  background-color: #a1a1a1;
+  background-color: #ce7125; /* Consistente con el estilo de hover del login */
 }

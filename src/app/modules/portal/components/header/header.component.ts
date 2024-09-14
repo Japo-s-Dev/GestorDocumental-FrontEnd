@@ -14,9 +14,9 @@ import { LoaderService } from '../../../../services/loader.service';
 })
 export class HeaderComponent implements OnInit {
   currentLabel: string = '';
-  userMenuOpen: boolean = false; // Controla si el menú está abierto o cerrado
-  username: string = 'demo1'; // Aquí deberías obtener el nombre del usuario real
+  userMenuOpen: boolean = false;
   currentLanguage: string;
+  username: string | null = null;
 
   constructor(private router: Router,
      private translate: TranslateService,
@@ -39,6 +39,12 @@ export class HeaderComponent implements OnInit {
     this.translate.onLangChange.subscribe(() => {
       this.updateLabel(this.router.url);
     });
+
+    const userStatus = localStorage.getItem('userStatus');
+    if (userStatus) {
+      const parsedStatus = JSON.parse(userStatus);
+      this.username = parsedStatus.username;
+    }
   }
 
   updateLabel(url: string) {

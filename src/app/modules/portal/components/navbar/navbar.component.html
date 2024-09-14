@@ -10,44 +10,50 @@
   <h4>{{ "navbar:menu" | translate }}</h4>
 
   <div class="box" (click)="toggleSearch('/portal/search')">
-    <i class="fa-solid fa-magnifying-glass"></i
-    >{{ "navbar:search" | translate }}
+    <i class="fa-solid fa-magnifying-glass"></i>
+    {{ "navbar:search" | translate }}
   </div>
 
   <!-- Nueva opción para el Gestor Documental -->
   <div class="box" (click)="navigate('/portal/document-management')">
-    <i class="fa-solid fa-folder-tree"></i>{{ "navbar:document_manager" | translate }}
+    <i class="fa-solid fa-folder-tree"></i>
+    {{ "navbar:document_manager" | translate }}
   </div>
 
   <div class="box" (click)="toggleAdd('/portal/add')">
-    <i class="fa-solid fa-plus"></i>{{ "navbar:add" | translate }}
+    <i class="fa-solid fa-plus"></i>
+    {{ "navbar:add" | translate }}
   </div>
 
   <div *ngIf="showAdd">
     <div class="sub-box" routerLink="/portal/add/file-entry">
-      <i class="fa-solid fa-file"></i>{{ "navbar:file_entry" | translate }}
+      <i class="fa-solid fa-file"></i>
+      {{ "navbar:file_entry" | translate }}
     </div>
     <div class="sub-box" routerLink="/portal/add/upload-document">
-      <i class="fa-solid fa-cloud-arrow-up"></i
-      >{{ "navbar:upload_documents" | translate }}
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      {{ "navbar:upload_documents" | translate }}
     </div>
   </div>
 
   <div *ngIf="isAdmin" class="spacer"></div>
   <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>
-  <div *ngIf="isAdmin" class="box" (click)="toggleAdmin('/portal/admin')">
-    <i class="fa-solid fa-gears"></i>{{ "navbar:options" | translate }}
+  <div *ngIf="isAdmin" class="box" (click)="toggleAdmin()">
+    <i class="fa-solid fa-gears"></i>
+    {{ "navbar:options" | translate }}
   </div>
   <div *ngIf="showAdmin">
     <div class="sub-box" routerLink="/portal/admin/users">
-      <i class="fa-solid fa-users"></i>{{ "navbar:users" | translate }}
+      <i class="fa-solid fa-users"></i>
+      {{ "navbar:users" | translate }}
     </div>
     <div class="sub-box" routerLink="/portal/admin/projects">
-      <i class="fa-solid fa-diagram-project"></i
-      >{{ "navbar:projects" | translate }}
+      <i class="fa-solid fa-diagram-project"></i>
+      {{ "navbar:projects" | translate }}
     </div>
     <div class="sub-box" routerLink="/portal/admin/roles">
-      <i class="fa-solid fa-user-shield"></i>{{ "navbar:roles" | translate }}
+      <i class="fa-solid fa-user-shield"></i>
+      {{ "navbar:roles" | translate }}
     </div>
   </div>
 </div>
