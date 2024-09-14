@@ -28,8 +28,11 @@ export class LoginComponent {
     public translate: TranslateService,
     private loaderService: LoaderService
   ) {
-    this.currentLanguage = this.translate.getDefaultLang() || 'es';
-    this.translate.setDefaultLang(this.currentLanguage);
+    // Recuperar el idioma del localStorage si está disponible, o usar 'es' por defecto
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+    this.currentLanguage = savedLanguage;
+    this.translate.setDefaultLang(savedLanguage);
+    this.translate.use(savedLanguage);
   }
 
   toggleVisibility(): void {
@@ -89,5 +92,6 @@ export class LoginComponent {
   switchLanguage(language: string) {
     this.translate.use(language);
     this.currentLanguage = language;
+    localStorage.setItem('selectedLanguage', language); // Guarda el idioma seleccionado en localStorage
   }
 }

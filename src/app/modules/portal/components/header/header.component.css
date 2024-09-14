@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 1.5rem; /* Ajuste del tamaño del icono */
+  font-size: 18px; /* Ajuste del tamaño del icono */
   gap: 0.5rem;
   color: #F1842C; /* Color principal del login */
   transition: color 0.3s;
@@ -42,7 +42,7 @@
 
 .username {
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500; /* Ajuste para más consistencia con el estilo del login */
   color: #333;
 }
@@ -101,4 +101,19 @@
 
 .language-selector button:hover {
   background-color: #ce7125; /* Consistente con el estilo de hover del login */
+}
+
+/* Estilo para usuarios regulares */
+.regular-user-style {
+  color: #333; /* Color de texto normal */
+}
+
+/* Estilo para ADMIN JUNIOR */
+.admin-junior-style {
+  color: #135394; /* Color destacado */
+}
+
+/* Estilo para ADMIN */
+.admin-style {
+  color: #a50101; /* Color dorado para mayor privilegio */
 }

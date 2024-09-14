@@ -4,26 +4,19 @@
   </div>
   <div class="user-menu-container">
     <div class="language-selector">
-      <button
-        [class.selected]="currentLanguage === 'en'"
-        (click)="switchLanguage('en')"
-      >
-        EN
-      </button>
-      <button
-        [class.selected]="currentLanguage === 'es'"
-        (click)="switchLanguage('es')"
-      >
-        ES
-      </button>
+      <button [class.selected]="currentLanguage === 'en'" (click)="switchLanguage('en')">EN</button>
+      <button [class.selected]="currentLanguage === 'es'" (click)="switchLanguage('es')">ES</button>
     </div>
     <div class="user-icon" (click)="toggleUserMenu()">
       <i class="fa-solid fa-user-circle"></i>
-      <span class="username">{{ username }}</span>
+      <span [ngClass]="usernameStyle">
+        {{ username }}
+
+      </span>
     </div>
     <div class="dropdown-menu" *ngIf="userMenuOpen">
-      <a (click)="viewProfile()">{{ "Ver Perfil" }}</a>
-      <a (click)="logout()">{{ "Cerrar Sesión" }}</a>
+      <a (click)="viewProfile()">Ver Perfil</a>
+      <a (click)="logout()">Cerrar Sesión</a>
     </div>
   </div>
 </div>
