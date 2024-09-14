@@ -14,6 +14,7 @@ import { LoaderService } from '../../../../../../../../services/loader.service';
 export class UsersComponent implements OnInit {
   users: IUser[] = [];
   searchTerm: string = '';
+  loggedInUsername: string | null = null;
 
   // Alert properties
   alertVisible: boolean = false;
@@ -35,6 +36,11 @@ export class UsersComponent implements OnInit {
       this.loaderService.hideLoader();
     }, 2000);
 
+    const userStatus = localStorage.getItem('userStatus');
+    if (userStatus) {
+      const parsedStatus = JSON.parse(userStatus);
+      this.loggedInUsername = parsedStatus.username;
+    }
   }
 
   loadUsers(): void {
@@ -88,6 +94,10 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: IUser): void {
+    if (user.username === this.loggedInUsername) {
+      this.showAlert('Error', 'No puedes eliminar al usuario logueado.', 'danger');
+      return;
+    }
     const modalRef = this.modalService.open(ConfirmModalComponent);
     modalRef.componentInstance.message = `¿Está seguro de querer eliminar al usuario "${user.username}"?`;
     modalRef.result.then((result) => {
