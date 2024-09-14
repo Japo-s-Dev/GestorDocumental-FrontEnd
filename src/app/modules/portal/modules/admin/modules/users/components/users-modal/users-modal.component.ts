@@ -38,10 +38,11 @@ export class UsersModalComponent implements OnInit {
       }
     });
 
-    // Obtener todos los roles
+    // Obtener todos los roles y filtrar el rol "ADMIN"
     this.rolesCrudService.listRoles().subscribe(response => {
       if (response && response.body.result) {
-        this.roles = response.body.result;
+        // Filtrar el rol "ADMIN" para que no aparezca en el select
+        this.roles = response.body.result.filter((role: IRole) => role.role_name.toUpperCase() !== 'ADMIN');
       }
     });
 
@@ -53,6 +54,8 @@ export class UsersModalComponent implements OnInit {
       assigned_role: [this.userData?.assigned_role || '', [Validators.required]]  // <-- Nuevo campo para el rol
     });
   }
+
+
 
   save() {
     if (this.userForm.valid) {

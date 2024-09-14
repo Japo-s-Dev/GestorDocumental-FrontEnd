@@ -32,16 +32,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filteredUsers(); let i = index">
+      <tr
+        *ngFor="let user of filteredUsers(); let i = index"
+        [class.disabled]="user.assigned_role === 'ADMIN'"
+      >
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.assigned_role }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editUser(user)">
+            <button class="edit" (click)="editUser(user)" [disabled]="user.assigned_role === 'ADMIN'">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="delete" (click)="deleteUser(user)">
+            <button class="delete" (click)="deleteUser(user)" [disabled]="user.assigned_role === 'ADMIN'">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -49,5 +52,5 @@
       </tr>
     </tbody>
   </table>
-
 </div>
+
