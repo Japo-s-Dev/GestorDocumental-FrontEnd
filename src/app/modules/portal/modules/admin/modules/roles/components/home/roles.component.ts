@@ -104,7 +104,7 @@ export class RolesComponent implements OnInit {
           },
           (error) => {
             this.loaderService.showLoader();
-            this.showAlert('Error', 'Error al eliminar el rol.', 'danger');
+            this.showAlert('Error', 'El Rol no se puede eliminar porque esta asignado a un Usuario.', 'danger');
             console.error('Error al eliminar el rol:', error);
             setTimeout(() => {
               this.loaderService.hideLoader();
