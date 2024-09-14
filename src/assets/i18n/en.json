@@ -81,6 +81,11 @@
   "projects:id": "ID",
   "projects:nombre": "Name",
   "projects:actions": "Actions",
+  "projects:title_project": "Project name",
+  "projects:cancel": "Cancel",
+  "projects:edit": "Edit Project",
+  "projects:update": "Update",
+  "projects:create": "Create",
 
   "file_entry:title": "File Entry",
   "file_entry:project_label": "Project",

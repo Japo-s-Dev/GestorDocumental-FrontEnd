@@ -2,6 +2,7 @@
   <header>
     <h1>{{ "projects:title" | translate }}</h1>
   </header>
+
   <button class="add-project-button" (click)="addProject()">
     <i class="fa-solid fa-plus"></i> {{ "projects:add_project" | translate }}
   </button>
@@ -24,7 +25,7 @@
     <tbody>
       <tr *ngFor="let project of filteredProjects(); let i = index">
         <td>{{ project.proyectoId }}</td>
-        <td>{{ project.nombre }}</td>
+        <td>{{ project.projectData }}</td>
         <td>
           <div class="actions-buttons">
             <button class="edit" (click)="editProject(project)">
@@ -38,4 +39,13 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Aquí va el modal -->
+  <app-projects-modal
+    *ngIf="isModalOpen"
+    [project]="selectedProject"
+    (projectSaved)="saveProject()"
+    (modalClosed)="closeModal()"
+  >
+  </app-projects-modal>
 </div>

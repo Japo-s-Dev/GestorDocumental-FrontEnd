@@ -1,0 +1,36 @@
+<div class="modal" *ngIf="project">
+  <div class="modal-content">
+    <header>
+      <h2>
+        {{
+          project.proyectoId
+            ? ("projects:edit" | translate)
+            : ("projects:add_project" | translate)
+        }}
+      </h2>
+    </header>
+    <form (ngSubmit)="saveProject()">
+      <label for="projectName">{{
+        "projects:title_project" | translate
+      }}</label>
+      <input
+        id="projectName"
+        [(ngModel)]="project.projectData"
+        name="projectName"
+        required
+      />
+      <div class="modal-actions">
+        <button type="submit">
+          {{
+            project.proyectoId
+              ? ("projects:update" | translate)
+              : ("projects:create" | translate)
+          }}
+        </button>
+        <button type="button" (click)="closeModal()">
+          {{ "projects:cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
