@@ -48,6 +48,7 @@ export class RolesComponent implements OnInit {
         }
       },
       (error) => {
+        this.showAlert('Error', 'Error al obtener los roles.', 'danger');
         console.error('Error al obtener los roles:', error);
       }
     );

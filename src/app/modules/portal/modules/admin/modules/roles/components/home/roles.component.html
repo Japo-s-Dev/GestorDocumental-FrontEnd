@@ -10,18 +10,19 @@
 
 <div class="roles-container">
   <header>
-    <h1>Roles</h1>
+    <h2 class="roles-title">Roles</h2>
   </header>
   <button class="add-role-button" (click)="addRole()">
     <i class="fa-solid fa-plus"></i> Agregar Rol
   </button>
 
-  <input
-    type="text"
+  <!-- Buscador -->
+  <div class="search-container">
+    <input type="text"
     placeholder="Buscar rol..."
     [(ngModel)]="searchTerm"
-    class="search-input"
-  />
+    class="search-input">
+  </div>
 
   <table>
     <thead>
