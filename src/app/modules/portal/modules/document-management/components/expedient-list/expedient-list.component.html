@@ -1,1 +1,22 @@
-<p>expedient-list works!</p>
+<div class="expedient-list-container">
+  <!-- Select para elegir el proyecto -->
+  <select [(ngModel)]="selectedProject" (change)="onProjectChange(selectedProject)">
+    <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+  </select>
+
+  <!-- Tabla dinámica basada en el proyecto seleccionado -->
+  <table *ngIf="tableData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData">
+        <td *ngFor="let header of tableHeaders">{{ row[header] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="tableData.length === 0">No hay datos para mostrar.</p>
+</div>
