@@ -7,6 +7,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ProfileModalComponent } from './components/profile-modal/profile-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 // Función necesaria para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -17,11 +20,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     FrameComponent,
     NavbarComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileModalComponent
   ],
   imports: [
     CommonModule,
     PortalRoutingModule,
+    FormsModule,
+    NgbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

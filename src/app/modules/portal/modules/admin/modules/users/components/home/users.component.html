@@ -9,18 +9,23 @@
 
 <div class="users-container">
   <header>
-    <h1>{{ "users:title" | translate }}</h1>
+    <h2 class="users-title">{{ "users:title" | translate }}</h2>
   </header>
   <button class="add-user-button" (click)="addUser()">
     <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
   </button>
 
-  <input
+
+
+   <!-- Buscador -->
+   <div class="search-container">
+    <input
     type="text"
     [placeholder]="'users:search_placeholder' | translate"
     [(ngModel)]="searchTerm"
     class="search-input"
-  />
+    />
+  </div>
 
   <table>
     <thead>

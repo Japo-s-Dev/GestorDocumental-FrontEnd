@@ -16,6 +16,7 @@
     </div>
 
     <div class="modal-body">
+      <!-- Formulario para el proyecto -->
       <form [formGroup]="projectForm">
         <div class="mb-3">
           <label for="project_name" class="form-label">Nombre del Proyecto</label>
@@ -31,11 +32,100 @@
           </div>
         </div>
       </form>
+
+      <!-- Mostrar formulario de índices solo si el proyecto fue creado o está en modo de edición -->
+      <ng-container *ngIf="projectCreated || isEditMode">
+
+
+        <!-- Botón para añadir índice -->
+        <button class="btn btn-primary btn-add-index mt-3" (click)="toggleIndexForm()" [disabled]="!projectData">
+          <i class="fa fa-plus"></i> Añadir Índice
+        </button>
+
+        <!-- Formulario para crear o editar un índice -->
+        <form *ngIf="showIndexForm" [formGroup]="indexForm" (ngSubmit)="onSubmitIndex()" class="index-form mt-3">
+          <div class="mb-3">
+            <label for="indexName" class="form-label">Nombre del Índice</label>
+            <input id="indexName" formControlName="index_name" type="text" class="form-control" />
+            <div *ngIf="indexForm.get('index_name')?.hasError('required') && indexForm.get('index_name')?.touched" class="alert">
+              El nombre del índice es requerido.
+            </div>
+            <div *ngIf="indexForm.get('index_name')?.hasError('indexNameExists') && indexForm.get('index_name')?.touched" class="alert">
+              Ya existe un índice con este nombre.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="datatypeId" class="form-label">Tipo de Dato</label>
+            <select id="datatypeId" formControlName="datatype_id" class="form-control">
+              <option *ngFor="let type of dataTypes" [value]="type.id">{{ type.datatype_name }}</option>
+            </select>
+            <div *ngIf="indexForm.get('datatype_id')?.hasError('required') && indexForm.get('datatype_id')?.touched" class="alert">
+              El tipo de dato es requerido.
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <label class="form-check-label" for="requiredCheck">Requerido</label>
+            <input class="form-check-input" type="checkbox" formControlName="required" id="requiredCheck" />
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-success btn-save-index" [disabled]="!projectData">
+              <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+            <button type="button" class="btn btn-secondary btn-cancel-index" (click)="cancelEdit()" [disabled]="!projectData">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Listado de índices -->
+
+        <!-- Alerta específica para los índices -->
+        <div class="alert alert-danger mt-2" *ngIf="showIndexWarningAlert">
+          {{ indexAlertMessage }}
+        </div>
+
+        <!-- Contenedor con scroll para la tabla -->
+        <div class="table-scroll">
+          <table class="table mt-3 table-indices">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Tipo de Dato</th>
+                <th>Requerido</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let index of indices">
+                <td>{{ index.index_name }}</td>
+                <td>{{ getTypeName(index.datatype_id) }}</td>
+                <td>{{ index.required ? 'Sí' : 'No' }}</td>
+                <td>
+                  <div class="actions-buttons">
+                    <button class="edit" (click)="editIndex(index)">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="delete" (click)="deleteIndex(index.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+      </ng-container>
     </div>
 
     <div class="modal-footer">
       <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
-      <button type="button" class="add-project-button btn" (click)="save()">{{ isEditMode ? 'Guardar Cambios' : 'Agregar Proyecto' }}</button>
+      <button type="button" class="add-project-button btn" (click)="save()">
+        {{ isEditMode ? 'Guardar Cambios' : (projectCreated ? 'Agregar Proyecto' : 'Crear Proyecto') }}
+      </button>
     </div>
   </div>
 </div>

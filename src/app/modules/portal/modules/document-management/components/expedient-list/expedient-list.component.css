@@ -1,0 +1,125 @@
+.expedient-list-container {
+  padding: 20px;
+}
+
+/* Título de la sección */
+.expedient-title {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Botón de agregar expediente */
+.add-expedient-button {
+  float: right;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-expedient-button:hover {
+  background-color: #218838;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* Estilo del select */
+.project-select-container {
+  margin-bottom: 20px;
+}
+
+.project-select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  font-family: "Poppins", sans-serif;
+}
+
+.project-select:focus {
+  outline: none;
+  border-color: #F1842C;
+}
+
+/* Buscador */
+.search-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  background: url('https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png')
+    no-repeat 10px 10px;
+  background-size: 20px;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #F1842C;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #000;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+td {
+  font-family: "Poppins", sans-serif;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.expedient-link {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.expedient-link:hover {
+  color: #F1842C;
+  text-decoration: underline;
+}
+

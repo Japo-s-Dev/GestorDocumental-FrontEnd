@@ -45,6 +45,7 @@ export class ProjectsComponent implements OnInit {
         }
       },
       (error) => {
+        this.showAlert('Error', 'Error al obtener los proyectos.', 'danger');
         console.error('Error al obtener los proyectos:', error);
       },
     );
