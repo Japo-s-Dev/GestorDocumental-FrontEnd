@@ -8,6 +8,8 @@ import { ExpedientListComponent } from './components/expedient-list/expedient-li
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { FormsModule } from '@angular/forms';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 
 @NgModule({
@@ -20,8 +22,10 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
   imports: [
     CommonModule,
     DocumentManagementRoutingModule,
+    FormsModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    NgxDocViewerModule
   ]
 })
 export class DocumentManagementModule { }

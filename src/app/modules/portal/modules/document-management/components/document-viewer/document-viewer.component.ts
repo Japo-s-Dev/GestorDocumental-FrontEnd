@@ -6,9 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./document-viewer.component.css']
 })
 export class DocumentViewerComponent {
-  selectedDocument: any;
+  selectedDocumentUrl: string | null = null;
+  selectedDocumentName: string | null = null;
 
-  onFileSelected(file: any) {
-    this.selectedDocument = file;
+  onFileSelected(file: { url: string, name: string }) {
+    this.selectedDocumentUrl = file.url;
+    this.selectedDocumentName = file.name;
   }
 }

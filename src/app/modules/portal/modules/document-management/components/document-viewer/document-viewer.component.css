@@ -1,28 +1,36 @@
 .viewer-container {
   display: flex;
-  height: 100vh; /* Ocupa toda la altura disponible */
+  height: 100vh;
 }
 
 .file-tree-container {
-  width: 35%; /* Aumenta este valor para darle más espacio al árbol */
+  width: 35%;
   border-right: 1px solid #ddd;
   padding: 10px;
-  overflow-y: auto; /* Permite el scroll si el contenido es largo */
-  background-color: #f8f9fa; /* Fondo claro para diferenciar */
-  transition: width 0.3s ease; /* Transición suave al cambiar de tamaño */
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  transition: width 0.3s ease;
 }
 
 .file-display-container {
   flex: 1;
   padding: 10px;
-  overflow-y: auto; /* Permite el scroll si el contenido es largo */
+  overflow-y: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column; /* Cambiado para apilar el header y el visor */
 }
 
-iframe {
+.document-header {
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif; /* Fuente consistente con el login */
+  font-size: 18px;
+  color: #333; /* Color consistente con el estilo del login */
+}
+
+ngx-doc-viewer {
   width: 100%;
-  height: 90vh;
+  height: 85vh; /* Ajustar la altura para que el header no quede cortado */
   border: none;
 }
