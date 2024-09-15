@@ -1,10 +1,15 @@
 <div class="viewer-container">
+  <!-- Botón para volver a la ruta anterior -->
+  <button class="back-button" (click)="goBack()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
   <div class="file-tree-container">
     <app-file-tree (fileSelected)="onFileSelected($event)"></app-file-tree>
   </div>
+
   <div class="file-display-container">
     <ng-container *ngIf="selectedDocumentUrl">
-      <!-- Mueve el header aquí para que quede encima del documento -->
       <div class="document-header">
         <h3>{{ selectedDocumentName }}</h3>
       </div>

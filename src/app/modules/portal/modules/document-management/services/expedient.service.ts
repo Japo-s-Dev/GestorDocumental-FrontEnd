@@ -18,7 +18,7 @@ export class ExpedientService {
     return formData;
   }
 
-  listArchives(projectId: number = 14): Observable<any> {
+  listArchives(projectId: number): Observable<any> {
     const payload = {
       id: 1,
       method: 'list_archives',
@@ -33,5 +33,11 @@ export class ExpedientService {
       observe: 'response',
       withCredentials: true
     });
+  }
+
+  listProjects(): Observable<any> {
+    const payload = { id: 1, method: 'list_projects', params: {} };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 }

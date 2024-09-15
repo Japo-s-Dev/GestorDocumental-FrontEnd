@@ -81,6 +81,7 @@ export class IndexService {
     const payload = {
       id: 1,
       method: 'list_datatypes',
+      params: {}
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {

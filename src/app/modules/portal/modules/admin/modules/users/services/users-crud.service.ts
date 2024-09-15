@@ -23,7 +23,8 @@ export class UserCrudService {
   listUsers(): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_users'
+      method: 'list_users',
+      params: {}
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {

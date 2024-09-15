@@ -71,7 +71,8 @@ export class ValueService {
   listValues(): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_values'
+      method: 'list_values',
+      params: {}
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {

@@ -1,6 +1,32 @@
 .viewer-container {
   display: flex;
   height: 100vh;
+  position: relative; /* Posiciona el botón relativo al contenedor */
+}
+
+.back-button {
+  position: absolute;
+  top: 0px; /* Ajusta para que quede en la esquina superior */
+  left: 0px; /* Ajusta para que quede en la esquina izquierda */
+  padding: 5px; /* Botón más pequeño */
+  border: none;
+  background-color: #F1842C;
+  color: white;
+  border-radius: 50%; /* Botón redondo para un estilo minimalista */
+  cursor: pointer;
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button i {
+  margin: 0;
+  font-size: 12px; /* Ajusta el tamaño del icono */
+}
+
+.back-button:hover {
+  background-color: #0056b3;
 }
 
 .file-tree-container {
@@ -17,20 +43,20 @@
   padding: 10px;
   overflow-y: auto;
   display: flex;
-  flex-direction: column; /* Cambiado para apilar el header y el visor */
+  flex-direction: column;
 }
 
 .document-header {
   margin-bottom: 10px;
   text-align: center;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif; /* Fuente consistente con el login */
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
-  color: #333; /* Color consistente con el estilo del login */
+  color: #333;
 }
 
 ngx-doc-viewer {
   width: 100%;
-  height: 85vh; /* Ajustar la altura para que el header no quede cortado */
+  height: 85vh;
   border: none;
 }

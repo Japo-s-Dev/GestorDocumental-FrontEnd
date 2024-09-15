@@ -1,4 +1,4 @@
-export interface Index {
+export interface IIndex {
   id: number;
   index_name: string;
   project_id: number;
@@ -7,7 +7,7 @@ export interface Index {
 }
 
 
-export interface Expedient {
+export interface IExpedient {
   id: number;
   project_id: number;
   tag: string;
@@ -17,7 +17,7 @@ export interface Expedient {
   last_edit_user: number;
 }
 
-export interface Value {
+export interface IValue {
   id: number;
   index_id: number;
   project_id: number;
@@ -26,4 +26,9 @@ export interface Value {
   creation_date: Date;
   modified_date: Date;
   last_edit_user: number;
+}
+
+export interface IProject{
+  id: number;
+  name: string;
 }

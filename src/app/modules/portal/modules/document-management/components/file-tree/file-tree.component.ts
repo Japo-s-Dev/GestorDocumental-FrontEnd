@@ -59,15 +59,15 @@ export class FileTreeComponent {
         type: 'folder',
         children: [
           { name: 'Tarea Japo.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/54ed0070-82d3-40fd-b352-b272ff78b2c7' },
-          { name: 'Image1.jpg', type: 'image', url: 'https://example.com/image1.jpg' },
+          { name: 'Imagen Japo.jpg', type: 'image', url: 'https://documents-evogd.s3.amazonaws.com/screenshot123_26082024_232602.jpg' },
         ],
       },
       {
         name: 'Carpeta Padre 2',
         type: 'folder',
         children: [
-          { name: 'Music.mp3', type: 'audio', url: 'https://example.com/music.mp3' },
-          { name: 'Video.mp4', type: 'video', url: 'https://example.com/video.mp4' },
+          { name: 'Music.mp3', type: 'audio', url: 'https://example.com/video.mp4' },
+          { name: 'Reporte.xlms', type: 'file', url: 'https://documents-evogd.s3.amazonaws.com/Reporte.xls' },
         ],
       },
     ];
