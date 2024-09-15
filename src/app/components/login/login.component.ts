@@ -28,7 +28,7 @@ export class LoginComponent {
     public translate: TranslateService,
     private loaderService: LoaderService
   ) {
-    // Recuperar el idioma del localStorage si está disponible, o usar 'es' por defecto
+
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
     this.currentLanguage = savedLanguage;
     this.translate.setDefaultLang(savedLanguage);
@@ -53,11 +53,13 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.body.result && response.body.result.success) {
-          // Guardar los parámetros en localStorage
           localStorage.setItem('userStatus', JSON.stringify({
             username: response.body.result.username,
             role: response.body.result.role
           }));
+
+          const currentDateTime = new Date().toLocaleString();
+          localStorage.setItem('lastLogin', currentDateTime);
 
           this.loaderService.showLoader();
           this.router.navigate(['/portal']);
@@ -67,7 +69,7 @@ export class LoginComponent {
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.showAlert('Error', 'Credenciales incorrectas', 'danger');
+        this.showAlert('Error', 'Interno del servidor', 'danger');
         this.loaderService.hideLoader();
       }
     });
@@ -92,6 +94,6 @@ export class LoginComponent {
   switchLanguage(language: string) {
     this.translate.use(language);
     this.currentLanguage = language;
-    localStorage.setItem('selectedLanguage', language); // Guarda el idioma seleccionado en localStorage
+    localStorage.setItem('selectedLanguage', language);
   }
 }

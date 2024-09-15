@@ -9,18 +9,22 @@
 
 <div class="projects-container">
   <header>
-    <h1>Proyectos</h1>
+    <h2 class="projects-title">Proyectos</h2>
   </header>
   <button class="add-project-button" (click)="addProject()">
     <i class="fa-solid fa-plus"></i> Agregar Proyecto
   </button>
 
-  <input
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <input
     type="text"
     placeholder="Buscar proyecto..."
     [(ngModel)]="searchTerm"
     class="search-input"
-  />
+    />
+  </div>
 
   <table>
     <thead>

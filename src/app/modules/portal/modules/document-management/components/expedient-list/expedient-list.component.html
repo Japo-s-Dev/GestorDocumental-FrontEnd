@@ -1,1 +1,42 @@
-<p>expedient-list works!</p>
+<div class="expedient-list-container">
+  <!-- Título y botón de agregar -->
+  <div class="header">
+    <h2 class="expedient-title">Expedientes</h2>
+    <button class="add-expedient-button" (click)="openExpedientModal()">
+      <i class="fa-solid fa-plus"></i> Agregar Expediente
+    </button>
+  </div>
+
+  <!-- Select para elegir el proyecto -->
+  <div class="project-select-container">
+    <select class="project-select" [(ngModel)]="selectedProject" (change)="onProjectChange(selectedProject)">
+      <option value="0" disabled selected>Seleccione un Proyecto</option>
+      <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+    </select>
+  </div>
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Buscar expediente..." (input)="onSearch($event)">
+  </div>
+
+  <!-- Tabla dinámica basada en el proyecto seleccionado -->
+  <table *ngIf="tableData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of filteredData">
+        <td>
+          <!-- Usa (click) para manejar la navegación -->
+          <a (click)="nextStep()" class="expedient-link">{{ row['id'] }}</a>
+        </td>
+        <td *ngFor="let header of tableHeaders.slice(1)">{{ row[header] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="tableData.length === 0">No hay datos para mostrar.</p>
+</div>

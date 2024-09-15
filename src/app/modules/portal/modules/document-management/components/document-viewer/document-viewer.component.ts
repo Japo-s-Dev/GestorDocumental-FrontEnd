@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common'; // Importa Location para manejar la navegación
 
 @Component({
   selector: 'app-document-viewer',
@@ -6,9 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./document-viewer.component.css']
 })
 export class DocumentViewerComponent {
-  selectedDocument: any;
+  selectedDocumentUrl: string | null = null;
+  selectedDocumentName: string | null = null;
 
-  onFileSelected(file: any) {
-    this.selectedDocument = file;
+  constructor(private location: Location) {} // Inyecta Location
+
+  onFileSelected(file: { url: string, name: string }) {
+    this.selectedDocumentUrl = file.url;
+    this.selectedDocumentName = file.name;
+  }
+
+  goBack(): void {
+    this.location.back(); // Navega a la ruta anterior
   }
 }

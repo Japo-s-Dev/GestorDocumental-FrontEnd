@@ -8,6 +8,11 @@ import { ExpedientListComponent } from './components/expedient-list/expedient-li
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { RouterModule } from '@angular/router';
+import { ExpedientModalComponent } from './components/expedient-modal/expedient-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -15,13 +20,19 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     FileTreeComponent,
     DocumentViewerComponent,
     ExpedientListComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    ExpedientModalComponent
   ],
   imports: [
     CommonModule,
     DocumentManagementRoutingModule,
+    FormsModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    NgxDocViewerModule,
+    RouterModule,
+    ReactiveFormsModule,
+    NgbModule,
   ]
 })
 export class DocumentManagementModule { }
