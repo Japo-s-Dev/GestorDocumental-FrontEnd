@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../../../../../../enums/app.constants';
-import { CreateUserRequest } from '../interfaces/create-user.interface';
-import { UpdateUserRequest } from '../interfaces/update-user.interface';
-import { IDeleteUserRequest } from '../interfaces/delete-user.interface';
+import { IIndexRequest } from '../interfaces/index.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserCrudService {
+export class IndexService {
   private apiUrl = `${AppConstants.BASE_URL}/api/rpc`;
 
   constructor(private http: HttpClient) {}
@@ -20,58 +18,76 @@ export class UserCrudService {
     return formData;
   }
 
-  listUsers(): Observable<any> {
+  createIndex(data: IIndexRequest): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_users',
+      method: 'create_index',
+      params: {
+        data: { ...data, },
+      },
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  listIndices(projectId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_indexes',
+      params: {
+        filters: { project_id: projectId },
+      },
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  updateIndex(indexId: number, data: IIndexRequest): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'update_index',
+      params: {
+        id: indexId,
+        data,
+      },
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  deleteIndex(indexId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'delete_index',
+      params: { id: indexId },
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  listDatatypes(): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_datatypes',
       params: {}
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
-      withCredentials: true
+      withCredentials: true,
     });
   }
 
-  createUser(userData: CreateUserRequest): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'create_user',
-      params: { data: userData }
-    };
-    const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
-  }
-
-  updateUser(userId: number, userData: UpdateUserRequest): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'update_user',
-      params: {
-        id: userId,
-        data: userData
-      }
-    };
-    const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
-  }
-
-  deleteUser(userId: number): Observable<any> {
-    const payload: IDeleteUserRequest = {
-      id: 1,
-      method: 'delete_user',
-      params: { id: userId }
-    };
-    const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
-  }
 }

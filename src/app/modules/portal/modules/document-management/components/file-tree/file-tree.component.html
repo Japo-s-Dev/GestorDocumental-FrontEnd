@@ -6,7 +6,7 @@
     <!-- Nodo para archivos -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
       <mat-icon class="file-icon">{{ getIcon(node) }}</mat-icon>
-      <span class="node-text">{{ node.name }}</span>
+      <span class="node-text" (click)="selectFile(node)">{{ node.name }}</span>
     </mat-tree-node>
 
     <!-- Nodo para carpetas con hijos -->

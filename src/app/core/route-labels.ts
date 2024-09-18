@@ -1,6 +1,6 @@
 export const RouteLabels: { [key: string]: string } = {
   '/portal': 'route:home',
-  '/portal/document-management/expidient-list': 'route:document_management',
+  '/portal/document-management/expedient-list': 'route:document_management',
   '/portal/document-management/viewer': 'route:document_viewer',
   '/portal/search': 'route:search_criteria',
   '/portal/search/result': 'route:search_result',

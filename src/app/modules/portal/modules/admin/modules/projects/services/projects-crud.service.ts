@@ -18,7 +18,7 @@ export class ProjectsCrudService {
   }
 
   listProjects(): Observable<any> {
-    const payload = { id: 1, method: 'list_projects' };
+    const payload = { id: 1, method: 'list_projects', params: {} };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }

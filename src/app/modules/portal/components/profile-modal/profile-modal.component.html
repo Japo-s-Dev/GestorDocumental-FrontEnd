@@ -1,0 +1,28 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        Perfil de Usuario
+      </h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body profile-body">
+      <div class="profile-picture">
+        <i [class]="roleIcon"></i>
+      </div>
+      <div class="profile-details">
+        <h5>{{ username }}</h5>
+        <p [ngClass]="roleStyle">{{ role }}</p>
+        <p class="last-login">Última vez logueado: {{ lastLogin }}</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">Salir</button>
+      <button type="button" class="logout-button btn" (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </div>
+</div>

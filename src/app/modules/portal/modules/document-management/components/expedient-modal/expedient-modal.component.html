@@ -1,0 +1,60 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditMode ? 'Editar Expediente' : 'Agregar Expediente' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Alerta personalizada para mostrar mensajes -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="expedientForm">
+        <!-- Campo de tag obligatorio -->
+        <div class="mb-3">
+          <label for="tag" class="form-label">Tag</label>
+          <input
+            id="tag"
+            formControlName="tag"
+            type="text"
+            class="form-control"
+            placeholder="Ingrese el tag del expediente"
+          />
+          <div *ngIf="expedientForm.get('tag')?.touched && expedientForm.get('tag')?.hasError('required')" class="text-danger">
+            El campo Tag es requerido.
+          </div>
+        </div>
+
+        <!-- Campos dinámicos generados según los índices -->
+        <div *ngFor="let index of indices" class="mb-3">
+          <label [for]="index.index_name" class="form-label">{{ index.index_name }}</label>
+          <input
+            [id]="index.index_name"
+            [formControlName]="index.index_name"
+            type="text"
+            class="form-control"
+            [required]="index.required"
+            [placeholder]="'Ingrese ' + index.index_name"
+          />
+          <div *ngIf="expedientForm.get(index.index_name)?.touched && expedientForm.get(index.index_name)?.hasError('required')" class="text-danger">
+            El campo {{ index.index_name }} es requerido.
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button" (click)="close()">Cancelar</button>
+      <button type="button" class="add-user-button" (click)="saveExpedient()">
+        {{ isEditMode ? 'Guardar Cambios' : 'Agregar Expediente' }}
+      </button>
+    </div>
+  </div>
+</div>
