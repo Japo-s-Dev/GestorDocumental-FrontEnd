@@ -185,25 +185,48 @@ export class ExpedientListComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmModalComponent);
     modalRef.componentInstance.message = `¿Está seguro de querer eliminar el expediente con ID "${expedientId}"?`;
 
-    modalRef.result.then((result) => {
-      if (result === 'confirm') {
-        this.loaderService.showLoader();
-        this.service.deleteArchive(expedientId).subscribe(
-          () => {
-            this.reloadTableBasedOnIndices(); // Recargar la tabla según los índices
-            this.showAlert('Eliminación', 'Expediente eliminado con éxito.', 'info');
-          },
-          (error) => {
-            console.error('Error al eliminar el expediente:', error);
-            this.showAlert('Error', 'Error al eliminar el expediente.', 'danger');
-            this.loaderService.hideLoader();
-          }
-        );
-      }
-    }).catch((error) => {
-      console.log('Modal dismissed', error);
-    });
+    modalRef.result
+      .then((result) => {
+        if (result === 'confirm') {
+          this.loaderService.showLoader();
+
+          // Primero, obtener todos los valores asociados al expediente
+          const valuesToDelete = this.values.filter((value) => value.archive_id === expedientId);
+
+          // Crear un array de promesas de eliminación de valores
+          const deleteValuePromises = valuesToDelete.map((value) =>
+            this.service.deleteValue(value.id).toPromise()
+          );
+
+          // Ejecutar todas las promesas de eliminación de valores
+          Promise.all(deleteValuePromises)
+            .then(() => {
+              // Una vez que todos los valores se hayan eliminado, eliminar el expediente
+              this.service.deleteArchive(expedientId).subscribe(
+                () => {
+                  this.reloadTableBasedOnIndices(); // Recargar la tabla según los índices
+                  this.showAlert('Eliminación', 'Expediente eliminado con éxito.', 'info');
+                  this.loaderService.hideLoader();
+                },
+                (error) => {
+                  console.error('Error al eliminar el expediente:', error);
+                  this.showAlert('Error', 'Error al eliminar el expediente.', 'danger');
+                  this.loaderService.hideLoader();
+                }
+              );
+            })
+            .catch((error) => {
+              console.error('Error al eliminar los valores asociados:', error);
+              this.showAlert('Error', 'Error al eliminar los valores asociados al expediente.', 'danger');
+              this.loaderService.hideLoader();
+            });
+        }
+      })
+      .catch((error) => {
+        console.log('Modal dismissed', error);
+      });
   }
+
 
   showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
     this.alertTitle = title;
