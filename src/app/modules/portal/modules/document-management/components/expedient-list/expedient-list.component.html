@@ -1,19 +1,34 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()">
+</app-alert>
+
 <div class="expedient-list-container">
-  <!-- Título y botón de agregar -->
+  <!-- Título y botones -->
   <div class="header">
     <h2 class="expedient-title">Expedientes</h2>
-    <button class="add-expedient-button" (click)="openExpedientModal()">
-      <i class="fa-solid fa-plus"></i> Agregar Expediente
-    </button>
+    <div class="header-buttons">
+
+      <button class="add-expedient-button" (click)="openExpedientModal()">
+        <i class="fa-solid fa-plus"></i> Agregar Expediente
+      </button>
+    </div>
   </div>
 
-  <!-- Select para elegir el proyecto -->
-  <div class="project-select-container">
+  <div class="project-select-refresh-container">
     <select class="project-select" [(ngModel)]="selectedProject" (change)="onProjectChange(selectedProject)">
       <option value="0" disabled selected>Seleccione un Proyecto</option>
       <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
     </select>
+    <button class="refresh-table-button" (click)="buildTable()">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
   </div>
+
 
   <!-- Buscador -->
   <div class="search-container">
@@ -25,15 +40,27 @@
     <thead>
       <tr>
         <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        <th>Acciones</th> <!-- Columna para las acciones -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of filteredData">
         <td>
-          <!-- Usa (click) para manejar la navegación -->
           <a (click)="nextStep()" class="expedient-link">{{ row['id'] }}</a>
         </td>
-        <td *ngFor="let header of tableHeaders.slice(1)">{{ row[header] }}</td>
+        <td *ngFor="let header of tableHeaders.slice(1)">
+          {{ row[header] }}
+        </td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editExpedient(row['id'])">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteExpedient(row['id'])">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

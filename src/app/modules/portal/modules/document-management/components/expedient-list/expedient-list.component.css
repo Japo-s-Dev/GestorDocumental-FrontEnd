@@ -38,9 +38,10 @@
   align-items: center;
 }
 
-
-/* Estilo del select */
-.project-select-container {
+.project-select-refresh-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Ajusta el espacio entre el select y el botón */
   margin-bottom: 20px;
 }
 
@@ -53,10 +54,19 @@
   font-family: "Poppins", sans-serif;
 }
 
-.project-select:focus {
-  outline: none;
-  border-color: #F1842C;
+.refresh-table-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #28a745;
+  font-size: 20px;
+  transition: color 0.3s;
 }
+
+.refresh-table-button:hover {
+  color: #218838;
+}
+
 
 /* Buscador */
 .search-container {
@@ -104,6 +114,11 @@ td {
   font-family: "Poppins", sans-serif;
 }
 
+td:last-child {
+  width: 100px;
+  text-align: center;
+}
+
 tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
@@ -121,5 +136,38 @@ tbody tr:nth-child(even) {
 .expedient-link:hover {
   color: #F1842C;
   text-decoration: underline;
+}
+
+
+.actions-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+button.edit {
+  background-color: #343a40;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button.edit:hover {
+  background-color: #23272b;
+}
+
+button.delete {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button.delete:hover {
+  background-color: #c82333;
 }
 
