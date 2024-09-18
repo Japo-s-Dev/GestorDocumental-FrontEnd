@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ServicesService } from '../../services/services.service';
-import { IIndex } from '../../interfaces/services.interface';
+import { IExpedientRequest, IIndex, IValue, IValueRequest } from '../../interfaces/services.interface';
 
 @Component({
   selector: 'app-expedient-modal',
@@ -39,7 +39,7 @@ export class ExpedientModalComponent implements OnInit {
       tag: ['', Validators.required] // Campo para el tag
     });
 
-    // Agregar los campos dinámicos basados en los índices
+    // Agregar los campos dinámicos basados en los índices, usando el nombre real del índice
     this.indices.forEach(index => {
       this.expedientForm.addControl(
         index.index_name,
@@ -78,44 +78,75 @@ export class ExpedientModalComponent implements OnInit {
       this.showAlert('Por favor, completa todos los campos requeridos.');
       return;
     }
-
     const formValue = this.expedientForm.value;
+    const expedientData: IExpedientRequest = {
+      project_id: Number(this.projectId),
+      tag: formValue.tag
+    };
 
     if (this.isEditMode && this.expedientId) {
-      // Actualizar el expediente
-      this.servicesService.updateArchive(this.expedientId, formValue.tag).subscribe(() => {
-        this.saveValues(this.expedientId);
-        this.activeModal.close('updated');
-      }, error => {
-        console.error('Error al actualizar el expediente', error);
-      });
+      this.servicesService.updateArchive(Number(this.expedientId), { tag: expedientData.tag }).subscribe(
+        () => {
+          this.saveValues(this.expedientId);
+          this.activeModal.close('updated');
+        },
+        (error) => {
+          console.error('Error al actualizar el expediente', error);
+        }
+      );
     } else {
       // Crear un nuevo expediente
-      this.servicesService.createArchive(this.projectId, formValue.tag).subscribe(response => {
-        const createdExpedientId = response.body.result.id;
-        this.saveValues(createdExpedientId);
-        this.activeModal.close('created');
-      }, error => {
-        console.error('Error al crear el expediente', error);
-      });
+      this.servicesService.createArchive(expedientData).subscribe(
+        (response) => {
+          const createdExpedientId = response.body.result.id;
+          this.saveValues(createdExpedientId);
+          this.activeModal.close('created');
+        },
+        (error) => {
+          console.error('Error al crear el expediente', error);
+        }
+      );
     }
   }
 
   saveValues(expedientId: number): void {
-    Object.keys(this.expedientForm.controls).forEach(key => {
-      if (key !== 'tag') {
-        const index = this.indices.find(idx => idx.index_name === key);
-        if (index) {
-          const value = this.expedientForm.get(key)?.value;
-          if (this.isEditMode) {
-            // Si es edición, actualizar los valores existentes
-            this.servicesService.updateValue(index.id, value).subscribe();
-          } else {
-            // Si es creación, crear nuevos valores
-            this.servicesService.createValue(index.id, this.projectId, expedientId, value).subscribe();
+    this.servicesService.listValues().subscribe(valueResponse => {
+      const existingValues: IValue[] = valueResponse.body.result.filter(
+        (value: IValue) => value.archive_id === expedientId
+      );
+
+      Object.keys(this.expedientForm.controls).forEach(controlKey => {
+        if (controlKey !== 'tag') {
+          const index = this.indices.find(idx => idx.index_name === controlKey);
+          if (index) {
+            let value = this.expedientForm.get(controlKey)?.value || ''; // Asegura que value no sea undefined
+
+            console.log(`Valor capturado para ${controlKey}:`, value);
+
+            const existingValue = existingValues.find((val: IValue) => val.index_id === index.id);
+
+            if (this.isEditMode && existingValue) {
+              console.log(`Actualizando valor con ID: ${existingValue.id}, valor: ${value}`);
+              this.servicesService.updateValue(existingValue.id, value).subscribe({
+                next: (res) => console.log('Valor actualizado:', res),
+                error: (err) => console.error('Error al actualizar el valor:', err)
+              });
+            } else {
+              const valueData: IValueRequest = {
+                index_id: index.id,
+                project_id: Number(this.projectId),
+                archive_id: Number(expedientId),
+                value: value,
+              };
+
+              this.servicesService.createValue(valueData).subscribe({
+                next: (res) => console.log('Valor creado:', res),
+                error: (err) => console.error('Error al crear el valor:', err)
+              });
+            }
           }
         }
-      }
+      });
     });
   }
 

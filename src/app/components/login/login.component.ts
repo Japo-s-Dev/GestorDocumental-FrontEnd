@@ -60,6 +60,7 @@ export class LoginComponent {
 
           const currentDateTime = new Date().toLocaleString();
           localStorage.setItem('lastLogin', currentDateTime);
+          localStorage.removeItem('selectedProject');
 
           this.loaderService.showLoader();
           this.router.navigate(['/portal']);

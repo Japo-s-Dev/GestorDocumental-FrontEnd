@@ -13,6 +13,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { RouterModule } from '@angular/router';
 import { ExpedientModalComponent } from './components/expedient-modal/expedient-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '../../../../shared/shared.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     ReactiveFormsModule,
     NgbModule,
+    SharedModule,
   ]
 })
 export class DocumentManagementModule { }

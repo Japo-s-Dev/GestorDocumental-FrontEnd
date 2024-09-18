@@ -60,7 +60,14 @@ export class ProjectsModalComponent implements OnInit {
 
   initIndexForm() {
     this.indexForm = this.fb.group({
-      index_name: ['', [Validators.required, this.indexNameExistsValidator.bind(this)]],
+      index_name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9 ]*$'), // Solo permite letras, números y espacios
+          this.indexNameExistsValidator.bind(this)
+        ]
+      ],
       datatype_id: ['', Validators.required],
       required: [false],
     });
@@ -159,11 +166,14 @@ export class ProjectsModalComponent implements OnInit {
         this.indexService.createIndex(indexData).subscribe(
           () => {
             this.loadIndices();
-            this.cancelEdit();
+            this.indexForm.reset(); // Resetea el formulario para agregar un nuevo índice
+            this.indexForm.patchValue({ required: false }); // Mantén el valor 'required' en falso por defecto
           },
           (error) => this.showIndexAlert('Error al crear el índice')
         );
       }
+    } else {
+      this.showIndexAlert('Nombre del índice solo puede contener letras o números.');
     }
   }
 
