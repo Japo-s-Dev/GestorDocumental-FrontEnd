@@ -4,33 +4,33 @@
   [message]="alertMessage"
   [alertType]="alertType"
   [iconType]="alertIcon"
-  (closed)="handleAlertClosed()">
+  (closed)="handleAlertClosed()"
+>
 </app-alert>
 
 <div class="projects-container">
   <header>
-    <h2 class="projects-title">Proyectos</h2>
+    <h2 class="projects-title">{{ "projects:title" | translate }}</h2>
   </header>
   <button class="add-project-button" (click)="addProject()">
-    <i class="fa-solid fa-plus"></i> Agregar Proyecto
+    <i class="fa-solid fa-plus"></i> {{ "projects:add_project" | translate }}
   </button>
-
 
   <!-- Buscador -->
   <div class="search-container">
     <input
-    type="text"
-    placeholder="Buscar proyecto..."
-    [(ngModel)]="searchTerm"
-    class="search-input"
+      type="text"
+      placeholder="{{ 'projects:search_project' | translate }}"
+      [(ngModel)]="searchTerm"
+      class="search-input"
     />
   </div>
 
   <table>
     <thead>
       <tr>
-        <th>Nombre del Proyecto</th>
-        <th class="actions-col">Acciones</th>
+        <th>{{ "projects:title_project" | translate }}</th>
+        <th class="actions-col">{{ "projects:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
