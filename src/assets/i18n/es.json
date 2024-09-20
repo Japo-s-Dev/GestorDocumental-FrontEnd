@@ -171,6 +171,14 @@
 
   "users:password_weak": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial (!, @, $, ?).",
 
+  "ROLES": "****************************************************ROLES****************************************************",
+  "roles:title": "Roles",
+  "roles:add_role": "Agregar Rol",
+  "roles:search_placeholder": "Buscar rol...",
+  "roles:role_name": "Nombre del Rol",
+  "roles:description": "Descripción",
+  "roles:actions": "Acciones",
+  
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Id Liquidación",
   "field:nombre": "Nombre",

@@ -4,36 +4,49 @@
   [message]="alertMessage"
   [alertType]="alertType"
   [iconType]="alertIcon"
-  (closed)="handleAlertClosed()">
+  (closed)="handleAlertClosed()"
+>
 </app-alert>
-
 
 <div class="roles-container">
   <header>
-    <h2 class="roles-title">Roles</h2>
+    <h2 class="roles-title">{{ "roles:title" | translate }}</h2>
   </header>
   <button class="add-role-button" (click)="addRole()">
-    <i class="fa-solid fa-plus"></i> Agregar Rol
+    <i class="fa-solid fa-plus"></i> {{ "roles:add_role" | translate }}
   </button>
 
   <!-- Buscador -->
   <div class="search-container">
-    <input type="text"
-    placeholder="Buscar rol..."
-    [(ngModel)]="searchTerm"
-    class="search-input">
+    <input
+      type="text"
+      placeholder="{{ 'roles:search_placeholder' | translate }}"
+      [(ngModel)]="searchTerm"
+      class="search-input"
+    />
   </div>
 
   <table>
     <thead>
       <tr>
-        <th>Nombre del Rol</th>
-        <th>Descripción</th>
-        <th>Acciones</th>
+        <th>
+          {{ "roles:role_name" | translate }}
+        </th>
+        <th>
+          {{ "roles:description" | translate }}
+        </th>
+        <th>
+          {{ "roles:actions" | translate }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let role of filteredRoles()" [class.disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'">
+      <tr
+        *ngFor="let role of filteredRoles()"
+        [class.disabled]="
+          role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
+        "
+      >
         <td>{{ role.role_name }}</td>
         <td>{{ role.description }}</td>
         <td>
@@ -41,14 +54,18 @@
             <button
               class="edit"
               (click)="editRole(role)"
-              [disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'"
+              [disabled]="
+                role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
+              "
             >
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
             <button
               class="delete"
               (click)="deleteRole(role)"
-              [disabled]="role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'"
+              [disabled]="
+                role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
+              "
             >
               <i class="fa-solid fa-trash"></i>
             </button>
@@ -58,4 +75,3 @@
     </tbody>
   </table>
 </div>
-

@@ -171,6 +171,15 @@
 
   "users:password_weak": "The password must be at least 8 characters long, with an uppercase letter, a number, and a special character (!, @, $, ?).",
 
+  "ROLES": "****************************************************ROLES****************************************************",
+  "roles:title": "Roles",
+  "roles:add_role": "Add Role",
+  "roles:search_placeholder": "Search role...",
+  "roles:role_name": "Role Name",
+  "roles:description": "Description",
+  "roles:actions": "Actions",
+  "roles:": "Edit Role",
+
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Settlement Id",
   "field:nombre": "Name",
