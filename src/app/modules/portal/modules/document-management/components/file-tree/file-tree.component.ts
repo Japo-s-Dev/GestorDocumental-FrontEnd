@@ -55,21 +55,36 @@ export class FileTreeComponent {
   constructor(private renderer: Renderer2) {
     const TREE_DATA: FileNode[] = [
       {
-        name: 'Carpeta Padre1',
+        name: 'Caso 2002',
         type: 'folder',
         children: [
-          { name: 'Tarea Japo.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/54ed0070-82d3-40fd-b352-b272ff78b2c7' },
-          { name: 'Imagen Japo.jpg', type: 'image', url: 'https://documents-evogd.s3.amazonaws.com/screenshot123_26082024_232602.jpg' },
-        ],
-      },
-      {
-        name: 'Carpeta Padre 2',
-        type: 'folder',
-        children: [
-          { name: 'Music.mp3', type: 'audio', url: 'https://example.com/video.mp4' },
-          { name: 'Reporte.xlms', type: 'file', url: 'https://documents-evogd.s3.amazonaws.com/Reporte.xls' },
-        ],
-      },
+          {
+            name: 'Documentos del caso',
+            type: 'folder',
+            children: [
+              {
+                name: 'Demanda',
+                type: 'folder',
+                children: [
+                  { name: 'Modelo de Demanda.doc', type: 'doc', url: 'https://documents-evogd.s3.amazonaws.com/Modelo+de+Demanda.doc' },
+                  { name: 'Entidad Judicial.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/Entidad+Judicial.pdf' },
+                  { name: 'Datps Judiciales.docx', type: 'docx', url: 'https://documents-evogd.s3.amazonaws.com/Judicial.docx' },
+                ]
+              },
+              { name: 'personas registradas.csv', type: 'csv', url: 'https://documents-evogd.s3.amazonaws.com/personas+registradas.csv' },
+            ]
+          },
+          {
+            name: 'Datos del Demandante',
+            type: 'folder',
+            children: [
+              { name: 'DPI Gabriel Paz.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/DPI.pdf' },
+              { name: 'Datos Gabriel', type: 'docx', url: 'https://documents-evogd.s3.amazonaws.com/Gabriel+Paz.txt' },
+              { name: 'Abogado.jpg', type: 'image', url: 'https://documents-evogd.s3.amazonaws.com/Abogado.jpg' }
+            ]
+          }
+        ]
+      }
     ];
 
     this.dataSource.data = TREE_DATA;
