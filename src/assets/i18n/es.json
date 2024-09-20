@@ -13,6 +13,7 @@
   "home:used_storage": "Almacenamiento usado",
   "home:available_storage": "Almacenamiento disponible",
 
+  "NAVBAR": "****************************************************NAVBAR****************************************************",
   "navbar:menu": "MENÚ",
   "navbar:document_manager": "Gestor de Documentos",
   "navbar:search": "Buscar",
@@ -25,7 +26,7 @@
   "navbar:projects": "Proyectos",
   "navbar:roles": "Roles",
 
-
+  "ROUTE": "****************************************************ROUTE****************************************************",
   "route:home": "Inicio",
   "route:document_management": "Gestor de Documentos",
   "route:document_viewer": "Gestor de Documentos > Visor",
@@ -39,18 +40,29 @@
   "route:admin_projects": "Admin > Proyectos",
   "route:admin_roles": "Admin > Roles",
 
+  "SEARCH": "****************************************************SEARCH****************************************************",
   "search:search_criteria": "Criterios de Búsqueda",
   "button:search": "Buscar",
   "button:save_search": "Guardar Búsqueda",
+
+  "PROJECTS": "****************************************************PROJECTS****************************************************",
   "project:label": "Proyecto",
   "project:option1": "Proyecto 1",
   "project:option2": "Proyecto 2",
   "project:option3": "Proyecto 3",
+  "projects:title": "Proyectos",
+  "projects:add_project": "Agregar proyecto",
+  "projects:search_placeholder": "Buscar proyectos",
+
+  "projects:id": "ID",
+  "projects:nombre": "Nombre",
+  "projects:actions": "Acciones",
   "projects:title_project": "Nombre del proyecto",
   "projects:cancel": "Cancelar",
   "projects:edit": "Editar Proyecto",
   "projects:update": "Actualizar",
   "projects:create": "Crear",
+  
   "projects:search_project": "Buscar proyecto...",
   "projects:create_project": "Crear proyecto",
   "projects:alert_name_project": "El nombre del proyecto es requerido.",
@@ -63,12 +75,6 @@
 
   "projects:add_index": "Añadir índice",
   "projects:save_changes": "Guardar cambios",
-  "projects:title": "Proyectos",
-  "projects:add_project": "Agregar proyecto",
-  "projects:search_placeholder": "Buscar proyectos",
-  "projects:id": "ID",
-  "projects:nombre": "Nombre",
-  "projects:actions": "Acciones",
   "projects:index_name": "Nombre",
   "projects:index_datatype": "Tipo de dato",
   "projects:index_required": "Requerido",
@@ -99,17 +105,7 @@
   "projects:delete_project": "Eliminar Proyecto",
   "projects:confirm_delete": "¿Está seguro de querer eliminar el proyecto \"{{ projectName }}\"?",
 
-  "field:id_liquidacion": "Id Liquidación",
-  "field:nombre": "Nombre",
-  "field:fecha": "Fecha",
-  "field:id_transaccion": "Id Transacción",
-  "field:email_contacto": "Email Contacto",
-  "field:confirmado": "Confirmado",
-  "field:numero_orden": "Número de Orden",
-  "field:cliente": "Cliente",
-  "field:fecha_entrega": "Fecha de Entrega",
-  "field:telefono": "Teléfono",
-
+  "RESULT": "****************************************************RESULT****************************************************",
   "result:criteria": "Criterios de Resultados",
   "result:nombre": "Nombre",
   "result:status": "Estado",
@@ -121,6 +117,7 @@
   "status:pending": "Pendiente",
   "status:not_started": "No Iniciado",
 
+  "USERS": "****************************************************USERS****************************************************",
   "users:title": "Usuarios",
   "users:add_user": "Agregar Usuario",
   "users:search_placeholder": "Buscar usuario",
@@ -129,6 +126,39 @@
   "users:role": "Rol",
   "users:actions": "Acciones",
 
+  "users:add_success_title": "Agregación",
+  "users:add_success_message": "Usuario creado con éxito.",
+  
+  "users:update_success_title": "Actualización",
+  "users:update_success_message": "Usuario actualizado con éxito.",
+  
+  "users:delete_success_title": "Eliminación",
+  "users:delete_success_message": "Usuario eliminado con éxito.",
+  
+  "users:delete_error_logged_in_title": "Error",
+  "users:delete_error_logged_in_message": "No puedes eliminar al usuario logueado.",
+  
+  "users:confirm_delete": "¿Está seguro de querer eliminar al usuario \"{{username}}\"?",
+  
+  "users:error_loading_title": "Error",
+  "users:error_loading_message": "Error al obtener los usuarios.",
+  
+  "users:error_deleting_title": "Error",
+  "users:error_deleting_message": "Error al eliminar el usuario.",
+  
+  "FIELD": "****************************************************FIELD****************************************************",
+  "field:id_liquidacion": "Id Liquidación",
+  "field:nombre": "Nombre",
+  "field:fecha": "Fecha",
+  "field:id_transaccion": "Id Transacción",
+  "field:email_contacto": "Email Contacto",
+  "field:confirmado": "Confirmado",
+  "field:numero_orden": "Número de Orden",
+  "field:cliente": "Cliente",
+  "field:fecha_entrega": "Fecha de Entrega",
+  "field:telefono": "Teléfono",
+
+  "FILE_ENTRY": "****************************************************FILE ENTRY****************************************************",
   "file_entry:title": "Entrada de Archivo",
   "file_entry:project_label": "Proyecto",
   "file_entry:id_liquidacion": "Id Liquidación",
@@ -150,6 +180,7 @@
   "status:option2": "Pendiente",
   "status:option3": "En proceso de revisión",
 
+  "UPLOAD_DOCUMENT": "****************************************************UPLOAD DOCUMENT****************************************************",
   "upload_document:title": "Subir Documentos",
   "upload_document:drag_drop": "Arrastra y suelta o selecciona archivos desde el dispositivo",
   "upload_document:max_size": "máx. 50MB",
