@@ -164,6 +164,13 @@
   "users:rol_asigned": "Rol asignado",
   "users:rol_required": "El rol es requerido.",
 
+  "users:password_mismatch": "Las contraseñas no coinciden.",
+  "users:update_error": "Error actualizando usuario.",
+  "users:create_error": "Error creando usuario.",
+  "users:form_invalid": "Por favor, complete el formulario correctamente.",
+
+  "users:password_weak": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial (!, @, $, ?).",
+
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Id Liquidación",
   "field:nombre": "Nombre",

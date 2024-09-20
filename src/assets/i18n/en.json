@@ -164,6 +164,13 @@
   "users:rol_asigned": "Role assigned",
   "users:rol_required": "The role is required.",
 
+  "users:password_mismatch": "The passwords do not match.",
+  "users:update_error": "Error updating user.",
+  "users:create_error": "Error creating user.",
+  "users:form_invalid": "Please complete the form correctly.",
+
+  "users:password_weak": "The password must be at least 8 characters long, with an uppercase letter, a number, and a special character (!, @, $, ?).",
+
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Settlement Id",
   "field:nombre": "Name",

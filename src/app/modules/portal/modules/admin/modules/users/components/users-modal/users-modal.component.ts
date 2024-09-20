@@ -1,4 +1,3 @@
-// UsersModalComponent.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +5,7 @@ import { UserCrudService } from '../../services/users-crud.service';
 import { RolesCrudService } from '../../../roles/services/roles-crud.service';
 import { IRole } from '../../../roles/interfaces/role.interface';
 import { IUser } from '../../interfaces/user.interface';
+import { TranslateService } from '@ngx-translate/core';  // Importar el servicio de traducción
 
 @Component({
   selector: 'app-user-modal',
@@ -27,7 +27,8 @@ export class UsersModalComponent implements OnInit {
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     private userCrudService: UserCrudService,
-    private rolesCrudService: RolesCrudService
+    private rolesCrudService: RolesCrudService,
+    private translate: TranslateService  // Inyectar el servicio de traducción
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +58,9 @@ export class UsersModalComponent implements OnInit {
       const formValue = this.userForm.value;
 
       if (!this.isEditMode && formValue.password !== formValue.confirmPassword) {
-        this.showAlert('Las contraseñas no coinciden');
+        this.translate.get('users:password_mismatch').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });
         return;
       }
 
@@ -74,7 +77,9 @@ export class UsersModalComponent implements OnInit {
             this.activeModal.close('updated');
           },
           (error) => {
-            this.showAlert('Error al actualizar el usuario');
+            this.translate.get('users:update_error').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
             console.error('Error al actualizar el usuario', error);
           }
         );
@@ -84,14 +89,17 @@ export class UsersModalComponent implements OnInit {
             this.activeModal.close('created');
           },
           (error) => {
-            this.showAlert('Error al crear el usuario');
+            this.translate.get('users:create_error').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
             console.error('Error al crear el usuario', error);
           }
         );
       }
     } else {
-      this.showAlert('Por favor, completa el formulario correctamente');
-      // Marcar todos los campos como tocados para mostrar las alertas de requerido
+      this.translate.get('users:form_invalid').subscribe((translatedText: string) => {
+        this.showAlert(translatedText);
+      });
       this.userForm.markAllAsTouched();
     }
   }
@@ -135,7 +143,11 @@ export class UsersModalComponent implements OnInit {
       const hasSpecialChar = /[!@$?]/.test(password);
 
       if (password.length < 8 || !hasUpperCase || !hasNumber || !hasSpecialChar) {
-        return { passwordWeak: true, message: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (!, @, $, ?).' };
+        let message = '';
+        this.translate.get('users:password_weak').subscribe((translatedMessage: string) => {
+          message = translatedMessage;
+        });
+        return { passwordWeak: true, message };
       }
     }
     return null;
