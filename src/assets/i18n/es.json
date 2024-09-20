@@ -188,6 +188,17 @@
   "roles:upload": "Actualización",
   "roles:deletion": "Eliminación",
   "roles:error": "Error",
+
+  "roles-modal:edit_role": "Editar Rol",
+  "roles-modal:add_role": "Agregar Rol",
+  "roles-modal:cancel": "Cancelar",
+  "roles-modal:save_changes": "Guardar Cambios",
+
+  "roles:role_name_required": "El nombre del rol es requerido.",
+  "roles:role_name_admin_not_allowed": "No se permite usar 'ADMIN' como nombre de rol.",
+  "roles:role_name_duplicate": "El nombre del rol ya existe.",
+  "roles:description_required": "La descripción del rol es requerida.",
+  "roles:description_maxlength": "La descripción del rol no puede exceder los 60 caracteres.",
   
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Id Liquidación",
