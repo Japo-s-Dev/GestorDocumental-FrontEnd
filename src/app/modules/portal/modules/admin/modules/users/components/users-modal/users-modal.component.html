@@ -1,14 +1,29 @@
 <div class="modal-overlay">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h5 class="modal-title">{{ isEditMode ? 'Editar Usuario' : 'Agregar Usuario' }}</h5>
-      <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+      <h5 class="modal-title">
+        {{
+          isEditMode
+            ? ("users:edit_user" | translate)
+            : ("users:add_user" | translate)
+        }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="close()"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
 
     <!-- Alerta personalizada -->
-    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+    <div
+      class="alert"
+      [class.showAlert]="showWarningAlert"
+      [class.hide]="!showWarningAlert"
+    >
       <span class="msg">{{ alertMessage }}</span>
       <div class="close-btn" (click)="closeAlert()">
         <span class="fas fa-times"></span>
@@ -18,64 +33,147 @@
     <div class="modal-body">
       <form [formGroup]="userForm">
         <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input id="username" formControlName="username" type="text" class="form-control" />
-          <div *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')" class="alert">
-            El nombre de usuario es requerido.
+          <label for="username" class="form-label">
+            {{ "users:username" | translate }}</label
+          >
+          <input
+            id="username"
+            formControlName="username"
+            type="text"
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              userForm.get('username')?.touched &&
+              userForm.get('username')?.hasError('required')
+            "
+            class="alert"
+          >
+            {{ "users:username_required" | translate }}
           </div>
-          <div *ngIf="userForm.get('username')?.hasError('usernameExists')" class="alert">
-            El nombre de usuario ya existe.
+          <div
+            *ngIf="userForm.get('username')?.hasError('usernameExists')"
+            class="alert"
+          >
+            {{ "users:username_exist" | translate }}
           </div>
         </div>
 
         <div class="mb-3" *ngIf="!isEditMode">
-          <label for="password" class="form-label">Contraseña</label>
-          <input id="password" formControlName="password" type="password" class="form-control" />
-          <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.hasError('required')" class="alert">
-            La contraseña es requerida.
+          <label for="password" class="form-label">
+            {{ "users:password" | translate }}
+          </label>
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              userForm.get('password')?.touched &&
+              userForm.get('password')?.hasError('required')
+            "
+            class="alert"
+          >
+            {{ "users:password_required" | translate }}
           </div>
-          <div *ngIf="userForm.get('password')?.hasError('passwordWeak')" class="alert">
+          <div
+            *ngIf="userForm.get('password')?.hasError('passwordWeak')"
+            class="alert"
+          >
             {{ userForm.get('password')?.errors?.['message'] }}
           </div>
         </div>
 
         <div class="mb-3" *ngIf="!isEditMode">
-          <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-          <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" />
-          <div *ngIf="userForm.get('confirmPassword')?.touched && userForm.get('confirmPassword')?.hasError('required')" class="alert">
-            Confirmar contraseña es requerido.
+          <label for="confirmPassword" class="form-label"
+            >{{ "users:password_confirm" | translate }}
+          </label>
+          <input
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            type="password"
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              userForm.get('confirmPassword')?.touched &&
+              userForm.get('confirmPassword')?.hasError('required')
+            "
+            class="alert"
+          >
+            {{ "users:password_confirm_required" | translate }}
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input id="email" formControlName="email" type="email" class="form-control" />
-          <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')" class="alert">
-            El correo electrónico es requerido.
+          <label for="email" class="form-label">{{
+            "users:email" | translate
+          }}</label>
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              userForm.get('email')?.touched &&
+              userForm.get('email')?.hasError('required')
+            "
+            class="alert"
+          >
+            {{ "users:email_required" | translate }}
           </div>
           <div *ngIf="userForm.get('email')?.hasError('email')" class="alert">
-            Por favor ingrese un correo electrónico válido.
+            {{ "users:email_invalid" | translate }}
           </div>
-          <div *ngIf="userForm.get('email')?.hasError('emailExists')" class="alert">
-            El correo electrónico ya está registrado.
+          <div
+            *ngIf="userForm.get('email')?.hasError('emailExists')"
+            class="alert"
+          >
+            {{ "users:email_exist" | translate }}
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="assigned_role" class="form-label">Rol Asignado</label>
-          <select id="assigned_role" formControlName="assigned_role" class="form-control">
-            <option *ngFor="let role of roles" [value]="role.role_name">{{ role.role_name }}</option>
+          <label for="assigned_role" class="form-label">
+            {{ "users:rol_asigned" | translate }}
+          </label>
+          <select
+            id="assigned_role"
+            formControlName="assigned_role"
+            class="form-control"
+          >
+            <option *ngFor="let role of roles" [value]="role.role_name">
+              {{ role.role_name }}
+            </option>
           </select>
-          <div *ngIf="userForm.get('assigned_role')?.touched && userForm.get('assigned_role')?.hasError('required')" class="alert">
-            El rol asignado es requerido.
+          <div
+            *ngIf="
+              userForm.get('assigned_role')?.touched &&
+              userForm.get('assigned_role')?.hasError('required')
+            "
+            class="alert"
+          >
+            {{ "users:rol_required" | translate }}
           </div>
         </div>
       </form>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
-      <button type="button" class="add-user-button btn" (click)="save()">{{ isEditMode ? 'Guardar Cambios' : 'Agregar Usuario' }}</button>
+      <button type="button" class="cancel-button btn" (click)="close()">
+        {{ "users:cancel" | translate }}
+      </button>
+      <button type="button" class="add-user-button btn" (click)="save()">
+        {{
+          isEditMode
+            ? ("users:save_changes" | translate)
+            : ("users:add_user" | translate)
+        }}
+      </button>
     </div>
   </div>
 </div>
