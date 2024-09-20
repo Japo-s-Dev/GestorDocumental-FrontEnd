@@ -125,6 +125,10 @@
   "users:email": "Correo Electrónico",
   "users:role": "Rol",
   "users:actions": "Acciones",
+  "users:edit_user": "Editar Usuario",
+  "users:password": "Contraseña",
+  "users:cancel": "Cancelar",
+  "users:save_changes": "Guardar Cambios",
 
   "users:add_success_title": "Agregación",
   "users:add_success_message": "Usuario creado con éxito.",
@@ -145,7 +149,21 @@
   
   "users:error_deleting_title": "Error",
   "users:error_deleting_message": "Error al eliminar el usuario.",
+
+  "users:username_required": "El nombre de usuario es requerido.",
+  "users:username_exist": "El nombre de usuario ya existe.",
+
+  "users:password_required": "La contraseña es requerida.",
+  "users:password_confirm": "Confirmar Contraseña",
+  "users:password_confirm_required": "La confirmación de la contraseña es requerida.",
   
+  "users:email_required": "El correo electrónico es requerido.",
+  "users:email_invalid": "El correo electrónico no es válido.",
+  "users:email_exist": "El correo electrónico ya esta registrado.",
+
+  "users:rol_asigned": "Rol asignado",
+  "users:rol_required": "El rol es requerido.",
+
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Id Liquidación",
   "field:nombre": "Nombre",
