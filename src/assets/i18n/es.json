@@ -194,6 +194,10 @@
   "roles-modal:cancel": "Cancelar",
   "roles-modal:save_changes": "Guardar Cambios",
 
+  "roles:error_update_role": "Error al actualizar el rol.",
+  "roles:error_create_role": "Error al crear el rol.",
+  "roles:form_error": "Por favor, complete el formulario correctamente.",
+
   "roles:role_name_required": "El nombre del rol es requerido.",
   "roles:role_name_admin_not_allowed": "No se permite usar 'ADMIN' como nombre de rol.",
   "roles:role_name_duplicate": "El nombre del rol ya existe.",
