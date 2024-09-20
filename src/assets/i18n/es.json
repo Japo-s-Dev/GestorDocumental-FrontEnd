@@ -73,6 +73,7 @@
   "projects:index_datatype": "Tipo de dato",
   "projects:index_required": "Requerido",
   "projects:index_actions": "Acciones",
+  "projects:index_title": "Nombre del índice",
 
   "projects:error_loading_data_types": "Error al cargar los tipos de datos",
   "projects:project_updated_success": "Proyecto actualizado correctamente.",
@@ -84,7 +85,19 @@
   "projects:error_creating_index": "Error al crear el índice",
   "projects:error_deleting_index": "Error al eliminar el índice",
   "projects:unknown": "Desconocido",
-  "projects:index_title": "Nombre del índice",
+
+  "projects:add_success_title": "Creación",
+  "projects:add_success_message": "Proyecto creado correctamente.",
+  "projects:update_success_title": "Actualización",
+  "projects:update_success_message": "Proyecto actualizado correctamente.",
+  "projects:delete_success_title": "Eliminación",
+  "projects:delete_success_message": "Proyecto eliminado correctamente.",
+  "projects:error_loading_title": "Error",
+  "projects:error_loading_message": "Error al cargar los proyectos.",
+  "projects:error_deleting_title": "Error",
+  "projects:error_deleting_message": "Error al eliminar el proyecto.",
+  "projects:delete_project": "Eliminar Proyecto",
+  "projects:confirm_delete": "¿Está seguro de querer eliminar el proyecto \"{{ projectName }}\"?",
 
   "field:id_liquidacion": "Id Liquidación",
   "field:nombre": "Nombre",
