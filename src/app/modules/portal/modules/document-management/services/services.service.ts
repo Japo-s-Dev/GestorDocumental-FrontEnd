@@ -263,4 +263,49 @@ export class ServicesService {
     });
   }
 
+  createComment(archiveId: number, text: string): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_comment',
+      params: {
+        data: {
+          archive_id: archiveId,
+          text: text
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  getComment(commentId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'get_comment',
+      params: {
+        id: commentId
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  listComments(): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_comments',
+      params: {}
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
 }
