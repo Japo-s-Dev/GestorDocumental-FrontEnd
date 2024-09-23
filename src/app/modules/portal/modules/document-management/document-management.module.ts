@@ -14,12 +14,14 @@ import { RouterModule } from '@angular/router';
 import { ExpedientModalComponent } from './components/expedient-modal/expedient-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../../shared/shared.module';
+import { CommentsEventsComponent } from './components/comments-events/comments-events.component';
 
 
 @NgModule({
   declarations: [
     FileTreeComponent,
     DocumentViewerComponent,
+    CommentsEventsComponent,
     ExpedientListComponent,
     SafeUrlPipe,
     ExpedientModalComponent
