@@ -253,7 +253,8 @@ export class ExpedientListComponent implements OnInit {
     );
   }
 
-  nextStep(): void {
+  nextStep(expedientId: number): void {
+    localStorage.setItem('selectedExpedientId', expedientId.toString());
     this.router.navigate(['/portal/document-management/viewer']);
   }
 }

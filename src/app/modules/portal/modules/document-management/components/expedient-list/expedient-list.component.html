@@ -4,7 +4,8 @@
   [message]="alertMessage"
   [alertType]="alertType"
   [iconType]="alertIcon"
-  (closed)="handleAlertClosed()">
+  (closed)="handleAlertClosed()"
+>
 </app-alert>
 
 <div class="expedient-list-container">
@@ -12,7 +13,6 @@
   <div class="header">
     <h2 class="expedient-title">Expedientes</h2>
     <div class="header-buttons">
-
       <button class="add-expedient-button" (click)="openExpedientModal()">
         <i class="fa-solid fa-plus"></i> Agregar Expediente
       </button>
@@ -20,19 +20,29 @@
   </div>
 
   <div class="project-select-refresh-container">
-    <select class="project-select" [(ngModel)]="selectedProject" (change)="onProjectChange(selectedProject)">
+    <select
+      class="project-select"
+      [(ngModel)]="selectedProject"
+      (change)="onProjectChange(selectedProject)"
+    >
       <option value="0" disabled selected>Seleccione un Proyecto</option>
-      <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+      <option *ngFor="let project of projects" [value]="project.id">
+        {{ project.name }}
+      </option>
     </select>
     <button class="refresh-table-button" (click)="buildTable()">
       <i class="fa-solid fa-rotate-right"></i>
     </button>
   </div>
 
-
   <!-- Buscador -->
   <div class="search-container">
-    <input type="text" class="search-input" placeholder="Buscar expediente..." (input)="onSearch($event)">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Buscar expediente..."
+      (input)="onSearch($event)"
+    />
   </div>
 
   <!-- Tabla dinámica basada en el proyecto seleccionado -->
@@ -40,13 +50,16 @@
     <thead>
       <tr>
         <th *ngFor="let header of tableHeaders">{{ header }}</th>
-        <th>Acciones</th> <!-- Columna para las acciones -->
+        <th>Acciones</th>
+        <!-- Columna para las acciones -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of filteredData">
         <td>
-          <a (click)="nextStep()" class="expedient-link">{{ row['id'] }}</a>
+          <a (click)="nextStep(row['id'])" class="expedient-link">{{
+            row["id"]
+          }}</a>
         </td>
         <td *ngFor="let header of tableHeaders.slice(1)">
           {{ row[header] }}
