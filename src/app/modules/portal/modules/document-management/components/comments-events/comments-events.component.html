@@ -18,6 +18,7 @@
       <!-- Display events with a different style -->
       <div *ngIf="!item.text" class="event-bubble">
         <p>
+          <strong>{{ item.username }}</strong> performed
           <strong>{{ item.action }}</strong> on <em>{{ item.object }}</em> with
           ID <em>{{ item.object_id }}</em>
         </p>

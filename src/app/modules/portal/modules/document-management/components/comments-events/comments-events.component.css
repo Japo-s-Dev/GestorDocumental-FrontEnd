@@ -6,7 +6,7 @@
   background-color: #f5f5f5;
   padding: 15px;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .comment-input {
@@ -73,10 +73,11 @@
 }
 
 .own {
-  background-color: #ff4d00;
-  color: white;
+  background-color: #e07c51; /* Different background color for own comments */
+  color: #3c2109;
   align-self: flex-end;
   border: 1px solid #d76b00;
+  margin-left: auto; /* Align own comments to the right */
 }
 
 .event-bubble {
@@ -90,11 +91,12 @@
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center; /* Center text in the event bubble */
+  color: #802200;
 }
 
 .comment-date, .event-date {
   font-size: 10px;
-  color: #666;
+  color: #552f00;
   text-align: right;
   margin-top: 5px;
   display: block;

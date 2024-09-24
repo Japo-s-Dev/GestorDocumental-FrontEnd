@@ -12,6 +12,7 @@ export class CommentsEventsComponent implements OnInit {
   newComment: string = '';
   archiveId: number | null = null;
   users: any[] = []; // Store the list of users
+  currentUser: any = {};
 
   constructor(
     private servicesService: ServicesService,
@@ -20,6 +21,12 @@ export class CommentsEventsComponent implements OnInit {
 
   ngOnInit(): void {
     const storedExpedientId = localStorage.getItem('selectedExpedientId');
+    const storedUserStatus = localStorage.getItem('userStatus');
+
+    if (storedUserStatus) {
+      this.currentUser = JSON.parse(storedUserStatus);
+    }
+
     if (storedExpedientId) {
       this.archiveId = Number(storedExpedientId);
       this.loadUsers();
@@ -51,20 +58,23 @@ export class CommentsEventsComponent implements OnInit {
             (comment: any) => comment.archive_id === this.archiveId
           );
 
-          // Add username to each comment
+          // Add username and check if it's the current user's comment
           filteredComments.forEach((comment: any) => {
             const user = this.users.find((u) => u.id === comment.user_id);
             comment.username = user ? user.username : 'Unknown User';
+            comment.isOwnComment = comment.username === this.currentUser.username;
           });
 
           this.servicesService.listEvents(this.archiveId!).subscribe(
             (eventResponse) => {
               if (eventResponse && eventResponse.body) {
                 const events = eventResponse.body.result.map((event: any) => {
+                  const user = this.users.find((u) => u.id === event.user_id);
                   return {
                     ...event,
+                    username: user ? user.username : 'Unknown User',
                     description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
-                    timestamp: event.timestamp,
+                    timestamp: event.timestamp
                   };
                 });
 
@@ -73,8 +83,7 @@ export class CommentsEventsComponent implements OnInit {
                 // Sort by timestamp to maintain chronological order
                 this.commentsAndEvents.sort(
                   (a, b) =>
-                    new Date(a.timestamp).getTime() -
-                    new Date(b.timestamp).getTime()
+                    new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
                 );
               }
             }
