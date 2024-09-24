@@ -11,10 +11,13 @@
 <div class="expedient-list-container">
   <!-- Título y botones -->
   <div class="header">
-    <h2 class="expedient-title">Expedientes</h2>
+    <h2 class="expedient-title">
+      {{ "document-management:expedient_list" | translate }}
+    </h2>
     <div class="header-buttons">
       <button class="add-expedient-button" (click)="openExpedientModal()">
-        <i class="fa-solid fa-plus"></i> Agregar Expediente
+        <i class="fa-solid fa-plus"></i>
+        {{ "document-management:add_expedient" | translate }}
       </button>
     </div>
   </div>
@@ -25,7 +28,9 @@
       [(ngModel)]="selectedProject"
       (change)="onProjectChange(selectedProject)"
     >
-      <option value="0" disabled selected>Seleccione un Proyecto</option>
+      <option value="0" disabled selected>
+        {{ "document-management:select_structure" | translate }}
+      </option>
       <option *ngFor="let project of projects" [value]="project.id">
         {{ project.name }}
       </option>
@@ -40,7 +45,7 @@
     <input
       type="text"
       class="search-input"
-      placeholder="Buscar expediente..."
+      placeholder="{{ 'document-management:search_placeholder' | translate }}"
       (input)="onSearch($event)"
     />
   </div>
@@ -50,7 +55,9 @@
     <thead>
       <tr>
         <th *ngFor="let header of tableHeaders">{{ header }}</th>
-        <th>Acciones</th>
+        <th>
+          {{ "document-management:actions" | translate }}
+        </th>
         <!-- Columna para las acciones -->
       </tr>
     </thead>
@@ -78,5 +85,7 @@
     </tbody>
   </table>
 
-  <p *ngIf="tableData.length === 0">No hay datos para mostrar.</p>
+  <p *ngIf="tableData.length === 0">
+    {{ "document-management:no_data" | translate }}
+  </p>
 </div>

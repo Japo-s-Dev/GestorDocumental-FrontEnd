@@ -259,5 +259,11 @@
 
   "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
   "document-management:files": "Files",
-  "document-management:comments": "Comments"
+  "document-management:comments": "Comments",
+  "document-management:expedient_list": "Expedient List",
+  "document-management:add_expedient": "Add Expedient",
+  "document-management:select_structure": "Select Estructure",
+  "document-management:search_placeholder": "Search expedient...",
+  "document-management:actions": "Actions",
+  "document-management:no_data": "No data available"
 }

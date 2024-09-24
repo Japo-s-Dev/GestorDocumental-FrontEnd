@@ -259,5 +259,12 @@
 
   "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
   "document-management:files": "Archivos",
-  "document-management:comments": "Comentarios"
+  "document-management:comments": "Comentarios",
+  "document-management:expedient_list": "Lista de Expedientes",
+  "document-management:add_expedient": "Agregar Expediente",
+  "document-management:select_structure": "Seleccione una estructura",
+  "document-management:search_placeholder": "Buscar expediente...",
+  "document-management:actions": "Acciones",
+  "document-management:no_data": "No hay datos disponibles"
+
 }
