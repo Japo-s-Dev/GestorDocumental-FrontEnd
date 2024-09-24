@@ -1,14 +1,30 @@
 <div class="comments-section">
-  <div class="comment-list" *ngIf="comments && comments.length > 0">
-    <div class="comment-item" *ngFor="let comment of comments">
-      <div [class]="comment.isOwnComment ? 'bubble own' : 'bubble'">
-        <p>{{ comment.text }}</p>
-        <span class="comment-date">{{ comment.date | date : "short" }}</span>
+  <div
+    class="comment-list"
+    *ngIf="commentsAndEvents && commentsAndEvents.length > 0"
+  >
+    <div class="comment-item" *ngFor="let item of commentsAndEvents">
+      <!-- Display regular comments -->
+      <div
+        *ngIf="item.text"
+        [class]="item.isOwnComment ? 'bubble own' : 'bubble'"
+      >
+        <p>{{ item.text }}</p>
+        <span class="comment-date">{{ item.date | date : "short" }}</span>
+      </div>
+
+      <!-- Display events with a different style -->
+      <div *ngIf="!item.text" class="event-bubble">
+        <p>
+          <strong>{{ item.action }}</strong> on <em>{{ item.object }}</em> with
+          ID <em>{{ item.object_id }}</em>
+        </p>
+        <span class="event-date">{{ item.timestamp | date : "short" }}</span>
       </div>
     </div>
   </div>
-  <div *ngIf="comments.length === 0">
-    <p>No comments yet.</p>
+  <div *ngIf="commentsAndEvents.length === 0">
+    <p>No comments or events yet.</p>
   </div>
 
   <!-- Comment input area always at the bottom -->

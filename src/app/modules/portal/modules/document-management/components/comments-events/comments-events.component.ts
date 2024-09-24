@@ -4,32 +4,47 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-comments-events',
   templateUrl: './comments-events.component.html',
-  styleUrl: './comments-events.component.css'
+  styleUrls: ['./comments-events.component.css']
 })
 export class CommentsEventsComponent implements OnInit {
-  comments: any[] = [];
+  commentsAndEvents: any[] = [];
   newComment: string = '';
-  archiveId: number | null = null; // Nullable archiveId
+  archiveId: number | null = null;
 
   constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
-    // Retrieve the selected expedient ID from localStorage
     const storedExpedientId = localStorage.getItem('selectedExpedientId');
     if (storedExpedientId) {
       this.archiveId = Number(storedExpedientId);
-      this.loadComments();
+      this.loadCommentsAndEvents();
     } else {
       console.error('No expedient ID found in localStorage.');
     }
   }
 
-  loadComments() {
+  loadCommentsAndEvents() {
     if (this.archiveId !== null) {
       this.servicesService.listComments().subscribe(response => {
         if (response && response.body) {
-          // Filter the comments based on archiveId
-          this.comments = response.body.result.filter((comment: any) => comment.archive_id === this.archiveId);
+          const filteredComments = response.body.result.filter((comment: any) => comment.archive_id === this.archiveId);
+  
+          this.servicesService.listEvents(this.archiveId!).subscribe(eventResponse => {
+            if (eventResponse && eventResponse.body) {
+              const events = eventResponse.body.result.map((event: any) => {
+                return {
+                  ...event,
+                  description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
+                  timestamp: event.timestamp
+                };
+              });
+  
+              this.commentsAndEvents = [...filteredComments, ...events];
+  
+              // Sort by timestamp to maintain chronological order
+              this.commentsAndEvents.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+            }
+          });
         }
       });
     }
@@ -39,7 +54,7 @@ export class CommentsEventsComponent implements OnInit {
     if (this.newComment.trim() && this.archiveId !== null) {
       this.servicesService.createComment(this.archiveId, this.newComment).subscribe(response => {
         this.newComment = '';
-        this.loadComments();
+        this.loadCommentsAndEvents(); // Reload comments and events
       });
     }
   }

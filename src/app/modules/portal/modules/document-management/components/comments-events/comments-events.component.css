@@ -16,7 +16,7 @@
   border-top: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  align-items: center; /* Center items vertically */
+  align-items: center;
 }
 
 .comment-input textarea {
@@ -31,21 +31,21 @@
 
 .comment-input button {
   margin-left: 8px;
-  padding: 6px 12px; /* Smaller button size */
+  padding: 6px 12px;
   background-color: #ff4d00;
   color: white;
   width: 35%;
   align-items: center;
   border: none;
-  border-radius: 8px; /* Adjust border-radius for a smaller button */
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px; /* Adjust font size to fit the smaller button */
+  font-size: 14px;
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .comment-input button:hover {
   background-color: #d76b00;
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
 .comment-list {
@@ -79,7 +79,20 @@
   border: 1px solid #d76b00;
 }
 
-.comment-date {
+.event-bubble {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #ffc107; /* Distinct background color for events */
+  margin: 10px auto; /* Center the event bubble */
+  position: relative;
+  word-wrap: break-word;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center text in the event bubble */
+}
+
+.comment-date, .event-date {
   font-size: 10px;
   color: #666;
   text-align: right;
