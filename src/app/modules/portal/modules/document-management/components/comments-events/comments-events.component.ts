@@ -28,7 +28,8 @@ export class CommentsEventsComponent implements OnInit {
     if (this.archiveId !== null) {
       this.servicesService.listComments().subscribe(response => {
         if (response && response.body) {
-          this.comments = response.body.result; // Adapt this if your API response format differs
+          // Filter the comments based on archiveId
+          this.comments = response.body.result.filter((comment: any) => comment.archive_id === this.archiveId);
         }
       });
     }
