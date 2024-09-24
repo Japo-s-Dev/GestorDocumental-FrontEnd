@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 export class DocumentViewerComponent {
   selectedDocumentUrl: string | null = null;
   selectedDocumentName: string | null = null;
+  activeTab: string = 'archivos'; // Default tab set to 'archivos'
 
   constructor(private location: Location) {}
 

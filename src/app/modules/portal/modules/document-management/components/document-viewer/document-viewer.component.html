@@ -1,23 +1,52 @@
 <div class="viewer-container">
-  <!-- Botón para volver a la ruta anterior -->
-  <button class="back-button" (click)="goBack()">
-    <i class="fa-solid fa-arrow-left"></i>
-  </button>
+  <!-- Header container for back button and tabs -->
+  <div class="header-container">
+    <!-- Back button -->
+    <button class="back-button" (click)="goBack()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
 
-  <div class="file-tree-container">
-    <app-file-tree (fileSelected)="onFileSelected($event)"></app-file-tree>
+    <!-- Tabs for Archivos and Comentarios -->
+    <div class="tabs">
+      <button
+        [class.active]="activeTab === 'archivos'"
+        (click)="activeTab = 'archivos'"
+      >
+        Archivos
+      </button>
+      <button
+        [class.active]="activeTab === 'comentarios'"
+        (click)="activeTab = 'comentarios'"
+      >
+        Comentarios
+      </button>
+    </div>
   </div>
 
-  <div class="file-display-container">
-    <ng-container *ngIf="selectedDocumentUrl">
-      <div class="document-header">
+  <!-- Main container for tab content -->
+  <div class="tab-content">
+    <!-- Display file tree if "Archivos" tab is selected -->
+    <div *ngIf="activeTab === 'archivos'" class="file-tree-container">
+      <app-file-tree (fileSelected)="onFileSelected($event)"></app-file-tree>
+    </div>
+
+    <!-- Display comments if "Comentarios" tab is selected -->
+    <div *ngIf="activeTab === 'comentarios'" class="comments-container">
+      <app-comments-events></app-comments-events>
+    </div>
+
+    <!-- Document preview that remains visible in both tabs -->
+    <div class="file-display-container">
+      <div class="document-header" *ngIf="selectedDocumentName">
         <h3>{{ selectedDocumentName }}</h3>
       </div>
       <ngx-doc-viewer
+        *ngIf="selectedDocumentUrl"
         [url]="selectedDocumentUrl"
         viewer="google"
-        style="width:100%; height:85vh;">
+        style="width: 100%; height: 85vh"
+      >
       </ngx-doc-viewer>
-    </ng-container>
+    </div>
   </div>
 </div>
