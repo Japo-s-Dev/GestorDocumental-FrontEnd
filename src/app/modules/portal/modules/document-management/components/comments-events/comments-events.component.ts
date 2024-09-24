@@ -5,18 +5,23 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-comments-events',
   templateUrl: './comments-events.component.html',
-  styleUrls: ['./comments-events.component.css']
+  styleUrls: ['./comments-events.component.css'],
 })
 export class CommentsEventsComponent implements OnInit {
   commentsAndEvents: any[] = [];
+  filteredCommentsAndEvents: any[] = [];
   newComment: string = '';
   archiveId: number | null = null;
-  users: any[] = []; // Store the list of users
+  users: any[] = [];
   currentUser: any = {};
+  selectedFilters: string[] = ['expedientComment', 'expedientEvent'];
+  allFilters = ['expedientComment', 'expedientEvent', 'documentComment', 'documentEvent'];
+  isAllSelected = false;
+  dropdownOpen = false;
 
   constructor(
     private servicesService: ServicesService,
-    private userCrudService: UserCrudService // Inject the user service
+    private userCrudService: UserCrudService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +46,7 @@ export class CommentsEventsComponent implements OnInit {
         if (response && response.body.result) {
           this.users = response.body.result;
           console.log('Users loaded:', this.users);
-          this.loadCommentsAndEvents(); // Now that users are loaded, load comments and events
+          this.loadCommentsAndEvents();
         }
       },
       (error) => {
@@ -57,16 +62,15 @@ export class CommentsEventsComponent implements OnInit {
           const filteredComments = response.body.result.filter(
             (comment: any) => comment.archive_id === this.archiveId
           );
-  
-          // Add username and check if it's the current user's comment
+
           filteredComments.forEach((comment: any) => {
             const user = this.users.find((u) => u.id === comment.user_id);
             comment.username = user ? user.username : 'Unknown User';
             comment.isOwnComment = comment.username === this.currentUser.username;
-            comment.eventType = 'comment'; // Add a type to distinguish between comments and events
-            comment.dateTime = new Date(comment.ctime); // Use ctime for sorting
+            comment.eventType = 'expedientComment';
+            comment.dateTime = new Date(comment.ctime);
           });
-  
+
           this.servicesService.listEvents(this.archiveId!).subscribe(
             (eventResponse) => {
               if (eventResponse && eventResponse.body) {
@@ -77,17 +81,18 @@ export class CommentsEventsComponent implements OnInit {
                     username: user ? user.username : 'Unknown User',
                     description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
                     timestamp: event.timestamp,
-                    eventType: 'event', // Add a type to distinguish between comments and events
-                    dateTime: new Date(event.timestamp) // Use timestamp for sorting
+                    eventType: 'expedientEvent',
+                    dateTime: new Date(event.timestamp),
                   };
                 });
-  
+
                 this.commentsAndEvents = [...filteredComments, ...events];
-  
-                // Sort by dateTime to maintain chronological order
+
                 this.commentsAndEvents.sort(
                   (a, b) => a.dateTime.getTime() - b.dateTime.getTime()
                 );
+
+                this.applyFilter();
               }
             }
           );
@@ -95,14 +100,51 @@ export class CommentsEventsComponent implements OnInit {
       });
     }
   }
-  
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  applyFilter() {
+    if (this.selectedFilters.length === 0) {
+      this.filteredCommentsAndEvents = [];
+    } else {
+      this.filteredCommentsAndEvents = this.commentsAndEvents.filter((item) =>
+        this.selectedFilters.includes(item.eventType)
+      );
+    }
+
+    this.isAllSelected = this.selectedFilters.length === this.allFilters.length;
+  }
+
+  toggleSelectAll(event: any) {
+    if (event.target.checked) {
+      this.selectedFilters = [...this.allFilters];
+    } else {
+      this.selectedFilters = [];
+    }
+    this.applyFilter();
+  }
 
   addComment() {
     if (this.newComment.trim() && this.archiveId !== null) {
-      this.servicesService.createComment(this.archiveId, this.newComment).subscribe(response => {
+      this.servicesService.createComment(this.archiveId, this.newComment).subscribe(() => {
         this.newComment = '';
-        this.loadCommentsAndEvents(); // Reload comments and events
+        this.loadCommentsAndEvents();
       });
     }
+  }
+
+  toggleFilterSelection(filter: string, event: any) {
+    if (event.target.checked) {
+      if (!this.selectedFilters.includes(filter)) {
+        this.selectedFilters.push(filter);
+      }
+    } else {
+      this.selectedFilters = this.selectedFilters.filter(f => f !== filter);
+    }
+  
+    this.isAllSelected = this.selectedFilters.length === this.allFilters.length;
+    this.applyFilter();
   }
 }

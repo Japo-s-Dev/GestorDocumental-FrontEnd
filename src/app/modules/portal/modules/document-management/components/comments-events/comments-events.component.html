@@ -1,9 +1,57 @@
 <div class="comments-section">
-  <div
-    class="comment-list"
-    *ngIf="commentsAndEvents && commentsAndEvents.length > 0"
-  >
-    <div class="comment-item" *ngFor="let item of commentsAndEvents">
+  <!-- Dropdown Checkbox Filter Menu -->
+  <div class="filter-dropdown">
+    <button (click)="toggleDropdown()" class="dropdown-button">Filter</button>
+    <div class="dropdown-content" [class.show]="dropdownOpen">
+      <label>
+        <input
+          type="checkbox"
+          (change)="toggleSelectAll($event)"
+          [checked]="isAllSelected"
+        />
+        All
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="expedientComment"
+          [checked]="selectedFilters.includes('expedientComment')"
+          (change)="toggleFilterSelection('expedientComment', $event)"
+        />
+        Expedient Comment
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="expedientEvent"
+          [checked]="selectedFilters.includes('expedientEvent')"
+          (change)="toggleFilterSelection('expedientEvent', $event)"
+        />
+        Expedient Event
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="documentComment"
+          [checked]="selectedFilters.includes('documentComment')"
+          (change)="toggleFilterSelection('documentComment', $event)"
+        />
+        Document Comment
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="documentEvent"
+          [checked]="selectedFilters.includes('documentEvent')"
+          (change)="toggleFilterSelection('documentEvent', $event)"
+        />
+        Document Event
+      </label>
+    </div>
+  </div>
+
+  <div class="comment-list" *ngIf="filteredCommentsAndEvents.length > 0">
+    <div class="comment-item" *ngFor="let item of filteredCommentsAndEvents">
       <!-- Display regular comments -->
       <div
         *ngIf="item.text"
@@ -26,7 +74,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="commentsAndEvents.length === 0">
+
+  <div *ngIf="filteredCommentsAndEvents.length === 0">
     <p>No comments or events yet.</p>
   </div>
 
