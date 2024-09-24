@@ -244,5 +244,9 @@
   "upload_document:max_size": "max. 10MB",
   "upload_document:preview": "Preview document",
   "upload_document:no_preview_available": "No preview available for this file type",
-  "upload_document:save_button": "Save Document"
+  "upload_document:save_button": "Save Document",
+
+  "COMMENTS": "****************************************************COMMENTS****************************************************",
+  "comments:no_yets": "No comments yet",
+  "comments:post_comment": "Post a comment"
 }

@@ -244,5 +244,9 @@
   "upload_document:max_size": "máx. 50MB",
   "upload_document:preview": "Vista previa del documento",
   "upload_document:no_preview_available": "No hay vista previa disponible para este tipo de archivo",
-  "upload_document:save_button": "Guardar Documento"
+  "upload_document:save_button": "Guardar Documento",
+
+  "COMMENTS": "****************************************************COMMENTS****************************************************",
+  "comments:no_yets": "No hay comentarios aún",
+  "comments:post_comment": "Publicar Comentario"
 }
