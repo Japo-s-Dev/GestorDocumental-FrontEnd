@@ -9,8 +9,10 @@
         *ngIf="item.text"
         [class]="item.isOwnComment ? 'bubble own' : 'bubble'"
       >
-        <p>{{ item.text }}</p>
-        <span class="comment-date">{{ item.date | date : "short" }}</span>
+        <p>
+          <strong>{{ item.username }}:</strong> {{ item.text }}
+        </p>
+        <span class="comment-date">{{ item.ctime | date : "short" }}</span>
       </div>
 
       <!-- Display events with a different style -->
