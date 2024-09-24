@@ -57,14 +57,16 @@ export class CommentsEventsComponent implements OnInit {
           const filteredComments = response.body.result.filter(
             (comment: any) => comment.archive_id === this.archiveId
           );
-
+  
           // Add username and check if it's the current user's comment
           filteredComments.forEach((comment: any) => {
             const user = this.users.find((u) => u.id === comment.user_id);
             comment.username = user ? user.username : 'Unknown User';
             comment.isOwnComment = comment.username === this.currentUser.username;
+            comment.eventType = 'comment'; // Add a type to distinguish between comments and events
+            comment.dateTime = new Date(comment.ctime); // Use ctime for sorting
           });
-
+  
           this.servicesService.listEvents(this.archiveId!).subscribe(
             (eventResponse) => {
               if (eventResponse && eventResponse.body) {
@@ -74,16 +76,17 @@ export class CommentsEventsComponent implements OnInit {
                     ...event,
                     username: user ? user.username : 'Unknown User',
                     description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
-                    timestamp: event.timestamp
+                    timestamp: event.timestamp,
+                    eventType: 'event', // Add a type to distinguish between comments and events
+                    dateTime: new Date(event.timestamp) // Use timestamp for sorting
                   };
                 });
-
+  
                 this.commentsAndEvents = [...filteredComments, ...events];
-
-                // Sort by timestamp to maintain chronological order
+  
+                // Sort by dateTime to maintain chronological order
                 this.commentsAndEvents.sort(
-                  (a, b) =>
-                    new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+                  (a, b) => a.dateTime.getTime() - b.dateTime.getTime()
                 );
               }
             }
@@ -92,6 +95,7 @@ export class CommentsEventsComponent implements OnInit {
       });
     }
   }
+  
 
   addComment() {
     if (this.newComment.trim() && this.archiveId !== null) {
