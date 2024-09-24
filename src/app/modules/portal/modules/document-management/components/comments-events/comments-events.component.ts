@@ -45,7 +45,6 @@ export class CommentsEventsComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.users = response.body.result;
-          console.log('Users loaded:', this.users);
           this.loadCommentsAndEvents();
         }
       },
