@@ -257,5 +257,7 @@
   "comments:filter_by": "Filtrar por",
   "comments:add_comment": "Agregar comentario...",
 
-  "ERROR": "****************************************************ERROR****************************************************"
+  "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
+  "document-management:files": "Archivos",
+  "document-management:comments": "Comentarios"
 }

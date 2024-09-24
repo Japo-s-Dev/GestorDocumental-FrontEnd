@@ -257,5 +257,7 @@
   "comments:filter_by": "Filter by",
   "comments:add_comment": "Add comment...",
 
-  "ERROR": "****************************************************ERROR****************************************************"
+  "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
+  "document-management:files": "Files",
+  "document-management:comments": "Comments"
 }

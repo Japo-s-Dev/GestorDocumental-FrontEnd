@@ -12,13 +12,13 @@
         [class.active]="activeTab === 'archivos'"
         (click)="activeTab = 'archivos'"
       >
-        Archivos
+        {{ "document-management:files" | translate }}
       </button>
       <button
         [class.active]="activeTab === 'comentarios'"
         (click)="activeTab = 'comentarios'"
       >
-        Comentarios
+        {{ "document-management:comments" | translate }}
       </button>
     </div>
   </div>
