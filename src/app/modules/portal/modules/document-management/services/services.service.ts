@@ -308,4 +308,24 @@ export class ServicesService {
       withCredentials: true
     });
   }
+
+  listEvents(archiveId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_events',
+      params: {
+        filters: {
+          archive_id: archiveId
+        },
+        list_options: {
+          order_bys: "timestamp"
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
 }
