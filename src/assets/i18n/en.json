@@ -265,5 +265,16 @@
   "document-management:select_structure": "Select Estructure",
   "document-management:search_placeholder": "Search expedient...",
   "document-management:actions": "Actions",
-  "document-management:no_data": "No data available"
+  "document-management:no_data": "No data available",
+  "expedient-modal:title_edit_expedient": "Edit Expedient",
+  "expedient-modal:title_add_expedient": "Add Expedient",
+  "expedient-modal:tag_placeholder": "Enter the file label",
+  "expedient-modal:tag_required": "The file tag is required",
+  "expedient-modal:required_field": "This field ",
+  "expedient-modal:is_required": " is required.",
+  "expedient-modal:tag": "Tag",
+  "expedient-modal:into": "Into ",
+  "expedient-modal:cancel": "Cancel",
+  "expedient-modal:save_expedient": "Save Expedient",
+  "expedient-modal:add_expedient": "Add Expedient"
 }

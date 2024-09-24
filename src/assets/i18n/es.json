@@ -265,6 +265,18 @@
   "document-management:select_structure": "Seleccione una estructura",
   "document-management:search_placeholder": "Buscar expediente...",
   "document-management:actions": "Acciones",
-  "document-management:no_data": "No hay datos disponibles"
+  "document-management:no_data": "No hay datos disponibles",
 
+  "EXPEDIENT-MODAL": "****************************************************EXPEDIENT-MODAL****************************************************",
+  "expedient-modal:title_edit_expedient": "Editar Expediente",
+  "expedient-modal:title_add_expedient": "Agregar Expediente",
+  "expedient-modal:tag_placeholder": "Ingrese la etiqueta del expediente",
+  "expedient-modal:tag_required": "La etiqueta del expediente es requerida",
+  "expedient-modal:required_field": "Este campo ",
+  "expedient-modal:is_required": " es requerido.",
+  "expedient-modal:tag": "Etiqueta",
+  "expedient-modal:into": "Ingrese ",
+  "expedient-modal:cancel": "Cancelar",
+  "expedient-modal:save_expedient": "Guardar Expediente",
+  "expedient-modal:add_expedient": "Agregar Expediente"
 }
