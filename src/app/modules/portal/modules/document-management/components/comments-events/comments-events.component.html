@@ -1,7 +1,9 @@
 <div class="comments-section">
   <!-- Dropdown Checkbox Filter Menu -->
   <div class="filter-dropdown">
-    <button (click)="toggleDropdown()" class="dropdown-button">Filter</button>
+    <button (click)="toggleDropdown()" class="dropdown-button">
+      {{ "comments:filter_by" | translate }}
+    </button>
     <div class="dropdown-content" [class.show]="dropdownOpen">
       <label>
         <input
@@ -9,7 +11,7 @@
           (change)="toggleSelectAll($event)"
           [checked]="isAllSelected"
         />
-        All
+        {{ "comments:select_all" | translate }}
       </label>
       <label>
         <input
@@ -18,7 +20,7 @@
           [checked]="selectedFilters.includes('expedientComment')"
           (change)="toggleFilterSelection('expedientComment', $event)"
         />
-        Archive Comment
+        {{ "comments:archive_comment" | translate }}
       </label>
       <label>
         <input
@@ -27,7 +29,7 @@
           [checked]="selectedFilters.includes('expedientEvent')"
           (change)="toggleFilterSelection('expedientEvent', $event)"
         />
-        Archive Event
+        {{ "comments:archive_event" | translate }}
       </label>
       <label>
         <input
@@ -36,7 +38,7 @@
           [checked]="selectedFilters.includes('documentComment')"
           (change)="toggleFilterSelection('documentComment', $event)"
         />
-        Document Comment
+        {{ "comments:document_comment" | translate }}
       </label>
       <label>
         <input
@@ -45,7 +47,7 @@
           [checked]="selectedFilters.includes('documentEvent')"
           (change)="toggleFilterSelection('documentEvent', $event)"
         />
-        Document Event
+        {{ "comments:document_event" | translate }}
       </label>
     </div>
   </div>
@@ -76,14 +78,14 @@
   </div>
 
   <div *ngIf="filteredCommentsAndEvents.length === 0">
-    <p>No comments or events yet.</p>
+    <p>{{ "comments:no_yets" | translate }}</p>
   </div>
 
   <!-- Comment input area always at the bottom -->
   <div class="comment-input">
     <textarea
       [(ngModel)]="newComment"
-      placeholder="Add a comment..."
+      placeholder="{{ 'comments:add_comment' | translate }}"
     ></textarea>
     <button (click)="addComment()">
       {{ "comments:post_comment" | translate }}

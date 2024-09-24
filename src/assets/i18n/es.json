@@ -247,6 +247,15 @@
   "upload_document:save_button": "Guardar Documento",
 
   "COMMENTS": "****************************************************COMMENTS****************************************************",
-  "comments:no_yets": "No hay comentarios aún",
-  "comments:post_comment": "Publicar Comentario"
+  "comments:no_yets": "No hay comentarios aún.",
+  "comments:post_comment": "Publicar Comentario",
+  "comments:select_all": "Seleccionar todo",
+  "comments:archive_comment": "Comentarios de archivos",
+  "comments:archive_event": "Eventos de archivos",
+  "comments:document_comment": "Comentarios de documentos",
+  "comments:document_event": "Eventos de documentos",
+  "comments:filter_by": "Filtrar por",
+  "comments:add_comment": "Agregar comentario...",
+
+  "ERROR": "****************************************************ERROR****************************************************"
 }

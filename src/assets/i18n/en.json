@@ -248,5 +248,14 @@
 
   "COMMENTS": "****************************************************COMMENTS****************************************************",
   "comments:no_yets": "No comments yet",
-  "comments:post_comment": "Post a comment"
+  "comments:post_comment": "Post a comment",
+  "comments:select_all": "Select All",
+  "comments:archive_comment": "Archive Comment",
+  "comments:archive_event": "Archive Event",
+  "comments:document_comment": "Document Comment",
+  "comments:document_event": "Document Event",
+  "comments:filter_by": "Filter by",
+  "comments:add_comment": "Add comment...",
+
+  "ERROR": "****************************************************ERROR****************************************************"
 }
