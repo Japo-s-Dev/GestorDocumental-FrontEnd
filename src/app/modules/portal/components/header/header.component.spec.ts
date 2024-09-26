@@ -133,4 +133,46 @@ describe('HeaderComponent', () => {
     expect(translateServiceMock.get).toHaveBeenCalledWith('route:search_criteria');
     expect(component.currentLabel).toBe('translated label');
   });
+
+  it('should set the correct styles and icons for ADMIN role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'adminUser', role: 'ADMIN' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('adminUser');
+    expect(component.userRole).toBe('ADMIN');
+    expect(component.usernameStyle).toBe('admin-style');
+    expect(component.roleIcon).toBe('fa-crown');
+  });
+  
+  it('should set the correct styles and icons for ADMIN JUNIOR role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'juniorAdmin', role: 'ADMIN JUNIOR' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('juniorAdmin');
+    expect(component.userRole).toBe('ADMIN JUNIOR');
+    expect(component.usernameStyle).toBe('admin-junior-style');
+    expect(component.roleIcon).toBe('fa-star');
+  });
+  
+  it('should set the correct styles and icons for a regular user role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'regularUser', role: 'USER' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('regularUser');
+    expect(component.userRole).toBe('USER');
+    expect(component.usernameStyle).toBe('regular-user-style');
+    expect(component.roleIcon).toBe('');
+  });
 });
