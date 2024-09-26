@@ -14,12 +14,20 @@ import { RouterModule } from '@angular/router';
 import { ExpedientModalComponent } from './components/expedient-modal/expedient-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../../shared/shared.module';
+import { CommentsEventsComponent } from './components/comments-events/comments-events.component';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     FileTreeComponent,
     DocumentViewerComponent,
+    CommentsEventsComponent,
     ExpedientListComponent,
     SafeUrlPipe,
     ExpedientModalComponent
@@ -35,6 +43,13 @@ import { SharedModule } from '../../../../shared/shared.module';
     ReactiveFormsModule,
     NgbModule,
     SharedModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }) 
   ]
 })
 export class DocumentManagementModule { }

@@ -1,0 +1,94 @@
+<div class="comments-section">
+  <!-- Dropdown Checkbox Filter Menu -->
+  <div class="filter-dropdown">
+    <button (click)="toggleDropdown()" class="dropdown-button">
+      {{ "comments:filter_by" | translate }}
+    </button>
+    <div class="dropdown-content" [class.show]="dropdownOpen">
+      <label>
+        <input
+          type="checkbox"
+          (change)="toggleSelectAll($event)"
+          [checked]="isAllSelected"
+        />
+        {{ "comments:select_all" | translate }}
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="expedientComment"
+          [checked]="selectedFilters.includes('expedientComment')"
+          (change)="toggleFilterSelection('expedientComment', $event)"
+        />
+        {{ "comments:archive_comment" | translate }}
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="expedientEvent"
+          [checked]="selectedFilters.includes('expedientEvent')"
+          (change)="toggleFilterSelection('expedientEvent', $event)"
+        />
+        {{ "comments:archive_event" | translate }}
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="documentComment"
+          [checked]="selectedFilters.includes('documentComment')"
+          (change)="toggleFilterSelection('documentComment', $event)"
+        />
+        {{ "comments:document_comment" | translate }}
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          value="documentEvent"
+          [checked]="selectedFilters.includes('documentEvent')"
+          (change)="toggleFilterSelection('documentEvent', $event)"
+        />
+        {{ "comments:document_event" | translate }}
+      </label>
+    </div>
+  </div>
+
+  <div class="comment-list" *ngIf="filteredCommentsAndEvents.length > 0">
+    <div class="comment-item" *ngFor="let item of filteredCommentsAndEvents">
+      <!-- Display regular comments -->
+      <div
+        *ngIf="item.text"
+        [class]="item.isOwnComment ? 'bubble own' : 'bubble'"
+      >
+        <p>
+          <strong>{{ item.username }}:</strong> {{ item.text }}
+        </p>
+        <span class="comment-date">{{ item.ctime | date : "short" }}</span>
+      </div>
+
+      <!-- Display events with a different style -->
+      <div *ngIf="!item.text" class="event-bubble">
+        <p>
+          <strong>{{ item.username }}</strong> performed
+          <strong>{{ item.action }}</strong> on <em>{{ item.object }}</em> with
+          ID <em>{{ item.object_id }}</em>
+        </p>
+        <span class="event-date">{{ item.timestamp | date : "short" }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredCommentsAndEvents.length === 0">
+    <p>{{ "comments:no_yets" | translate }}</p>
+  </div>
+
+  <!-- Comment input area always at the bottom -->
+  <div class="comment-input">
+    <textarea
+      [(ngModel)]="newComment"
+      placeholder="{{ 'comments:add_comment' | translate }}"
+    ></textarea>
+    <button (click)="addComment()">
+      {{ "comments:post_comment" | translate }}
+    </button>
+  </div>
+</div>

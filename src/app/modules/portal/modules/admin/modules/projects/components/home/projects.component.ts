@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectsModalComponent } from '../projects-modal/projects-modal.component';
 import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
 import { LoaderService } from '../../../../../../../../services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-projects',
@@ -26,6 +27,7 @@ export class ProjectsComponent implements OnInit {
     private projectsCrudService: ProjectsCrudService,
     private modalService: NgbModal,
     private loaderService: LoaderService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,11 @@ export class ProjectsComponent implements OnInit {
         }
       },
       (error) => {
-        this.showAlert('Error', 'Error al obtener los proyectos.', 'danger');
+        this.translate.get('projects:error_loading_title').subscribe((title: string) => {
+          this.translate.get('projects:error_loading_message').subscribe((message: string) => {
+            this.showAlert({ title, message }, 'danger');
+          });
+        });
         console.error('Error al obtener los proyectos:', error);
       },
     );
@@ -61,14 +67,22 @@ export class ProjectsComponent implements OnInit {
         if (result) {
           this.loadProjects();
           if (result === 'created') {
+            this.translate.get('projects:add_success_title').subscribe((title: string) => {
+              this.translate.get('projects:add_success_message').subscribe((message: string) => {
+                this.showAlert({ title, message }, 'success');
+              });
+            });
             this.loaderService.showLoader();
-            this.showAlert('Agregación', 'Proyecto creado con éxito.', 'success');
             setTimeout(() => {
               this.loaderService.hideLoader();
             }, 1000);
           } else if (result === 'updated') {
+            this.translate.get('projects:update_success_title').subscribe((title: string) => {
+              this.translate.get('projects:update_success_message').subscribe((message: string) => {
+                this.showAlert({ title, message }, 'warning');
+              });
+            });
             this.loaderService.showLoader();
-            this.showAlert('Actualización', 'Proyecto actualizado con éxito.', 'warning');
             setTimeout(() => {
               this.loaderService.hideLoader();
             }, 1000);
@@ -89,34 +103,44 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(project: IProject): void {
-    const modalRef = this.modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.message = `¿Está seguro de querer eliminar el proyecto "${project.project_name}"?`;
-    modalRef.result
-      .then((result) => {
-        if (result === 'confirm') {
-          this.projectsCrudService.deleteProject(project.id).subscribe(
-            () => {
-              this.loaderService.showLoader();
-              this.showAlert('Eliminación', 'Proyecto eliminado con éxito.', 'info');
-              this.loadProjects();
-              setTimeout(() => {
-                this.loaderService.hideLoader();
-              }, 1000);
-            },
-            (error) => {
-              this.loaderService.showLoader();
-              this.showAlert('Error', 'No es posible eliminar el proyecto, tiene expedientes asignados', 'danger');
-              console.error('Error al eliminar el proyecto:', error);
-              setTimeout(() => {
-                this.loaderService.hideLoader();
-              }, 1000);
-            },
-          );
-        }
-      })
-      .catch((error) => {
-        console.log('Modal dismissed', error);
-      });
+    this.translate.get('projects:confirm_delete', { projectName: project.project_name }).subscribe((translatedText: string) => {
+      const modalRef = this.modalService.open(ConfirmModalComponent);
+      modalRef.componentInstance.message = translatedText;
+
+      modalRef.result
+        .then((result) => {
+          if (result === 'confirm') {
+            this.projectsCrudService.deleteProject(project.id).subscribe(
+              () => {
+                this.translate.get('projects:delete_success_title').subscribe((title: string) => {
+                  this.translate.get('projects:delete_success_message').subscribe((message: string) => {
+                    this.showAlert({ title, message }, 'info');
+                  });
+                });
+                this.loaderService.showLoader();
+                this.loadProjects();
+                setTimeout(() => {
+                  this.loaderService.hideLoader();
+                }, 1000);
+              },
+              (error) => {
+                this.translate.get('projects:error_deleting_title').subscribe((title: string) => {
+                  this.translate.get('projects:error_deleting_message').subscribe((message: string) => {
+                    this.showAlert({ title, message }, 'danger');
+                  });
+                });
+                this.loaderService.showLoader();
+                setTimeout(() => {
+                  this.loaderService.hideLoader();
+                }, 1000);
+              },
+            );
+          }
+        })
+        .catch((error) => {
+          console.log('Modal dismissed', error);
+        });
+    });
   }
 
   filteredProjects(): IProject[] {
@@ -128,9 +152,9 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
-  showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
-    this.alertTitle = title;
-    this.alertMessage = message;
+  showAlert(translatedText: any, type: 'success' | 'warning' | 'danger' | 'info'): void {
+    this.alertTitle = translatedText.title;
+    this.alertMessage = translatedText.message;
     this.alertType = `alert-${type}`;
     this.alertIcon = `fa-${
       type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'

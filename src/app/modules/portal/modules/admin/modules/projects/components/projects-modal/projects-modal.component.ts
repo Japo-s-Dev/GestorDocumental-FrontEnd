@@ -5,6 +5,7 @@ import { IProject } from '../../interfaces/project.interface';
 import { ProjectsCrudService } from '../../services/projects-crud.service';
 import { IndexService } from '../../services/index.service';
 import { IIndexRequest } from '../../interfaces/index.interface';
+import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
   selector: 'app-projects-modal',
@@ -34,7 +35,8 @@ export class ProjectsModalComponent implements OnInit {
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     private projectsCrudService: ProjectsCrudService,
-    private indexService: IndexService
+    private indexService: IndexService,
+    private translate: TranslateService 
   ) {}
 
   ngOnInit(): void {
@@ -99,7 +101,9 @@ export class ProjectsModalComponent implements OnInit {
         }
       },
       (error) => {
-        this.showAlert('Error al cargar los tipos de datos');
+        this.translate.get('projects:error_loading_data_types').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });
       }
     );
   }
@@ -112,10 +116,14 @@ export class ProjectsModalComponent implements OnInit {
       if (this.isEditMode && this.projectData) {
         this.projectsCrudService.updateProject(this.projectData.id, formValue).subscribe(
           () => {
-            this.showAlert('Proyecto actualizado correctamente.');
+            this.translate.get('projects:project_updated_success').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
             this.activeModal.close('updated');
           },
-          (error) => this.showAlert('Error al actualizar el proyecto')
+          (error) => {this.translate.get('projects:error_updating_project').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });}
         );
       } else if (!this.projectCreated) {
         // Crear proyecto si aún no ha sido creado
@@ -126,22 +134,32 @@ export class ProjectsModalComponent implements OnInit {
               if (this.projectData) {
                 this.tempProjectId = this.projectData.id;
                 this.projectCreated = true;
-                this.showAlert('Proyecto creado correctamente, ahora puedes agregar índices.');
+                this.translate.get('projects:project_created_success').subscribe((translatedText: string) => {
+                  this.showAlert(translatedText);
+                });
               }
             }
             this.loadIndices();
           },
-          (error) => this.showAlert('Error al crear el proyecto')
+          (error) => {
+            this.translate.get('projects:error_creating_project').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
+          }
         );
       } else {
         if (this.indices.length < 1) {
-          this.showAlert('Debes agregar al menos un índice antes de finalizar.');
+          this.translate.get('projects:add_at_least_one_index').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          });
           return;
         }
         this.activeModal.close('created');
       }
     } else {
-      this.showAlert('Por favor, completa el formulario correctamente');
+      this.translate.get('projects:alert_complete_form').subscribe((translatedText: string) => {
+        this.showAlert(translatedText);
+      });  
     }
   }
 
@@ -160,7 +178,9 @@ export class ProjectsModalComponent implements OnInit {
             this.loadIndices();
             this.cancelEdit();
           },
-          (error) => this.showIndexAlert('Error al actualizar el índice')
+          (error) => {this.translate.get('projects:error_updating_index').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          }); }
         );
       } else {
         this.indexService.createIndex(indexData).subscribe(
@@ -169,7 +189,9 @@ export class ProjectsModalComponent implements OnInit {
             this.indexForm.reset(); // Resetea el formulario para agregar un nuevo índice
             this.indexForm.patchValue({ required: false }); // Mantén el valor 'required' en falso por defecto
           },
-          (error) => this.showIndexAlert('Error al crear el índice')
+          (error) => {this.translate.get('projects:error_creating_index').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          }); }
         );
       }
     } else {
@@ -196,7 +218,9 @@ export class ProjectsModalComponent implements OnInit {
       () => {
         this.loadIndices();
       },
-      (error) => this.showIndexAlert('Error al eliminar el índice')
+      (error) => {this.translate.get('projects:error_deleting_index').subscribe((translatedText: string) => {
+        this.showAlert(translatedText);
+      }); }
     );
   }
 
@@ -262,6 +286,6 @@ export class ProjectsModalComponent implements OnInit {
 
   getTypeName(datatypeId: number) {
     const type = this.dataTypes.find((dt) => dt.id === datatypeId);
-    return type ? type.datatype_name : 'Desconocido';
+    return type ? type.datatype_name : this.translate.instant('projects:unknown');
   }
 }

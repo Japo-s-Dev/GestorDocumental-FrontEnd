@@ -263,34 +263,62 @@ export class ServicesService {
     });
   }
 
-
-  // Método para obtener el árbol de archivos de un expediente
-  getFileTree(expedientId: number): Observable<any> {
+  createComment(archiveId: number, text: string): Observable<any> {
     const payload = {
       id: 1,
-      method: 'get_file_tree',
+      method: 'create_comment',
       params: {
-        id: expedientId
+        data: {
+          archive_id: archiveId,
+          text: text
+        }
       }
     };
-    const formData = this.createFormData(payload); // Usamos la función ya definida para crear el FormData
+    const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
   }
 
-
-  // Método para crear un separador (carpeta)
-  createSeparator(name: string, parentId: number | null, archiveId: number): Observable<any> {
+  getComment(commentId: number): Observable<any> {
     const payload = {
       id: 1,
-      method: 'create_separator',
+      method: 'get_comment',
       params: {
-        data: {
-          name: name,
-          parent_id: parentId, // Puede ser null si no tiene padre
+        id: commentId
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  listComments(): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_comments',
+      params: {}
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  listEvents(archiveId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_events',
+      params: {
+        filters: {
           archive_id: archiveId
+        },
+        list_options: {
+          order_bys: "timestamp"
         }
       }
     };
@@ -300,26 +328,4 @@ export class ServicesService {
       withCredentials: true
     });
   }
-
-  // Método para renombrar un separador (carpeta)
-  updateSeparator(separatorId: number, newName: string): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'update_separator',
-      params: {
-        id: separatorId,
-        data: {
-          name: newName
-        }
-      }
-    };
-    const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
-  }
-
-
-
 }
