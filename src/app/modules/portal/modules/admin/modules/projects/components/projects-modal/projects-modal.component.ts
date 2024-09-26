@@ -76,11 +76,18 @@ export class ProjectsModalComponent implements OnInit {
   }
 
   loadProjects() {
-    this.projectsCrudService.listProjects().subscribe((response) => {
-      if (response && response.body.result) {
-        this.existingProjects = response.body.result;
+    this.projectsCrudService.listProjects().subscribe(
+      (response) => {
+        if (response && response.body.result) {
+          this.existingProjects = response.body.result;
+        }
+      },
+      (error) => {
+        this.translate.get('projects:error_loading').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });
       }
-    });
+    );
   }
 
   loadIndices() {

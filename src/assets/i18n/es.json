@@ -104,6 +104,7 @@
   "projects:error_deleting_message": "Error al eliminar el proyecto.",
   "projects:delete_project": "Eliminar Proyecto",
   "projects:confirm_delete": "¿Está seguro de querer eliminar el proyecto \"{{ projectName }}\"?",
+  "projects:error_loading": "Error al cargar los proyectos.",
 
   "RESULT": "****************************************************RESULT****************************************************",
   "result:criteria": "Criterios de Resultados",
