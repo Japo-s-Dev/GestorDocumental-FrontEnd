@@ -4,13 +4,14 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; // Importa HttpClientTestingModule
 
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../services/auth.service';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
 
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
@@ -23,7 +24,8 @@ xdescribe('LoginComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterModule.forRoot([]),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        HttpClientTestingModule // Agrega HttpClientTestingModule aquí
       ],
       providers: [
         AuthService,
@@ -79,13 +81,13 @@ xdescribe('LoginComponent', () => {
   });
 
   it('should show alert on login failure', () => {
-    spyOn(authService, 'login').and.returnValue(throwError({ status: 401 }));
+    spyOn(authService, 'login').and.returnValue(throwError({ status: 403, error: { message: 'Credenciales incorrectas' }})); 
     spyOn(component, 'showAlert');
     spyOn(loaderService, 'hideLoader');
-
+  
     component.loginForm.setValue({ username: 'testUser', password: 'wrongPassword' });
     component.login();
-
+  
     expect(component.showAlert).toHaveBeenCalledWith('Error', 'Credenciales incorrectas', 'danger');
     expect(loaderService.hideLoader).toHaveBeenCalled();
   });
