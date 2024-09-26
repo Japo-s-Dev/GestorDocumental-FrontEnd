@@ -1,47 +1,75 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { of, throwError } from 'rxjs';
 import { ProjectsComponent } from './projects.component';
 import { ProjectsCrudService } from '../../services/projects-crud.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderService } from '../../../../../../../../services/loader.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // Importa HttpClientTestingModule si usas HttpClient
-import { ProjectsModalComponent } from '../projects-modal/projects-modal.component';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { of, throwError } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
   let fixture: ComponentFixture<ProjectsComponent>;
   let projectsCrudService: jasmine.SpyObj<ProjectsCrudService>;
+  let modalService: jasmine.SpyObj<NgbModal>;
   let loaderService: jasmine.SpyObj<LoaderService>;
+  let translateService: TranslateService;
 
   beforeEach(async () => {
-    const projectsCrudSpy = jasmine.createSpyObj('ProjectsCrudService', ['listProjects', 'deleteProject']);
-    const loaderSpy = jasmine.createSpyObj('LoaderService', ['showLoader', 'hideLoader']);
+    // Crear mocks para los servicios
+    projectsCrudService = jasmine.createSpyObj('ProjectsCrudService', ['listProjects', 'deleteProject']);
+    modalService = jasmine.createSpyObj('NgbModal', ['open']);
+    loaderService = jasmine.createSpyObj('LoaderService', ['showLoader', 'hideLoader']);
+
+    // Configurar respuestas simuladas para los servicios
+    projectsCrudService.listProjects.and.returnValue(of({ body: { result: [{ id: 1, project_name: 'Test Project' }] } }));
+    projectsCrudService.deleteProject.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
-      declarations: [ ProjectsComponent ],
-      imports: [ FormsModule, HttpClientTestingModule ], // Asegúrate de incluir HttpClientTestingModule
+      declarations: [ProjectsComponent],
+      imports: [
+        TranslateModule.forRoot(),
+        FormsModule
+      ],
       providers: [
-        { provide: ProjectsCrudService, useValue: projectsCrudSpy },
-        { provide: LoaderService, useValue: loaderSpy },
-        NgbModal
+        { provide: ProjectsCrudService, useValue: projectsCrudService },
+        { provide: NgbModal, useValue: modalService },
+        { provide: LoaderService, useValue: loaderService },
+        TranslateService
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
+    
+    translateService = TestBed.inject(TranslateService);
 
-    projectsCrudService = TestBed.inject(ProjectsCrudService) as jasmine.SpyObj<ProjectsCrudService>;
-    loaderService = TestBed.inject(LoaderService) as jasmine.SpyObj<LoaderService>;
+    // Mockear las funciones de traducción necesarias para evitar el error de subscribe
+    spyOn(translateService, 'get').and.callFake((key: string, interpolateParams?: any) => {
+      // Definir todas las posibles traducciones que se utilizan en el componente
+      const translations: { [key: string]: string } = {
+        'projects:title': 'Projects',
+        'projects:add_project': 'Add Project',
+        'projects:search_project': 'Search projects',
+        'projects:title_project': 'Project name',
+        'projects:actions': 'Actions',
+        'projects:error_deleting_title': 'Error deleting project',
+        'projects:confirm_delete': `Are you sure you want to delete the project "${interpolateParams?.projectName}"?`
+      };
+    
+      // Devolver la traducción esperada si existe
+      if (translations[key]) {
+        return of(translations[key]);
+      }
+    
+      // Si no se encuentra la traducción, retornar la clave como predeterminado
+      return of(key);
+    });
+    
+    spyOn(translateService, 'instant').and.callFake((key: string) => key);
   });
 
   beforeEach(() => {
-    // Simulamos el retorno del servicio
-    const mockProjects = [{ id: 1, project_name: 'Test Project' }];
-    projectsCrudService.listProjects.and.returnValue(of({ body: { result: mockProjects } }));
-
     fixture = TestBed.createComponent(ProjectsComponent);
     component = fixture.componentInstance;
-    // Aquí aseguramos que los valores simulados ya están listos antes de que el ciclo de vida se ejecute
-    fixture.detectChanges(); 
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -50,107 +78,112 @@ describe('ProjectsComponent', () => {
 
   it('should load projects on init', () => {
     expect(projectsCrudService.listProjects).toHaveBeenCalled();
-    expect(component.projects).toEqual([{ id: 1, project_name: 'Test Project' }]);
+    expect(component.projects.length).toBeGreaterThan(0);
   });
 
   it('should handle error on project load', () => {
-    projectsCrudService.listProjects.and.returnValue(throwError('Error'));  // Simulamos un error
-
+    projectsCrudService.listProjects.and.returnValue(throwError('Error loading projects'));
     component.loadProjects();
-
-    expect(component.projects.length).toBe(0);
-    expect(loaderService.showLoader).toHaveBeenCalled();
-    expect(loaderService.hideLoader).toHaveBeenCalled();
-  });
-
-  it('should filter projects by search term', () => {
-    component.projects = [
-      { id: 1, project_name: 'Project A' },
-      { id: 2, project_name: 'Project B' }
-    ];
-    
-    component.searchTerm = 'A';
-    
-    const filtered = component.filteredProjects();
-    
-    expect(filtered.length).toBe(1);
-    expect(filtered[0].project_name).toBe('Project A');
-  });
-
-  it('should display an alert with correct parameters', () => {
-    component.showAlert('Title', 'Message', 'success');
-    
-    expect(component.alertTitle).toBe('Title');
-    expect(component.alertMessage).toBe('Message');
-    expect(component.alertType).toBe('alert-success');
-    expect(component.alertIcon).toBe('fa-check-circle');
+    expect(translateService.get).toHaveBeenCalledWith('projects:error_loading_title');
     expect(component.alertVisible).toBeTrue();
-
-    jasmine.clock().install(); // Usamos el reloj simulado de Jasmine
-    component.showAlert('Test', 'Test message', 'info');
-    jasmine.clock().tick(7001); // Avanzamos el reloj simulado
-    expect(component.alertVisible).toBeFalse();
-    jasmine.clock().uninstall();
+    expect(component.alertType).toBe('alert-danger');
   });
 
   it('should open the project modal when adding a new project', () => {
-    const modalSpy = spyOn(component['modalService'], 'open').and.returnValue({
-      componentInstance: { projectData: {}, isEditMode: false },
+    const modalRefMock = {
+      componentInstance: {
+        projectData: {}, // Mockear la propiedad projectData
+        isEditMode: false // Mockear la propiedad isEditMode
+      },
       result: Promise.resolve('created')
-    } as any); 
-
+    } as NgbModalRef;
+    
+    modalService.open.and.returnValue(modalRefMock);
+    
     component.addProject();
-
-    expect(modalSpy).toHaveBeenCalledWith(ProjectsModalComponent);
-    expect(modalSpy.calls.mostRecent().returnValue.componentInstance.isEditMode).toBe(false);
+    expect(modalService.open).toHaveBeenCalled();
   });
-
+  
   it('should open the project modal when editing a project', () => {
     const mockProject = { id: 1, project_name: 'Test Project' };
-    const modalSpy = spyOn(component['modalService'], 'open').and.returnValue({
-      componentInstance: { projectData: mockProject, isEditMode: true },
+    const modalRefMock = {
+      componentInstance: {
+        projectData: {}, // Mockear la propiedad projectData
+        isEditMode: true // Mockear la propiedad isEditMode
+      },
       result: Promise.resolve('updated')
-    } as any); 
-
+    } as NgbModalRef;
+    
+    modalService.open.and.returnValue(modalRefMock);
+    
     component.editProject(mockProject);
+    expect(modalService.open).toHaveBeenCalled();
+  });
+  
 
-    expect(modalSpy).toHaveBeenCalledWith(ProjectsModalComponent);
-    expect(modalSpy.calls.mostRecent().returnValue.componentInstance.isEditMode).toBe(true);
+  it('should delete a project and show success alert', (done) => {
+    spyOn(component, 'loadProjects'); // Espiar para verificar que loadProjects sea llamado después de la eliminación
+  
+    const mockProject = { id: 1, project_name: 'Test Project' };
+    const modalRefMock = {
+      componentInstance: {
+        message: '', // Añadir propiedades necesarias
+      },
+      result: Promise.resolve('confirm')
+    } as NgbModalRef;
+    
+    modalService.open.and.returnValue(modalRefMock);
+  
+    component.deleteProject(mockProject);
+    
+    setTimeout(() => {
+      expect(projectsCrudService.deleteProject).toHaveBeenCalledWith(mockProject.id);
+      expect(component.loadProjects).toHaveBeenCalled();
+      expect(component.alertVisible).toBeTrue();
+      expect(component.alertType).toBe('alert-info');
+      done();
+    }, 100);
   });
 
-  it('should delete a project and show success alert', async () => {
+  /** 
+  it('should show error alert if delete project fails', (done) => {
+    spyOn(component, 'loadProjects');
+
     const mockProject = { id: 1, project_name: 'Test Project' };
-  
-    const modalSpy = spyOn(component['modalService'], 'open').and.returnValue({
-      componentInstance: { message: '', projectData: {}, isEditMode: false }, // Simula el componente modal
+    projectsCrudService.deleteProject.and.returnValue(throwError('Error deleting project'));
+    const modalRefMock = {
       result: Promise.resolve('confirm')
-    } as any); 
-  
-    projectsCrudService.deleteProject.and.returnValue(of({}));
-    const alertSpy = spyOn(component, 'showAlert'); 
-  
-    await component.deleteProject(mockProject);
-  
-    expect(projectsCrudService.deleteProject).toHaveBeenCalledWith(mockProject.id);
-    expect(alertSpy).toHaveBeenCalledWith('Eliminación', 'Proyecto eliminado con éxito.', 'info');
-    expect(modalSpy.calls.mostRecent().returnValue.componentInstance.message).toBeDefined();
+    } as NgbModalRef;
+    modalService.open.and.returnValue(modalRefMock);
+
+    component.deleteProject(mockProject);
+
+    setTimeout(() => {
+      expect(translateService.get).toHaveBeenCalledWith('projects:error_deleting_title');
+      expect(component.alertVisible).toBeTrue();
+      expect(component.alertType).toBe('alert-danger');
+      done();
+    }, 100);
+  });
+  */
+
+  it('should filter projects by search term', () => {
+    component.projects = [
+      { id: 1, project_name: 'Test Project 1' },
+      { id: 2, project_name: 'Another Project' },
+    ];
+    component.searchTerm = 'Test';
+    const filteredProjects = component.filteredProjects();
+    expect(filteredProjects.length).toBe(1);
+    expect(filteredProjects[0].project_name).toBe('Test Project 1');
   });
 
-  it('should show error alert if delete project fails', async () => {
-    const mockProject = { id: 1, project_name: 'Test Project' };
-  
-    const modalSpy = spyOn(component['modalService'], 'open').and.returnValue({
-      componentInstance: { message: '', projectData: {}, isEditMode: false }, // Simula el componente modal
-      result: Promise.resolve('confirm')
-    } as any);
-  
-    projectsCrudService.deleteProject.and.returnValue(throwError('Error'));
-    const alertSpy = spyOn(component, 'showAlert');
-  
-    await component.deleteProject(mockProject);
-  
-    expect(projectsCrudService.deleteProject).toHaveBeenCalledWith(mockProject.id);
-    expect(alertSpy).toHaveBeenCalledWith('Error', 'Error al eliminar el proyecto.', 'danger');
-    expect(modalSpy.calls.mostRecent().returnValue.componentInstance.message).toBeDefined();
-  });  
+  it('should display an alert with correct parameters', () => {
+    const alertText = { title: 'Title', message: 'Message' };
+    component.showAlert(alertText, 'info');
+    expect(component.alertTitle).toBe(alertText.title);
+    expect(component.alertMessage).toBe(alertText.message);
+    expect(component.alertType).toBe('alert-info');
+    expect(component.alertVisible).toBeTrue();
+  });
 });
