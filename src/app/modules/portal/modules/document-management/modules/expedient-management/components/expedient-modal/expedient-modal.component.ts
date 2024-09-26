@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ServicesService } from '../../services/services.service';
-import { IExpedientRequest, IIndex, IValue, IValueRequest } from '../../interfaces/services.interface';
+import { ServicesService } from '../../../../services/services.service';
+import { IExpedientRequest, IIndex, IValue, IValueRequest } from '../../../../interfaces/services.interface';
 
 @Component({
   selector: 'app-expedient-modal',

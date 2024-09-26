@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IExpedient, IIndex, IProject, IValue } from '../../interfaces/services.interface';
-import { LoaderService } from '../../../../../../services/loader.service';
-import { ServicesService } from '../../services/services.service';
+import { IExpedient, IIndex, IProject, IValue } from '../../../../interfaces/services.interface';
+import { LoaderService } from '../../../../../../../../services/loader.service';
+import { ServicesService } from '../../../../services/services.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExpedientModalComponent } from '../expedient-modal/expedient-modal.component';
-import { ConfirmModalComponent } from '../../../../../../shared/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-expedient-list',
@@ -14,7 +14,6 @@ import { ConfirmModalComponent } from '../../../../../../shared/confirm-modal/co
 })
 export class ExpedientListComponent implements OnInit {
 
-  // Alert properties
   alertVisible: boolean = false;
   alertTitle: string = '';
   alertMessage: string = '';
@@ -39,12 +38,10 @@ export class ExpedientListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProjects();
-
-    // Recuperar el proyecto seleccionado del localStorage si existe
     const storedProjectId = localStorage.getItem('selectedProject');
     if (storedProjectId) {
       this.selectedProject = Number(storedProjectId);
-      this.buildTable(); // Construir la tabla si hay un proyecto seleccionado
+      this.buildTable();
     }
   }
 
@@ -55,9 +52,7 @@ export class ExpedientListComponent implements OnInit {
   }
 
   reloadTableBasedOnIndices(): void {
-    // Determinar la cantidad de recargas en base a la cantidad de índices
     const reloadCount = Math.floor(this.indices.length / 4) || 1;
-
     for (let i = 0; i < reloadCount; i++) {
       this.buildTable();
     }
@@ -71,7 +66,6 @@ export class ExpedientListComponent implements OnInit {
             id: Number(project.id),
             name: project.project_name,
           })) as IProject[];
-          console.log('Proyectos cargados:', this.projects);
         }
       },
       (error) => {
@@ -82,9 +76,8 @@ export class ExpedientListComponent implements OnInit {
 
   onProjectChange(projectId: number): void {
     this.selectedProject = projectId;
-    // Almacenar el proyecto seleccionado en localStorage
     localStorage.setItem('selectedProject', projectId.toString());
-    this.buildTable(); // Construir la tabla al cambiar de proyecto
+    this.buildTable();
   }
 
   fetchIndices(projectId: number): void {
@@ -92,13 +85,12 @@ export class ExpedientListComponent implements OnInit {
       if (response && response.body.result) {
         this.indices = response.body.result as IIndex[];
         this.tableHeaders = ['id', ...this.indices.map((index) => index.index_name)];
-        this.loaderService.hideLoader(); // Ocultar loader cuando termine de cargar los índices
+        this.loaderService.hideLoader();
       }
     });
   }
 
   fetchExpedients(projectId: number): void {
-    // Limpiar los datos existentes
     this.expedients = [];
     this.values = [];
     this.tableData = [];
@@ -110,7 +102,7 @@ export class ExpedientListComponent implements OnInit {
       } else {
         this.expedients = [];
         this.filteredData = [];
-        this.loaderService.hideLoader(); // Ocultar loader si no hay expedientes
+        this.loaderService.hideLoader();
       }
     });
   }
@@ -156,7 +148,7 @@ export class ExpedientListComponent implements OnInit {
 
     modalRef.result.then((newExpedient) => {
       if (newExpedient) {
-        this.reloadTableBasedOnIndices(); // Recargar la tabla según los índices
+        this.reloadTableBasedOnIndices();
         this.showAlert('Creación', 'Expediente creado con éxito.', 'success');
       }
     }).catch((error) => {
@@ -173,7 +165,7 @@ export class ExpedientListComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result === 'updated') {
-        this.reloadTableBasedOnIndices(); // Recargar la tabla según los índices
+        this.reloadTableBasedOnIndices();
         this.showAlert('Actualización', 'Expediente actualizado con éxito.', 'success');
       }
     }).catch((error) => {
@@ -189,22 +181,16 @@ export class ExpedientListComponent implements OnInit {
       .then((result) => {
         if (result === 'confirm') {
           this.loaderService.showLoader();
-
-          // Primero, obtener todos los valores asociados al expediente
           const valuesToDelete = this.values.filter((value) => value.archive_id === expedientId);
-
-          // Crear un array de promesas de eliminación de valores
           const deleteValuePromises = valuesToDelete.map((value) =>
             this.service.deleteValue(value.id).toPromise()
           );
 
-          // Ejecutar todas las promesas de eliminación de valores
           Promise.all(deleteValuePromises)
             .then(() => {
-              // Una vez que todos los valores se hayan eliminado, eliminar el expediente
               this.service.deleteArchive(expedientId).subscribe(
                 () => {
-                  this.reloadTableBasedOnIndices(); // Recargar la tabla según los índices
+                  this.reloadTableBasedOnIndices();
                   this.showAlert('Eliminación', 'Expediente eliminado con éxito.', 'info');
                   this.loaderService.hideLoader();
                 },
@@ -226,7 +212,6 @@ export class ExpedientListComponent implements OnInit {
         console.log('Modal dismissed', error);
       });
   }
-
 
   showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
     this.alertTitle = title;
