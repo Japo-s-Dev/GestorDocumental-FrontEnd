@@ -105,7 +105,7 @@ export class ProjectsComponent implements OnInit {
             },
             (error) => {
               this.loaderService.showLoader();
-              this.showAlert('Error', 'Error al eliminar el proyecto.', 'danger');
+              this.showAlert('Error', 'No es posible eliminar el proyecto, tiene expedientes asignados', 'danger');
               console.error('Error al eliminar el proyecto:', error);
               setTimeout(() => {
                 this.loaderService.hideLoader();

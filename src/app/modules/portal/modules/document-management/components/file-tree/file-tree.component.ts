@@ -1,33 +1,21 @@
-import { Component, ElementRef, EventEmitter, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
-
-interface FileNode {
-  name: string;
-  type: string;
-  url?: string; // Hacemos la URL opcional
-  children?: FileNode[];
-}
-
-interface FlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-  type: string;
-  url?: string; // Hacemos la URL opcional también aquí
-}
+import { ServicesService } from '../../services/services.service';
+import { FileNode, FlatNode } from '../../interfaces/tree.interface';
 
 @Component({
   selector: 'app-file-tree',
   templateUrl: './file-tree.component.html',
   styleUrls: ['./file-tree.component.css']
 })
-export class FileTreeComponent {
+export class FileTreeComponent implements OnInit {
   @ViewChild('treeContainer') treeContainer!: ElementRef;
   @Output() fileSelected = new EventEmitter<{ url: string, name: string }>(); // Emitir nombre también
   isExpanded = false;
   originalParent: HTMLElement | null = null;
 
+  // Declaramos primero el transformer
   private transformer = (node: FileNode, level: number): FlatNode => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -38,59 +26,56 @@ export class FileTreeComponent {
     };
   };
 
+  // Luego el treeControl y treeFlattener
   treeControl = new FlatTreeControl<FlatNode>(
     node => node.level,
-    node => node.expandable,
+    node => node.expandable
   );
 
   treeFlattener = new MatTreeFlattener<FileNode, FlatNode>(
     this.transformer,
     node => node.level,
     node => node.expandable,
-    node => node.children,
+    node => node.children
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  idExpediente: number = 1;
 
-  constructor(private renderer: Renderer2) {
-    const TREE_DATA: FileNode[] = [
-      {
-        name: 'Caso 2002',
-        type: 'folder',
-        children: [
-          {
-            name: 'Documentos del caso',
-            type: 'folder',
-            children: [
-              {
-                name: 'Demanda',
-                type: 'folder',
-                children: [
-                  { name: 'Modelo de Demanda.doc', type: 'doc', url: 'https://documents-evogd.s3.amazonaws.com/Modelo+de+Demanda.doc' },
-                  { name: 'Entidad Judicial.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/Entidad+Judicial.pdf' },
-                  { name: 'Datps Judiciales.docx', type: 'docx', url: 'https://documents-evogd.s3.amazonaws.com/Judicial.docx' },
-                ]
-              },
-              { name: 'personas registradas.csv', type: 'csv', url: 'https://documents-evogd.s3.amazonaws.com/personas+registradas.csv' },
-            ]
-          },
-          {
-            name: 'Datos del Demandante',
-            type: 'folder',
-            children: [
-              { name: 'DPI Gabriel Paz.pdf', type: 'pdf', url: 'https://documents-evogd.s3.amazonaws.com/DPI.pdf' },
-              { name: 'Datos Gabriel', type: 'docx', url: 'https://documents-evogd.s3.amazonaws.com/Gabriel+Paz.txt' },
-              { name: 'Abogado.jpg', type: 'image', url: 'https://documents-evogd.s3.amazonaws.com/Abogado.jpg' }
-            ]
-          }
-        ]
-      }
-    ];
+  constructor(private renderer: Renderer2, private service: ServicesService) {}
 
-    this.dataSource.data = TREE_DATA;
+  ngOnInit(): void {
+    this.loadFileTree(this.idExpediente);
   }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
+
+  mapTreeData(node: any): FileNode {
+    const children = node.children?.map((child: any) => this.mapTreeData(child)) || [];
+    const documents = node.documents?.map((doc: any) => ({
+      name: doc.name,
+      type: doc.doc_type.split('/').pop(), // Extraemos el tipo de archivo (ej. 'pdf', 'docx')
+      url: doc.url,
+      children: [] // Los documentos no tienen hijos, pero necesitamos mantener la estructura
+    })) || [];
+
+    return {
+      name: node.name,
+      type: 'folder', // Los nodos con hijos son carpetas
+      children: [...children, ...documents] // Incluimos tanto subcarpetas como documentos
+    };
+  }
+
+  loadFileTree(expedientId: number) {
+    this.service.getFileTree(expedientId).subscribe(response => {
+      const treeData = response.body.result; // Asegúrate de que 'result' tenga la estructura del árbol
+      const mappedTreeData = this.mapTreeData(treeData); // Mapeamos la estructura del backend
+      this.dataSource.data = [mappedTreeData]; // Asignamos el árbol mapeado a la dataSource
+      console.log('Árbol de archivos cargado:', mappedTreeData);
+    }, error => {
+      console.error('Error al cargar el árbol de archivos:', error);
+    });
+  }
 
   getIcon(node: FlatNode) {
     switch (node.type) {
