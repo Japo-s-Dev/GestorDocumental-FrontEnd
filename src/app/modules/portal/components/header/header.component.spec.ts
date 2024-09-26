@@ -7,6 +7,7 @@ import { LoaderService } from '../../../../services/loader.service';
 import { HeaderComponent } from './header.component';
 import { RouteLabels } from '../../../../core/route-labels';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -15,6 +16,7 @@ describe('HeaderComponent', () => {
   let translateService: TranslateService;
   let authService: AuthService;
   let loaderService: LoaderService;
+  let modalService: jasmine.SpyObj<NgbModal>;
   let routerEventsSubject: Subject<any>;
 
   const translateServiceMock = {
@@ -31,6 +33,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     // Create a mock for Router and its events
     routerEventsSubject = new Subject<NavigationEnd>();
+    modalService = jasmine.createSpyObj('NgbModal', ['open']);
     router = {
       events: routerEventsSubject.asObservable(),
       navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)),
@@ -53,7 +56,8 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: router },
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: AuthService, useValue: authService },
-        { provide: LoaderService, useValue: loaderService }
+        { provide: LoaderService, useValue: loaderService },
+        { provide: NgbModal, useValue: modalService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -93,8 +97,19 @@ describe('HeaderComponent', () => {
   });
 
   it('should navigate to profile when viewProfile is called', () => {
+    const modalRef = {
+      result: Promise.resolve('logout')
+    };
+    modalService.open.and.returnValue(modalRef as any); // Configura el modal para resolver con 'logout'
+  
     component.viewProfile();
-    expect(router.navigate).toHaveBeenCalledWith(['/profile']);
+    
+    // Verifica que la función logout fue llamada
+    modalRef.result.then(() => {
+      expect(authService.logoff).toHaveBeenCalled();
+      expect(loaderService.showLoader).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
   });
 
   it('should log out and navigate to login', () => {
