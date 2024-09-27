@@ -17,6 +17,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FolderModalComponent } from './components/folder-modal/folder-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UploadDocumentComponent } from './components/upload-document/upload-document.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommentsEventsComponent,
     SafeUrlPipe,
     FolderModalComponent,
+    UploadDocumentComponent
   ],
   imports: [
     CommonModule,

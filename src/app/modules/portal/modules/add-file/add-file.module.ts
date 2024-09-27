@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { UploadDocumentComponent } from './components/upload-document/upload-document.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 // Función necesaria para cargar los archivos de traducción
@@ -17,7 +16,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AddFileHomeComponent,
-    UploadDocumentComponent
   ],
   imports: [
     CommonModule,

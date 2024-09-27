@@ -401,4 +401,25 @@ export class ServicesService {
     });
   }
 
+  uploadDocument(file: File, separatorId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_document',
+      params: {
+        data: {
+          separator_id: separatorId
+        }
+      }
+    };
+
+    const formData = this.createFormData(payload);
+    formData.append('json', JSON.stringify(payload));
+    formData.append('file', file); // Añadir el archivo al FormData
+
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }

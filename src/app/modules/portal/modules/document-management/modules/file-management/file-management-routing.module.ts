@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FileTreeComponent } from './components/file-tree/file-tree.component';
 import { DocumentViewerComponent } from './components/document-viewer/document-viewer.component';
 import { CommentsEventsComponent } from './components/comments-events/comments-events.component';
+import { UploadDocumentComponent } from './components/upload-document/upload-document.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'comments-events',
     component: CommentsEventsComponent
+  },
+  {
+    path: 'upload-document',
+    component: UploadDocumentComponent
   }
 ];
 

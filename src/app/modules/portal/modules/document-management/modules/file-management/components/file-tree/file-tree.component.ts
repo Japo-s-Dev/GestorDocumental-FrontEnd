@@ -8,6 +8,7 @@ import { FolderModalComponent } from '../folder-modal/folder-modal.component';
 import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { LoaderService } from '../../../../../../../../services/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-file-tree',
@@ -54,7 +55,8 @@ export class FileTreeComponent implements OnInit {
     private service: ServicesService,
     private modalService: NgbModal,
     private translate: TranslateService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -250,10 +252,23 @@ export class FileTreeComponent implements OnInit {
     });
   }
 
-  createFile() {
+  uploadDocument(): void {
     this.closeContextMenu();
-    console.log('Crear archivo');
+
+    if (this.selectedNode) {
+      const separatorID = this.selectedNode.id ?? null;
+
+      if (separatorID !== null) {
+        localStorage.setItem('selectedSeparatorId', separatorID.toString());
+        this.router.navigate(['/portal/document-management/upload-document']);
+      } else {
+        console.error('No se seleccionó un separador válido.');
+      }
+    } else {
+      console.error('No hay ningún nodo seleccionado.');
+    }
   }
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
