@@ -14,7 +14,11 @@ const routes: Routes = [
   {
     path: 'viewer',
     loadChildren: () => import('./modules/file-management/file-management.module').then(m => m.FileManagementModule)
-  }
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule)
+  },
 
 ];
 

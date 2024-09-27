@@ -46,9 +46,6 @@ export class ExpedientModalComponent implements OnInit {
         this.fb.control('', index.required ? Validators.required : [])
       );
     });
-
-    // Verificación en consola
-    console.log('Form controls initialized:', this.expedientForm.controls);
   }
 
   loadExpedientData(): void {
@@ -121,12 +118,9 @@ export class ExpedientModalComponent implements OnInit {
           if (index) {
             let value = this.expedientForm.get(controlKey)?.value || ''; // Asegura que value no sea undefined
 
-            console.log(`Valor capturado para ${controlKey}:`, value);
-
             const existingValue = existingValues.find((val: IValue) => val.index_id === index.id);
 
             if (this.isEditMode && existingValue) {
-              console.log(`Actualizando valor con ID: ${existingValue.id}, valor: ${value}`);
               this.servicesService.updateValue(existingValue.id, value).subscribe({
                 next: (res) => console.log('Valor actualizado:', res),
                 error: (err) => console.error('Error al actualizar el valor:', err)

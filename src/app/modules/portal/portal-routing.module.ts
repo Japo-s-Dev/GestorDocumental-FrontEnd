@@ -13,10 +13,7 @@ const routes: Routes = [
         component: HomePortalComponent,
         pathMatch: 'full'
       },
-      {
-        path: 'search',
-        loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule)
-      },
+
       {
         path: 'add',
         loadChildren: () => import('./modules/add-file/add-file.module').then(m => m.AddFileModule)

@@ -103,18 +103,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         return;
       }
 
-      console.log('Datos enviados al servicio:', {
-        file: this.selectedFile,
-        separatorId: Number(separatorId)
-      });
 
-      console.log('Tipo de archivo seleccionado:', this.selectedFile?.type);
 
 
       this.service.uploadDocument(this.selectedFile, Number(separatorId))
         .subscribe(
           response => {
-            console.log('Documento subido con éxito', response);
             this.location.back();
           },
           error => {
