@@ -6,7 +6,7 @@ import { CreateUserRequest } from '../interfaces/create-user.interface';
 import { UpdateUserRequest } from '../interfaces/update-user.interface';
 import { IDeleteUserRequest } from '../interfaces/delete-user.interface';
 
-xdescribe('UserCrudService', () => {
+describe('UserCrudService', () => {
   let service: UserCrudService;
   let httpMock: HttpTestingController;
 
