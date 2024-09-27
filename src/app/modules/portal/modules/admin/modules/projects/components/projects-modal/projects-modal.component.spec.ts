@@ -228,6 +228,7 @@ describe('ProjectsModalComponent', () => {
 
   // Revisión de la actualización de índices
   it('should call updateIndex when editing an index', () => {
+    component.projectData = { id: 1, project_name: 'Test Project' }; // Asegurarse de que projectData esté definido
     component.isEditing = true;
     component.editingIndexId = 1;
     component.indexForm.controls['index_name'].setValue('Valid Name');
@@ -239,7 +240,7 @@ describe('ProjectsModalComponent', () => {
     
     expect(indexService.updateIndex).toHaveBeenCalledWith(1, jasmine.any(Object));
     expect(component.loadIndices).toHaveBeenCalled();
-  });
+});
 
   it('should handle error when deleting index', () => {
     indexService.deleteIndex.and.returnValue(throwError('Error deleting index'));
