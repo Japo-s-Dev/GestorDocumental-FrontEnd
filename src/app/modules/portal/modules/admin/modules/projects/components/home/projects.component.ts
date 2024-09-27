@@ -106,7 +106,7 @@ export class ProjectsComponent implements OnInit {
     this.translate.get('projects:confirm_delete', { projectName: project.project_name }).subscribe((translatedText: string) => {
       const modalRef = this.modalService.open(ConfirmModalComponent);
       modalRef.componentInstance.message = translatedText;
-  
+
       modalRef.result
         .then((result) => {
           if (result === 'confirm') {

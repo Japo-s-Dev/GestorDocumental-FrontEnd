@@ -58,7 +58,7 @@
 
 /* File tree container should only show when "Archivos" is active */
 .file-tree-container {
-  width: 30%;
+  width: 35%;
   padding: 10px;
   overflow-y: auto;
   background-color: #f8f9fa;
@@ -68,7 +68,7 @@
 
 /* Comments container should take the file tree's space when active */
 .comments-container {
-  width: 30%;
+  width: 35%;
   padding: 10px;
   overflow-y: auto;
   background-color: #f9f9f9;

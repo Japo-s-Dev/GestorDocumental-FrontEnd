@@ -328,4 +328,98 @@ export class ServicesService {
       withCredentials: true
     });
   }
+
+  // Método para obtener el árbol de archivos de un expediente
+  getFileTree(expedientId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'get_file_tree',
+      params: {
+        id: expedientId
+      }
+    };
+    const formData = this.createFormData(payload); // Usamos la función ya definida para crear el FormData
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  // Método para crear un separador (carpeta)
+  createSeparator(name: string, parentId: number | null, archiveId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_separator',
+      params: {
+        data: {
+          name: name,
+          parent_id: parentId, // Puede ser null si no tiene padre
+          archive_id: archiveId
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  // Método para renombrar un separador (carpeta)
+  updateSeparator(separatorId: number, newName: string): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'update_separator',
+      params: {
+        id: separatorId,
+        data: {
+          name: newName
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+
+  // Método para eliminar un separador (carpeta)
+  deleteSeparator(separatorId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'delete_separator',
+      params: {
+        id: separatorId
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  uploadDocument(file: File, separatorId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_document',
+      params: {
+        data: {
+          separator_id: separatorId
+        }
+      }
+    };
+
+    const formData = this.createFormData(payload);
+    formData.append('json', JSON.stringify(payload));
+    formData.append('file', file); // Añadir el archivo al FormData
+
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }

@@ -1,5 +1,5 @@
-import { UserCrudService } from '../../../admin/modules/users/services/users-crud.service';
-import { ServicesService } from '../../services/services.service';
+import { UserCrudService } from '../../../../../admin/modules/users/services/users-crud.service';
+import { ServicesService } from '../../../../services/services.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -142,7 +142,7 @@ export class CommentsEventsComponent implements OnInit {
     } else {
       this.selectedFilters = this.selectedFilters.filter(f => f !== filter);
     }
-  
+
     this.isAllSelected = this.selectedFilters.length === this.allFilters.length;
     this.applyFilter();
   }

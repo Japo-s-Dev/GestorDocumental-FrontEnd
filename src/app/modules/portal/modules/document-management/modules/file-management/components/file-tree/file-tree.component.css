@@ -22,9 +22,8 @@
   top: 10px;
   right: 10px;
   z-index: 9001;
-  background-color: #ffffff;
-  border: 2px solid #F1842C;
-  border-radius: 50%;
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Eliminamos el borde */
   width: 28px;
   height: 28px;
   display: flex;
@@ -32,7 +31,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: none; /* Eliminamos la sombra */
 }
 
 .expand-button:hover {
@@ -49,6 +48,7 @@
   color: #F1842C;
   font-size: 18px;
 }
+
 
 .custom-tree {
   height: calc(100% - 40px);
@@ -107,7 +107,8 @@ mat-tree-node[matTreeNodePadding] {
   color: #F1842C;
 }
 
-button.folder-button {
+/* Aseguramos que los tres puntitos estén centrados */
+button.folder-options-button {
   background-color: #ffffff;
   border: 2px solid #F1842C;
   border-radius: 50%;
@@ -123,17 +124,83 @@ button.folder-button {
   padding: 0;
 }
 
-button.folder-button:hover {
+button.folder-options-button:hover {
   background-color: #fdf7e3;
   transform: scale(1.05);
 }
 
-button.folder-button:active {
-  background-color: #fbeabb;
-  transform: scale(0.95);
+button.folder-options-button.active {
+  background-color: #fdf7e3; /* El estilo hover cuando está activo */
+  transform: scale(1.05);
 }
 
-button.folder-button mat-icon {
+button.folder-options-button mat-icon {
   color: #F1842C;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Mantener el hover mientras está activo */
+button.folder-options-button.active {
+  background-color: #fbeabb;
+}
+
+
+
+
+.folder-options-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.folder-options-button mat-icon {
+  color: #F1842C;
+}
+
+.context-menu {
+  position: fixed; /* Cambiado a fixed para que se mantenga en la ventana */
+  z-index: 9999; /* Aumentamos el z-index */
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  min-width: 150px; /* Aseguramos un ancho mínimo */
+  transition: all 0.3s ease; /* Suavizamos la apertura del menú */
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu ul li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.context-menu ul hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 8px 0; /* Espacio alrededor de la línea */
+}
+
+
+.context-menu ul li:hover {
+  background-color: #f0f0f0;
+  color: #ce7125;
+}
+
+

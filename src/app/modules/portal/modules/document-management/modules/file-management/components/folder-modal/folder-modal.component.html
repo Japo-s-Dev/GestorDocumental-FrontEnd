@@ -1,0 +1,31 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditMode ? 'Renombrar Carpeta' : 'Crear Carpeta' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">&times;</button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">&times;</div>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="folderForm">
+        <div class="mb-3">
+          <label for="folder_name" class="form-label">Nombre de la Carpeta</label>
+          <input id="folder_name" formControlName="folder_name" type="text" class="form-control" />
+          <div *ngIf="folderForm.get('folder_name')?.hasError('required') && folderForm.get('folder_name')?.touched" class="alert">
+            El nombre de la carpeta es requerido.
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
+      <button type="button" class="add-folder-button btn" (click)="save()">Guardar</button>
+    </div>
+  </div>
+</div>

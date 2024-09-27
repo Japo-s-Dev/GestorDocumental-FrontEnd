@@ -11,11 +11,23 @@
 
     <!-- Nodo para carpetas con hijos -->
     <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodeToggle matTreeNodePadding>
-      <button class="folder-button" mat-icon-button matTreeNodeToggle>
-        <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+      <button class="folder-options-button" mat-icon-button (click)="onOptionsClick($event, node)">
+        <mat-icon>more_vert</mat-icon>
       </button>
       <mat-icon class="folder-icon">{{ getIcon(node) }}</mat-icon>
       <span class="node-text">{{ node.name }}</span>
     </mat-tree-node>
   </mat-tree>
+</div>
+
+<!-- Menú contextual -->
+<div id="context-menu" #contextMenu class="context-menu">
+  <ul>
+    <li (click)="createFolder()">Crear Carpeta</li>
+    <li (click)="uploadDocument()">Subir Archivo</li>
+    <hr> <!-- Línea divisora -->
+    <li (click)="renameFolder()">Renombrar Carpeta</li>
+    <li (click)="deleteFolder()">Eliminar Carpeta</li>
+  </ul>
+
 </div>

@@ -1,11 +1,11 @@
-.upload-container {
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
+.upload-document-container {
+  padding: 20px;
 }
 
-h1 {
+.upload-title {
   font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
@@ -19,7 +19,7 @@ h1 {
 
 .drag-drop {
   width: 48%;
-  height: 300px; /* Altura fija */
+  height: 300px;
   border: 2px dashed #ccc;
   border-radius: 8px;
   padding: 20px;
@@ -55,29 +55,56 @@ h1 {
 
 .preview-document {
   width: 48%;
-  height: 300px; /* Altura fija */
+  height: 300px;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   text-align: left;
-  overflow: hidden; /* Esconde el desbordamiento para mantener el tamaño fijo */
-}
-
-.preview-document ngx-doc-viewer {
-  height: 100%; /* Ocupa todo el alto disponible */
-  width: 100%; /* Ocupa todo el ancho disponible */
+  overflow: hidden;
 }
 
 .button-container {
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .save-button {
-  background-color: #000;
-  color: #fff;
-  border: none;
   padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.back-button {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 1rem;
+
+}
+
+.back-button:hover {
+  background-color: #5a6268;
 }

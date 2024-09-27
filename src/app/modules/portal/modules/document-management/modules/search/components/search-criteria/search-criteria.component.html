@@ -1,0 +1,57 @@
+<div class="search-criteria-container">
+  <!-- Título de la sección -->
+  <header>
+    <h1 class="search-title">{{ "search:search_criteria" | translate }}</h1>
+  </header>
+
+  <main>
+
+    <div class="project-select-container">
+      <select
+        class="project-select"
+        id="project"
+        [(ngModel)]="selectedProject"
+        (ngModelChange)="onProjectChange($event)"
+        name="project"
+
+      >
+        <option value="0" disabled selected>
+          {{ "document-management:select_structure" | translate }}
+        </option>
+        <option *ngFor="let project of projects" [value]="project.id">
+          {{ project.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Formulario controlado por Angular -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-class">
+      <!-- Itera sobre los campos generados dinámicamente -->
+      <div *ngFor="let field of formFields" class="attributeForm">
+        <label>{{ field.index_name }}</label>
+
+        <!-- Caso especial para los campos de tipo 'date' -->
+        <div *ngIf="field.datatype_id === 5" class="date-range"> <!-- 5 es 'date' -->
+          <input type="date" [formControlName]="field.index_name.toLowerCase() + '_inicio'" class="custom-input-class">
+          <span class="date-separator">al</span>
+          <input type="date" [formControlName]="field.index_name.toLowerCase() + '_fin'" class="custom-input-class">
+        </div>
+
+        <!-- Otros tipos de campos -->
+        <div *ngIf="field.datatype_id !== 5" class="input-range">
+          <input [type]="getInputType(field.datatype_id)" [formControlName]="field.index_name.toLowerCase()" class="custom-input-class">
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="navigation">
+        <button class="btn submit" type="submit" [disabled]="!form.valid">
+          {{ "button:search" | translate }}
+        </button>
+        <button class="btn reset" type="button" (click)="onReset()">
+          Limpiar campos
+        </button>
+      </div>
+    </form>
+  </main>
+</div>
