@@ -25,11 +25,18 @@ describe('AlertComponent', () => {
     component.message = 'Test Message';
     fixture.detectChanges();
 
-    const titleElement = fixture.debugElement.query(By.css('.alert-title'));
-    const messageElement = fixture.debugElement.query(By.css('.alert-message'));
+    const titleElement = fixture.debugElement.query(By.css('strong'));
+    const messageElement = fixture.debugElement.query(By.css('div div'));
 
-    expect(titleElement.nativeElement.textContent).toContain('Test Title');
-    expect(messageElement.nativeElement.textContent).toContain('Test Message');
+    expect(titleElement).not.toBeNull(); // Verifica que el título exista
+    expect(messageElement).not.toBeNull(); // Verifica que el mensaje exista
+
+    if (titleElement) {
+      expect(titleElement.nativeElement.textContent).toContain('Test Title');
+    }
+    if (messageElement) {
+      expect(messageElement.nativeElement.textContent).toContain('Test Message');
+    }
   });
 
   it('should apply the correct alert type and icon type', () => {
@@ -37,10 +44,18 @@ describe('AlertComponent', () => {
     component.iconType = 'icon-success';
     fixture.detectChanges();
 
-    const alertElement = fixture.debugElement.query(By.css('.alert-container'));
+    const alertElement = fixture.debugElement.query(By.css('.alert-box'));
+    const iconElement = fixture.debugElement.query(By.css('.alert-icon'));
 
-    expect(alertElement.nativeElement.classList).toContain('alert-success');
-    expect(alertElement.nativeElement.classList).toContain('icon-success');
+    expect(alertElement).not.toBeNull(); // Verifica que el contenedor de alerta exista
+    expect(iconElement).not.toBeNull(); // Verifica que el icono exista
+
+    if (alertElement) {
+      expect(alertElement.nativeElement.classList).toContain('alert-success');
+    }
+    if (iconElement) {
+      expect(iconElement.nativeElement.classList).toContain('icon-success');
+    }
   });
 
   it('should emit the closed event when close is called', () => {
@@ -54,9 +69,12 @@ describe('AlertComponent', () => {
   it('should emit the closed event when the close button is clicked', () => {
     spyOn(component.closed, 'emit');
 
-    const closeButton = fixture.debugElement.query(By.css('.close-button'));
-    closeButton.triggerEventHandler('click', null);
-
-    expect(component.closed.emit).toHaveBeenCalled();
+    const closeButton = fixture.debugElement.query(By.css('.alert-close'));
+    
+    expect(closeButton).not.toBeNull(); // Verifica que el botón de cierre exista
+    if (closeButton) {
+      closeButton.triggerEventHandler('click', null);
+      expect(component.closed.emit).toHaveBeenCalled();
+    }
   });
 });
