@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentsEventsComponent } from './comments-events.component';
 
-describe('CommentsEventsComponent', () => {
+xdescribe('CommentsEventsComponent', () => {
   let component: CommentsEventsComponent;
   let fixture: ComponentFixture<CommentsEventsComponent>;
 

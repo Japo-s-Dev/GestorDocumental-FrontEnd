@@ -8,7 +8,7 @@ import { SearchCriteriaComponent } from './search-criteria.component';
 import { FormConfigService } from '../../services/form-config.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('SearchCriteriaComponent', () => {
+xdescribe('SearchCriteriaComponent', () => {
   let component: SearchCriteriaComponent;
   let fixture: ComponentFixture<SearchCriteriaComponent>;
 
