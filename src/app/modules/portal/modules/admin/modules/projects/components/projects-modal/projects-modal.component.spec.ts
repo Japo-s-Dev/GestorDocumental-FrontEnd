@@ -282,5 +282,95 @@ describe('ProjectsModalComponent', () => {
     fixture.detectChanges();
 
     expect(component.showAlert).toHaveBeenCalledWith('The translated alert message');
-}));
+  }));
+
+  it('should set isEditing to true, set editingIndexId, and showIndexForm when editIndex is called', () => {
+    const mockIndex = { id: 1, index_name: 'Test Index', datatype_id: 1, required: true };
+  
+    component.editIndex(mockIndex);
+  
+    expect(component.isEditing).toBeTrue();
+    expect(component.editingIndexId).toEqual(mockIndex.id);
+    expect(component.showIndexForm).toBeTrue();
+  
+    // Verificar que el formulario tenga los valores correspondientes
+    expect(component.indexForm.value).toEqual({
+      index_name: mockIndex.index_name,
+      datatype_id: mockIndex.datatype_id,
+      required: mockIndex.required
+    });
+  });
+
+  it('should show an alert message when there are no indices added', () => {
+    component.indices = [];
+    component.projectCreated = true; // Asegúrate de que la bandera esté configurada correctamente
+    component.projectForm.controls['project_name'].setValue('Valid Project Name'); // Asegúrate de que el formulario sea válido
+    spyOn(component, 'showAlert');
+    spyOn(translateService, 'get').and.returnValue(of('Please add at least one index'));
+
+    component.save();
+
+    expect(translateService.get).toHaveBeenCalledWith('projects:add_at_least_one_index');
+    expect(component.showAlert).toHaveBeenCalledWith('Please add at least one index');
+});
+
+
+  it('should call deleteProject and dismiss modal when closing and no indices are present', () => {
+    component.isEditMode = false;
+    component.projectCreated = true;
+    component.indices = [];
+    component.tempProjectId = 1;
+
+    spyOn(component.activeModal, 'dismiss');
+    projectsCrudService.deleteProject.and.returnValue(of({}));
+
+    component.close();
+
+    expect(projectsCrudService.deleteProject).toHaveBeenCalledWith(1);
+    expect(component.activeModal.dismiss).toHaveBeenCalled();
+  });
+
+  it('should dismiss the modal without deleting the project when closing and indices are present', () => {
+    component.isEditMode = false;
+    component.projectCreated = true;
+    component.indices = [{ id: 1, index_name: 'Index 1', datatype_id: 1, required: true }];
+    component.tempProjectId = 1;
+
+    spyOn(component.activeModal, 'dismiss');
+
+    component.close();
+
+    expect(projectsCrudService.deleteProject).not.toHaveBeenCalled();
+    expect(component.activeModal.dismiss).toHaveBeenCalled();
+  });
+
+  it('should set indexAlertMessage and showIndexWarningAlert when showIndexAlert is called', fakeAsync(() => {
+    const testMessage = 'Test index alert message';
+
+    component.showIndexAlert(testMessage);
+
+    expect(component.indexAlertMessage).toEqual(testMessage);
+    expect(component.showIndexWarningAlert).toBeTrue();
+
+    // Verificar que el alert se cierra después de 10 segundos
+    tick(10000);
+    expect(component.showIndexWarningAlert).toBeFalse();
+  }));
+
+  it('should set showWarningAlert to false when closeAlert is called', () => {
+    component.showWarningAlert = true;
+
+    component.closeAlert();
+
+    expect(component.showWarningAlert).toBeFalse();
+  });
+
+  it('should set showIndexWarningAlert to false when closeIndexAlert is called', () => {
+    component.showIndexWarningAlert = true;
+
+    component.closeIndexAlert();
+
+    expect(component.showIndexWarningAlert).toBeFalse();
+  });
+
 });
