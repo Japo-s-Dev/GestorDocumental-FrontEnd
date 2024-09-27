@@ -21,21 +21,7 @@
     {{ "navbar:document_manager" | translate }}
   </div>
 
-  <div class="box" (click)="toggleAdd('/portal/add')">
-    <i class="fa-solid fa-plus"></i>
-    {{ "navbar:add" | translate }}
-  </div>
 
-  <div *ngIf="showAdd">
-    <div class="sub-box" routerLink="/portal/add/file-entry">
-      <i class="fa-solid fa-file"></i>
-      {{ "navbar:file_entry" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/add/upload-document">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      {{ "navbar:upload_documents" | translate }}
-    </div>
-  </div>
 
   <div *ngIf="isAdmin" class="spacer"></div>
   <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>

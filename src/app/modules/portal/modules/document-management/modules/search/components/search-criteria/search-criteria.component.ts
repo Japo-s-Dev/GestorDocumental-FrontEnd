@@ -87,26 +87,27 @@ export class SearchCriteriaComponent implements OnInit {
     indices.forEach((index) => {
       const datatype = this.datatypes.find((dt) => dt.id === index.datatype_id);
       const fieldName = index.index_name.toLowerCase().replace(/\s+/g, '_');
+      const control = new FormControl('');
 
       if (datatype) {
         switch (datatype.datatype_name.toLowerCase()) {
           case 'text':
-            this.form.addControl(fieldName, new FormControl(''));
-            break;
           case 'number':
-            this.form.addControl(fieldName, new FormControl(''));
+            this.form.addControl(fieldName, control);
             break;
           case 'date':
-            this.form.addControl(fieldName + '_inicio', new FormControl(''));
-            this.form.addControl(fieldName + '_fin', new FormControl(''));
+            this.form.addControl(fieldName + '_inicio', control);
+            this.form.addControl(fieldName + '_fin', control);
             break;
           default:
+            console.warn(`Tipo de dato no soportado: ${datatype.datatype_name}`);
             break;
         }
       }
     });
     this.formFields = indices;
   }
+
 
   getInputType(datatypeId: number): string {
     switch (datatypeId) {

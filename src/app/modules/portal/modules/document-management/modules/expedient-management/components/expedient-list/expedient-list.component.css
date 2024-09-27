@@ -70,19 +70,17 @@
 
 /* Buscador */
 .search-container {
-  position: relative;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el input y el botón */
   margin-bottom: 20px;
 }
 
 .search-input {
-  background: url('https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png')
-    no-repeat 10px 10px;
-  background-size: 20px;
+  flex-grow: 1; /* Para que el input ocupe el máximo espacio disponible */
   padding: 10px 10px 10px 40px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  width: 100%;
   font-family: "Poppins", sans-serif;
 }
 
@@ -90,6 +88,25 @@
   outline: none;
   border-color: #F1842C;
 }
+
+/* Botón de Búsqueda Avanzada */
+.advanced-search-button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.advanced-search-button:hover {
+  background-color: #333;
+}
+
+
 
 /* Tabla */
 table {

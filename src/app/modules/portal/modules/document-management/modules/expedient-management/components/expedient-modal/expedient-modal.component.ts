@@ -144,6 +144,22 @@ export class ExpedientModalComponent implements OnInit {
     });
   }
 
+  getInputType(datatypeId: number): string {
+    switch (datatypeId) {
+      case 2:  // Suponiendo que '2' es 'number'
+        return 'number';
+      case 3:  // Suponiendo que '3' es 'text'
+        return 'text';
+      case 4:  // Suponiendo que '4' es 'number'
+        return 'number';
+      case 5:  // Suponiendo que '5' es 'date'
+        return 'date';
+      default:
+        return 'text';  // Default input type
+    }
+  }
+
+
   close(): void {
     this.activeModal.dismiss();
   }

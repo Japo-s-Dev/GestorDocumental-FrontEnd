@@ -62,7 +62,7 @@
   "projects:edit": "Editar Proyecto",
   "projects:update": "Actualizar",
   "projects:create": "Crear",
-  
+
   "projects:search_project": "Buscar proyecto...",
   "projects:create_project": "Crear proyecto",
   "projects:alert_name_project": "El nombre del proyecto es requerido.",
@@ -133,21 +133,21 @@
 
   "users:add_success_title": "Agregación",
   "users:add_success_message": "Usuario creado con éxito.",
-  
+
   "users:update_success_title": "Actualización",
   "users:update_success_message": "Usuario actualizado con éxito.",
-  
+
   "users:delete_success_title": "Eliminación",
   "users:delete_success_message": "Usuario eliminado con éxito.",
-  
+
   "users:delete_error_logged_in_title": "Error",
   "users:delete_error_logged_in_message": "No puedes eliminar al usuario logueado.",
-  
+
   "users:confirm_delete": "¿Está seguro de querer eliminar al usuario \"{{username}}\"?",
-  
+
   "users:error_loading_title": "Error",
   "users:error_loading_message": "Error al obtener los usuarios.",
-  
+
   "users:error_deleting_title": "Error",
   "users:error_deleting_message": "Error al eliminar el usuario.",
 
@@ -157,7 +157,7 @@
   "users:password_required": "La contraseña es requerida.",
   "users:password_confirm": "Confirmar Contraseña",
   "users:password_confirm_required": "La confirmación de la contraseña es requerida.",
-  
+
   "users:email_required": "El correo electrónico es requerido.",
   "users:email_invalid": "El correo electrónico no es válido.",
   "users:email_exist": "El correo electrónico ya esta registrado.",
@@ -204,7 +204,7 @@
   "roles:role_name_duplicate": "El nombre del rol ya existe.",
   "roles:description_required": "La descripción del rol es requerida.",
   "roles:description_maxlength": "La descripción del rol no puede exceder los 60 caracteres.",
-  
+
   "FIELD": "****************************************************FIELD****************************************************",
   "field:id_liquidacion": "Id Liquidación",
   "field:nombre": "Nombre",
@@ -267,6 +267,7 @@
   "document-management:search_placeholder": "Buscar expediente...",
   "document-management:actions": "Acciones",
   "document-management:no_data": "No hay datos disponibles",
+  "document-management:advanced_search": "Busqueda Avanzada",
 
   "EXPEDIENT-MODAL": "****************************************************EXPEDIENT-MODAL****************************************************",
   "expedient-modal:title_edit_expedient": "Editar Expediente",

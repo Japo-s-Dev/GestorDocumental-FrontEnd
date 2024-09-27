@@ -40,7 +40,7 @@
     </button>
   </div>
 
-  <!-- Buscador -->
+  <!-- Buscador con botón de Búsqueda Avanzada -->
   <div class="search-container">
     <input
       type="text"
@@ -48,7 +48,12 @@
       placeholder="{{ 'document-management:search_placeholder' | translate }}"
       (input)="onSearch($event)"
     />
+
+    <button class="advanced-search-button" (click)="navigateToAdvancedSearch()">
+      {{ 'document-management:advanced_search' | translate }}
+    </button>
   </div>
+
 
   <!-- Tabla dinámica basada en el proyecto seleccionado -->
   <table *ngIf="tableData.length > 0">

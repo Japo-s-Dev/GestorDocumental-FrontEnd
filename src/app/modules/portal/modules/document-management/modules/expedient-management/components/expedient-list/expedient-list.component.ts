@@ -243,4 +243,8 @@ export class ExpedientListComponent implements OnInit {
     localStorage.setItem('selectedExpedientId', expedientId.toString());
     this.router.navigate(['/portal/document-management/viewer']);
   }
+
+  navigateToAdvancedSearch(): void {
+    this.router.navigate(['/portal/document-management/search']);
+  }
 }
