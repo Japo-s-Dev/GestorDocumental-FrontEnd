@@ -36,7 +36,7 @@ export class ProjectsModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private projectsCrudService: ProjectsCrudService,
     private indexService: IndexService,
-    private translate: TranslateService 
+    public translate: TranslateService 
   ) {}
 
   ngOnInit(): void {

@@ -86,26 +86,17 @@ describe('ProjectsModalComponent', () => {
     expect(projectsCrudService.listProjects).toHaveBeenCalled();
   });
 
-
   it('should handle error when loading projects', fakeAsync(() => {
-    // Simulate an error response from the listProjects method
     projectsCrudService.listProjects.and.returnValue(throwError('Error loading projects'));
   
-    // Spy on showAlert to check if it's called
     spyOn(component, 'showAlert');
-    
-    // Mock the translation service to return the expected error message
     spyOn(translateService, 'get').and.returnValue(of('Error loading projects'));
   
-    // Call the method under test
     component.loadProjects();
     
-    // Simulate the passage of time
     tick();
-  
     fixture.detectChanges();
   
-    // Check if showAlert was called with the correct error message
     expect(component.showAlert).toHaveBeenCalledWith('Error loading projects');
   }));
 
@@ -195,4 +186,100 @@ describe('ProjectsModalComponent', () => {
 
     expect(component.showAlert).toHaveBeenCalled();
   });
+
+  // Additional tests based on the missing parts
+
+  it('should handle add index validation error', () => {
+    component.indices = [];
+    spyOn(component, 'showAlert');
+    
+    // Simular la traducción
+    spyOn(translateService, 'get').and.returnValue(of('Please add at least one index'));
+
+    component.save();
+
+    expect(component.showAlert).toHaveBeenCalledWith('Please add at least one index');
+});
+
+
+  it('should handle index form validation error', () => {
+    spyOn(component, 'showIndexAlert');
+    component.indexForm.controls['index_name'].setValue('Invalid Name!');
+    component.indexForm.controls['datatype_id'].setValue(null);
+    
+    component.onSubmitIndex();
+    
+    expect(component.showIndexAlert).toHaveBeenCalledWith('Nombre del índice solo puede contener letras o números.');
+  });
+
+  // Revisión de la creación de índices
+  it('should call createIndex when index form is valid', () => {
+    component.projectData = { id: 1, project_name: 'Test Project' }; // Asegurarse de que projectData esté definido
+    component.indexForm.controls['index_name'].setValue('Valid Name');
+    component.indexForm.controls['datatype_id'].setValue(1);
+    
+    spyOn(component, 'loadIndices');
+    
+    component.onSubmitIndex();
+    
+    expect(indexService.createIndex).toHaveBeenCalled();
+    expect(component.loadIndices).toHaveBeenCalled();
+  });
+
+  // Revisión de la actualización de índices
+  it('should call updateIndex when editing an index', () => {
+    component.isEditing = true;
+    component.editingIndexId = 1;
+    component.indexForm.controls['index_name'].setValue('Valid Name');
+    component.indexForm.controls['datatype_id'].setValue(1);
+
+    spyOn(component, 'loadIndices');
+    
+    component.onSubmitIndex();
+    
+    expect(indexService.updateIndex).toHaveBeenCalledWith(1, jasmine.any(Object));
+    expect(component.loadIndices).toHaveBeenCalled();
+  });
+
+  it('should handle error when deleting index', () => {
+    indexService.deleteIndex.and.returnValue(throwError('Error deleting index'));
+
+    spyOn(component, 'showAlert');
+    
+    component.deleteIndex(1);
+
+    expect(component.showAlert).toHaveBeenCalled();
+  });
+
+  it('should toggle the index form', () => {
+    component.showIndexForm = false;
+    component.toggleIndexForm();
+    expect(component.showIndexForm).toBeTrue();
+
+    component.toggleIndexForm();
+    expect(component.showIndexForm).toBeFalse();
+  });
+
+  it('should close the modal when closing', () => {
+    spyOn(component.activeModal, 'dismiss');
+
+    component.close();
+
+    expect(component.activeModal.dismiss).toHaveBeenCalled();
+  });
+
+  // Prueba para validar que las traducciones están configuradas correctamente
+  it('should display the correct translated message when showing alert', fakeAsync(() => {
+    spyOn(translateService, 'get').and.returnValue(of('The translated alert message'));
+    spyOn(component, 'showAlert');
+
+    component.translate.get('projects:alert_complete_form').subscribe((translatedText: string) => {
+        component.showAlert(translatedText);
+    });
+
+    tick();
+    fixture.detectChanges();
+
+    expect(component.showAlert).toHaveBeenCalledWith('The translated alert message');
+}));
 });
