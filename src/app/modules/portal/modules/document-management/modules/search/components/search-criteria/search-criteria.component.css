@@ -58,6 +58,11 @@
   font-family: "Poppins", sans-serif;
 }
 
+.custom-input-class:focus  {
+  outline: none;
+  border-color: #F1842C;
+}
+
 .input-range {
   display: flex;
   align-items: center;
@@ -113,7 +118,7 @@
   color: #fff;
 }
 
-.submint:hover {
+.submit:hover {
   background-color: #333;
 }
 

@@ -5,7 +5,7 @@ import { IProject } from '../../interfaces/project.interface';
 import { ProjectsCrudService } from '../../services/projects-crud.service';
 import { IndexService } from '../../services/index.service';
 import { IIndexRequest } from '../../interfaces/index.interface';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-projects-modal',
@@ -36,7 +36,7 @@ export class ProjectsModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private projectsCrudService: ProjectsCrudService,
     private indexService: IndexService,
-    public translate: TranslateService 
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -166,7 +166,7 @@ export class ProjectsModalComponent implements OnInit {
     } else {
       this.translate.get('projects:alert_complete_form').subscribe((translatedText: string) => {
         this.showAlert(translatedText);
-      });  
+      });
     }
   }
 
@@ -180,31 +180,37 @@ export class ProjectsModalComponent implements OnInit {
       };
 
       if (this.isEditing && this.editingIndexId) {
+        // Actualizar índice existente
         this.indexService.updateIndex(this.editingIndexId, indexData).subscribe(
           () => {
-            this.loadIndices();
-            this.cancelEdit();
+            this.loadIndices();  // Recargar los índices
+            this.cancelEdit();    // Cerrar el formulario y volver al listado
           },
-          (error) => {this.translate.get('projects:error_updating_index').subscribe((translatedText: string) => {
-            this.showAlert(translatedText);
-          }); }
+          (error) => {
+            this.translate.get('projects:error_updating_index').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
+          }
         );
       } else {
+        // Crear nuevo índice
         this.indexService.createIndex(indexData).subscribe(
           () => {
-            this.loadIndices();
-            this.indexForm.reset(); // Resetea el formulario para agregar un nuevo índice
-            this.indexForm.patchValue({ required: false }); // Mantén el valor 'required' en falso por defecto
+            this.loadIndices();  // Recargar los índices
+            this.cancelEdit();    // Cerrar el formulario y volver al listado
           },
-          (error) => {this.translate.get('projects:error_creating_index').subscribe((translatedText: string) => {
-            this.showAlert(translatedText);
-          }); }
+          (error) => {
+            this.translate.get('projects:error_creating_index').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
+          }
         );
       }
     } else {
       this.showIndexAlert('Nombre del índice solo puede contener letras o números.');
     }
   }
+
 
   editIndex(index: any) {
     this.isEditing = true;

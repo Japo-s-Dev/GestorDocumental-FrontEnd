@@ -52,24 +52,6 @@
           >
             {{ "projects:alert_name_project" | translate }}
           </div>
-          <div
-            *ngIf="
-              projectForm.get('project_name')?.hasError('maxlength') &&
-              projectForm.get('project_name')?.touched
-            "
-            class="alert"
-          >
-            {{ "projects:alert_character_project" | translate }}
-          </div>
-          <div
-            *ngIf="
-              projectForm.get('project_name')?.hasError('projectNameExists') &&
-              projectForm.get('project_name')?.touched
-            "
-            class="alert"
-          >
-            {{ "projects:alert_exist_project" | translate }}
-          </div>
         </div>
       </form>
 
@@ -109,15 +91,6 @@
               class="alert"
             >
               {{ "projects:alert_name_index" | translate }}
-            </div>
-            <div
-              *ngIf="
-                indexForm.get('index_name')?.hasError('indexNameExists') &&
-                indexForm.get('index_name')?.touched
-              "
-              class="alert"
-            >
-              {{ "projects:alert_exist_index" | translate }}
             </div>
           </div>
 
@@ -176,14 +149,7 @@
         </form>
 
         <!-- Listado de índices -->
-
-        <!-- Alerta específica para los índices -->
-        <div class="alert alert-danger mt-2" *ngIf="showIndexWarningAlert">
-          {{ indexAlertMessage }}
-        </div>
-
-        <!-- Contenedor con scroll para la tabla -->
-        <div class="table-scroll">
+        <div *ngIf="!showIndexForm" class="table-scroll">
           <table class="table mt-3 table-indices">
             <thead>
               <tr>
@@ -214,6 +180,7 @@
         </div>
       </ng-container>
     </div>
+
 
     <div class="modal-footer">
       <button type="button" class="cancel-button btn" (click)="close()">
