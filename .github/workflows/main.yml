@@ -19,8 +19,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo -S apt-get update
-        npm install -g @angular/cli
-        npm install http-server -g
+        sudo npm install -g @angular/cli
+        sudo npm install http-server -g
 
     - name: Build
       run: |
