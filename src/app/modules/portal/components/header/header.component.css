@@ -23,7 +23,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 40px;
 }
 
 .user-icon {
@@ -120,8 +120,8 @@
 /* Estilo del interruptor de idioma con la transición de deslizamiento */
 .switch-language {
   position: relative;
-  width: 120px; /* Ajusta el ancho según sea necesario */
-  height: 50px; /* Ajusta la altura según sea necesario */
+  width: 90px; /* Ajusta el ancho según sea necesario */
+  height: 30px; /* Ajusta la altura según sea necesario */
   background: #f0f0f0;
   border-radius: 25px; /* Para un efecto más suave */
   display: flex;
@@ -142,7 +142,7 @@
 
 .toggle-label {
   position: absolute;
-  width: 60px; /* La mitad del ancho del interruptor */
+  width: 45px; /* La mitad del ancho del interruptor */
   height: 100%;
   background: #f1842c; /* Color anaranjado */
   border-radius: 20px;
