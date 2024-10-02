@@ -20,6 +20,7 @@ jobs:
       run: |
         sudo -S apt-get update
         sudo npm install -g @angular/cli
+        sudo npm install --save @angular/compiler-cli
         sudo npm install http-server -g
 
     - name: Install node modules
