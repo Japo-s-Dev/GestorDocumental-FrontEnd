@@ -1,0 +1,32 @@
+name: Publish to prod Backend
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    environment:
+      name: Production
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo -S apt-get update
+        npm install -g @angular/cli
+        npm install http-server -g
+
+    - name: Build
+      run: |
+        ng build --prod
+
+    - name: Run
+      run: |
+         cd ./dist
+         http-server . -p 9530
