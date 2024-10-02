@@ -267,6 +267,7 @@
   "document-management:search_placeholder": "Search expedient...",
   "document-management:actions": "Actions",
   "document-management:no_data": "No data available",
+  "document-management:advanced_search": "Advanced Search",
   "expedient-modal:title_edit_expedient": "Edit Expedient",
   "expedient-modal:title_add_expedient": "Add Expedient",
   "expedient-modal:tag_placeholder": "Enter the file label",
