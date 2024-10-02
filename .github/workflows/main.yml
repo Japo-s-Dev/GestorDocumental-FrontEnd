@@ -22,6 +22,10 @@ jobs:
         sudo npm install -g @angular/cli
         sudo npm install http-server -g
 
+    - name: Install node modules
+      run: |
+          npm install --legacy-peer-deps
+
     - name: Build
       run: |
         ng build --prod
