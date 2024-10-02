@@ -3,15 +3,21 @@
     {{ currentLabel }}
   </div>
   <div class="user-menu-container">
-    <div class="language-selector">
-      <button [class.selected]="currentLanguage === 'en'" (click)="switchLanguage('en')">EN</button>
-      <button [class.selected]="currentLanguage === 'es'" (click)="switchLanguage('es')">ES</button>
+    <div class="switch-language">
+      <input
+        id="language-toggle"
+        type="checkbox"
+        [checked]="currentLanguage === 'en'"
+        (change)="toggleLanguage()"
+      />
+      <label class="toggle-label" for="language-toggle"></label>
+      <span class="toggle-option">EN</span>
+      <span class="toggle-option">ES</span>
     </div>
     <div class="user-icon" (click)="toggleUserMenu()">
       <i class="fa-solid fa-user-circle"></i>
       <span [ngClass]="usernameStyle">
         {{ username }}
-
       </span>
     </div>
     <div class="dropdown-menu" *ngIf="userMenuOpen">
