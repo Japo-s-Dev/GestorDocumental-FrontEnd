@@ -26,11 +26,6 @@ jobs:
       run: |
           npm install --legacy-peer-deps
 
-    - name: Build
+    - name: Serve
       run: |
-        ng serve
-
-    - name: Run
-      run: |
-         cd ./dist
-         http-server . -p 9530
+        ng serve --port 9530
