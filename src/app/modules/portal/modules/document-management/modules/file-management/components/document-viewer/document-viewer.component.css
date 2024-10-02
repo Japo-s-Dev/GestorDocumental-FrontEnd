@@ -35,18 +35,52 @@
   display: flex;
 }
 
+
 .tabs button {
+  --primary-color: #111;
+  --hovered-color: #F1842C; /* Color anaranjado */
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 0;
   background: none;
   border: none;
-  padding: 10px 15px;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary-color);
+  transition: border-color 0.3s, color 0.3s;
 }
 
+.tabs button::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  bottom: -7px;
+  background: var(--hovered-color);
+  height: 2px;
+  transition: 0.3s ease-out;
+}
+
+.tabs button:hover::after {
+  width: 100%;
+}
+
+.tabs button:hover {
+  color: var(--hovered-color);
+}
+
+/* Estilo del botón cuando está activo */
 .tabs button.active {
-  border-bottom: 2px solid #F1842C;
   font-weight: bold;
+  color: var(--hovered-color); /* Color anaranjado cuando está activo */
+}
+
+.tabs button.active::after {
+  width: 100%; /* Mostrar la línea completa cuando el botón está activo */
+  background: var(--hovered-color);
 }
 
 .tab-content {
