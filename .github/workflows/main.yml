@@ -37,10 +37,18 @@ jobs:
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         nvm use node
         npm install --legacy-peer-deps
+        npm install @angular/localize --legacy-peer-deps
+
+    - name: Build Angular Project
+      run: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm use node
+        ng build --configuration production
 
     - name: Serve
       run: |
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         nvm use node
-        ng serve --port 9530
+        http-server -p 9530 ./dist/gestor-documental
