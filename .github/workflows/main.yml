@@ -51,4 +51,5 @@ jobs:
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         nvm use node
-        http-server -p 9530 ./dist/gestor-documental
+        cd ./dist/gestor-documental/browser
+        http-server -p 9530 ./
