@@ -40,4 +40,7 @@ jobs:
 
     - name: Serve
       run: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm use node
         ng serve --port 9530
