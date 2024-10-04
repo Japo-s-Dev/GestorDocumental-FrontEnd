@@ -25,6 +25,10 @@
   "navbar:users": "Users",
   "navbar:projects": "Projects",
   "navbar:roles": "Roles",
+  "navbar:reports": "Reports",
+  "navbar:actions_report": "Actions",
+  "navbar:structures_report": "Structures",
+  "navbar:users_report": "Users",
 
   "ROUTE": "****************************************************ROUTE****************************************************",
   "route:home": "Home",
@@ -39,6 +43,9 @@
   "route:admin_users": "Admin > Users",
   "route:admin_projects": "Admin > Projects",
   "route:admin_roles": "Admin > Roles",
+  "route:actions_report": "Reports > Actions",
+  "route:structures_report": "Reports > Structures",
+  "route:users_report": "Reports > Users",
 
   "SEARCH": "****************************************************SEARCH****************************************************",
   "search:search_criteria": "Search Criteria",
