@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/structures-report/structures-report.module').then(m => m.StructuresReportModule)
   },
   {
-    path: 'user',
+    path: 'users',
     loadChildren: () => import('./modules/user-report/user-report.module').then(m => m.UserReportModule)
   },
   
