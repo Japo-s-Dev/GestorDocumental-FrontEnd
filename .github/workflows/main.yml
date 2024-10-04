@@ -29,7 +29,6 @@ jobs:
         nvm use node
         sudo -S apt-get update
         npm install -g @angular/cli
-        npm install http-server -g
 
     - name: Install node modules
       run: |
@@ -46,10 +45,10 @@ jobs:
         nvm use node
         ng build --configuration production
 
+    - name: Test
+      run: |
+        sudo nginx -t
+
     - name: Serve
       run: |
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm use node
-        cd ./dist/gestor-documental/browser
-        http-server -p 9530 ./
+        sudo systemctl restart nginx.service
