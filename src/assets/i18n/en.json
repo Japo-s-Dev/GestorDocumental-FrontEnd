@@ -278,5 +278,7 @@
   "expedient-modal:into": "Into ",
   "expedient-modal:cancel": "Cancel",
   "expedient-modal:save_expedient": "Save Expedient",
-  "expedient-modal:add_expedient": "Add Expedient"
+  "expedient-modal:add_expedient": "Add Expedient",
+
+  "REPORTS": "****************************************************REPORTS****************************************************"
 }
