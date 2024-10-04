@@ -21,7 +21,24 @@
     {{ "navbar:document_manager" | translate }}
   </div>
 
+  <div class="spacer"></div>
+  <h4>{{ "navbar:reports" | translate }}</h4>
 
+  <!-- Enlaces para los reportes -->
+  <div class="box" routerLink="/portal/reports/actions">
+    <i class="fa-solid fa-chart-line"></i>
+    {{ "navbar:actions_report" | translate }}
+  </div>
+
+  <div class="box" routerLink="/portal/reports/structures">
+    <i class="fa-solid fa-building"></i>
+    {{ "navbar:structures_report" | translate }}
+  </div>
+
+  <div class="box" routerLink="/portal/reports/users">
+    <i class="fa-solid fa-user"></i>
+    {{ "navbar:users_report" | translate }}
+  </div>
 
   <div *ngIf="isAdmin" class="spacer"></div>
   <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>
