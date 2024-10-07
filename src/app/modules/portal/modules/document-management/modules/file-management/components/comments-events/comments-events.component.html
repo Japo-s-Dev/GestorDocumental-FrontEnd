@@ -5,50 +5,63 @@
       {{ "comments:filter_by" | translate }}
     </button>
     <div class="dropdown-content" [class.show]="dropdownOpen">
-      <label>
+      <div>
         <input
+          id="check-all"
           type="checkbox"
           (change)="toggleSelectAll($event)"
           [checked]="isAllSelected"
         />
-        {{ "comments:select_all" | translate }}
-      </label>
-      <label>
+        <label for="check-all">{{ "comments:select_all" | translate }}</label>
+      </div>
+      <div>
         <input
+          id="check-expedientComment"
           type="checkbox"
           value="expedientComment"
           [checked]="selectedFilters.includes('expedientComment')"
           (change)="toggleFilterSelection('expedientComment', $event)"
         />
-        {{ "comments:archive_comment" | translate }}
-      </label>
-      <label>
+        <label for="check-expedientComment">{{
+          "comments:archive_comment" | translate
+        }}</label>
+      </div>
+      <div>
         <input
+          id="check-expedientEvent"
           type="checkbox"
           value="expedientEvent"
           [checked]="selectedFilters.includes('expedientEvent')"
           (change)="toggleFilterSelection('expedientEvent', $event)"
         />
-        {{ "comments:archive_event" | translate }}
-      </label>
-      <label>
+        <label for="check-expedientEvent">{{
+          "comments:archive_event" | translate
+        }}</label>
+      </div>
+      <div>
         <input
+          id="check-documentComment"
           type="checkbox"
           value="documentComment"
           [checked]="selectedFilters.includes('documentComment')"
           (change)="toggleFilterSelection('documentComment', $event)"
         />
-        {{ "comments:document_comment" | translate }}
-      </label>
-      <label>
+        <label for="check-documentComment">{{
+          "comments:document_comment" | translate
+        }}</label>
+      </div>
+      <div>
         <input
+          id="check-documentEvent"
           type="checkbox"
           value="documentEvent"
           [checked]="selectedFilters.includes('documentEvent')"
           (change)="toggleFilterSelection('documentEvent', $event)"
         />
-        {{ "comments:document_event" | translate }}
-      </label>
+        <label for="check-documentEvent">{{
+          "comments:document_event" | translate
+        }}</label>
+      </div>
     </div>
   </div>
 

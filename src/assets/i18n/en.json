@@ -25,6 +25,10 @@
   "navbar:users": "Users",
   "navbar:projects": "Projects",
   "navbar:roles": "Roles",
+  "navbar:reports": "Reports",
+  "navbar:actions_report": "Actions",
+  "navbar:structures_report": "Structures",
+  "navbar:users_report": "Users",
 
   "ROUTE": "****************************************************ROUTE****************************************************",
   "route:home": "Home",
@@ -39,6 +43,9 @@
   "route:admin_users": "Admin > Users",
   "route:admin_projects": "Admin > Projects",
   "route:admin_roles": "Admin > Roles",
+  "route:actions_report": "Reports > Actions",
+  "route:structures_report": "Reports > Structures",
+  "route:users_report": "Reports > Users",
 
   "SEARCH": "****************************************************SEARCH****************************************************",
   "search:search_criteria": "Search Criteria",
@@ -267,6 +274,7 @@
   "document-management:search_placeholder": "Search expedient...",
   "document-management:actions": "Actions",
   "document-management:no_data": "No data available",
+  "document-management:advanced_search": "Advanced Search",
   "expedient-modal:title_edit_expedient": "Edit Expedient",
   "expedient-modal:title_add_expedient": "Add Expedient",
   "expedient-modal:tag_placeholder": "Enter the file label",
@@ -277,5 +285,7 @@
   "expedient-modal:into": "Into ",
   "expedient-modal:cancel": "Cancel",
   "expedient-modal:save_expedient": "Save Expedient",
-  "expedient-modal:add_expedient": "Add Expedient"
+  "expedient-modal:add_expedient": "Add Expedient",
+
+  "REPORTS": "****************************************************REPORTS****************************************************"
 }

@@ -25,6 +25,10 @@ const routes: Routes = [
       {
         path: 'document-management',
         loadChildren: () => import('./modules/document-management/document-management.module').then(m => m.DocumentManagementModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
       }
     ]
   }

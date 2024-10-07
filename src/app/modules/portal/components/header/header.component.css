@@ -23,7 +23,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 40px;
 }
 
 .user-icon {
@@ -82,25 +82,27 @@
 }
 
 .language-selector button {
-  padding: 8px 16px;
+  padding: 8px 20px;
   border: none;
   cursor: pointer;
-  background-color: #f0f0f0;
-  color: #333;
-  border-radius: 50px;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: #F1842C; /* Color anaranjado por defecto */
+  color: #fff;
+  border-radius: 25px;
   font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .language-selector button.selected {
-  background-color: #F1842C;
+  background-color: #ce7125; /* Color más oscuro cuando está seleccionado */
   color: #fff;
   font-weight: bold;
-  border-radius: 50px;
 }
 
 .language-selector button:hover {
-  background-color: #ce7125;
+  background-color: #d76b00; /* Color más intenso al pasar el mouse */
+  transform: scale(1.05);
 }
 
 .regular-user-style {
@@ -113,4 +115,78 @@
 
 .admin-style {
   color: #a50101;
+}
+
+/* Estilo del interruptor de idioma con la transición de deslizamiento */
+.switch-language {
+  position: relative;
+  width: 90px; /* Ajusta el ancho según sea necesario */
+  height: 30px; /* Ajusta la altura según sea necesario */
+  background: #f0f0f0;
+  border-radius: 25px; /* Para un efecto más suave */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Asegura que el texto esté a los extremos */
+  padding: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-language input[type="checkbox"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.toggle-label {
+  position: absolute;
+  width: 45px; /* La mitad del ancho del interruptor */
+  height: 100%;
+  background: #f1842c; /* Color anaranjado */
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transition: left 0.4s ease-in-out; /* Transición de deslizamiento */
+  z-index: 2;
+  top: 0;
+  pointer-events: none; /* Asegura que no cubra el texto debajo */
+}
+
+input[type="checkbox"]:checked + .toggle-label {
+  left: 50%; /* Mueve el interruptor hacia la derecha cuando está activado */
+}
+
+input[type="checkbox"]:not(:checked) + .toggle-label {
+  left: 0; /* Mueve el interruptor a la posición inicial cuando está desactivado */
+}
+
+.toggle-option {
+  width: 50%; /* Ocupa la mitad del contenedor */
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #000; /* Por defecto el color del texto no seleccionado es negro */
+  z-index: 0;
+  transition: color 0.3s;
+}
+
+input[type="checkbox"]:checked ~ .toggle-option:first-child {
+  color: #000; /* ES se vuelve negro cuando EN está seleccionado */
+}
+
+input[type="checkbox"]:checked ~ .toggle-option:last-child {
+  color: #fff; /* EN se vuelve blanco cuando está seleccionado */
+}
+
+input[type="checkbox"]:not(:checked) ~ .toggle-option:first-child {
+  color: #fff; /* ES se vuelve blanco cuando está seleccionado */
+}
+
+input[type="checkbox"]:not(:checked) ~ .toggle-option:last-child {
+  color: #000; /* EN se vuelve negro cuando ES está seleccionado */
 }
