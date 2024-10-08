@@ -60,6 +60,10 @@
   color: white;
 }
 
+.box.active > i {
+  color: white;
+}
+
 .spacer {
   margin: 15px 0;
   width: 85%;
@@ -95,4 +99,3 @@
   background-color: #f1842c;
   color: white;
 }
-

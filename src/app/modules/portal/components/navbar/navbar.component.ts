@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   showSearch = false;
   showAdd = false;
   showAdmin = false;
+  showReports = false; // Nuevo estado para mostrar/ocultar reportes
   isAdmin = false;
   username: string | null = null;
   currentLanguage: string;
@@ -50,14 +51,20 @@ export class NavbarComponent implements OnInit {
 
   toggleAdmin() {
     this.showAdmin = !this.showAdmin;
+    if (this.showAdmin) {
+      this.showReports = false; // Oculta los reportes si se muestran las opciones de Admin
+    }
+  }
+
+  toggleReports() {
+    this.showReports = !this.showReports;
+    if (this.showReports) {
+      this.showAdmin = false; // Oculta las opciones de Admin si se muestran los reportes
+    }
   }
 
   navigate(path: string) {
     this.router.navigate([path]);
   }
 
-  switchLanguage(language: string) {
-    this.translate.use(language);
-    this.currentLanguage = language;
-  }
 }
