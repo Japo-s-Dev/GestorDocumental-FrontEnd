@@ -5,6 +5,7 @@ import { IIndex, IProject } from '../../../../interfaces/services.interface';
 import { LoaderService } from '../../../../../../../../services/loader.service';
 import { SearchService } from '../../services/search.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-criteria',
@@ -32,13 +33,17 @@ export class SearchCriteriaComponent implements OnInit {
     private service: ServicesService,
     private searchService: SearchService,
     private loaderService: LoaderService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
+    localStorage.removeItem('searchResults')
     this.loadProjects();
     this.loadDatatypes();
+
   }
+
 
   loadProjects(): void {
     this.loaderService.showLoader();
@@ -49,6 +54,7 @@ export class SearchCriteriaComponent implements OnInit {
             id: Number(project.id),
             name: project.project_name,
           })) as IProject[];
+
           this.loaderService.hideLoader();
         }
       },
@@ -58,6 +64,8 @@ export class SearchCriteriaComponent implements OnInit {
       }
     );
   }
+
+
 
   loadDatatypes(): void {
     this.service.listDatatypes().subscribe(
@@ -158,6 +166,8 @@ export class SearchCriteriaComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loaderService.showLoader()
+    localStorage.removeItem('searchResults')
     const formValues = this.form.value;
     const filters: any[] = [];
 
@@ -171,6 +181,8 @@ export class SearchCriteriaComponent implements OnInit {
             if (this.rangeActive[index.index_name]) {
               const inicio = formValues[fieldName + '_inicio'];
               const fin = formValues[fieldName + '_fin'];
+              console.log("Inicio: ",inicio)
+              console.log("Fin: ",fin)
               if (inicio && fin) {
                 filters.push({ index_id: index.id, value: inicio, operator: 'Gte' });
                 filters.push({ index_id: index.id, value: fin, operator: 'Lte' });
@@ -224,24 +236,33 @@ export class SearchCriteriaComponent implements OnInit {
       }
     });
 
+    console.log("Filtros: ", filters)
 
     if (filters.length > 0) {
       this.searchService.searchArchives(filters).subscribe(
         (response) => {
           const results = response.body.result;
           if (response.body.result.length === 0) {
-            this.showAlert('No se encontraron resultados para su búsqueda.', 'warning');
+            this.loaderService.hideLoader()
+            const error = "Error"
+            this.translate.get('search_results:alert').subscribe((message: string) => {
+              this.showAlert({ error, message }, 'danger');
+            });
           } else {
+            console.log("resultado: ",results)
             this.nextStep(results, this.selectedProject);
           }
         },
         (error) => {
+          this.loaderService.hideLoader()
           console.error('Error al realizar la búsqueda:', error);
         }
       );
     } else {
+      this.loaderService.hideLoader()
       console.log('No se encontraron filtros válidos para aplicar.');
     }
+    this.loaderService.hideLoader()
   }
 
   replaceSpaces(indexName: string): string {

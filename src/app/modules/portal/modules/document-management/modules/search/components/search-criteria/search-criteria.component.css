@@ -154,19 +154,19 @@
 }
 
 .submit {
-  background-color: #000;
+  background-color: #28a745;
   color: #fff;
 }
 
 .submint:hover {
-  background-color: #333;
+  background-color: #218838;
 }
 
 .reset {
-  background-color: #000;
+  background-color: #6c757d;
   color: #fff;
 }
 
 .reset:hover {
-  background-color: #333;
+  background-color: #5a6268;
 }

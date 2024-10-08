@@ -40,6 +40,7 @@ export class SearchResultComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.hideLoader()
     this.loadResults();
   }
 
