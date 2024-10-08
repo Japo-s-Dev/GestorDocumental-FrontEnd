@@ -58,16 +58,56 @@
   font-family: "Poppins", sans-serif;
 }
 
-.custom-input-class:focus  {
-  outline: none;
-  border-color: #F1842C;
-}
-
+/* Ajustes específicos para los campos de tipo número */
 .input-range {
   display: flex;
   align-items: center;
   width: 100%;
+  gap: 10px; /* Espacio entre los campos y el botón */
 }
+
+.input-range input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Botón de rango */
+.range-button {
+  padding: 10px;
+  background-color: #007bff; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.range-button:hover {
+  background-color: #0056b3; /* Cambio de color en hover */
+}
+
+/* Botón de cancelar rango */
+.cancel-range-button {
+  padding: 10px;
+  background-color: #dc3545; /* Color rojo para cancelar */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-range-button:hover {
+  background-color: #c82333; /* Cambio de color en hover */
+}
+
 
 .date-range {
   display: flex;
@@ -118,7 +158,7 @@
   color: #fff;
 }
 
-.submit:hover {
+.submint:hover {
   background-color: #333;
 }
 

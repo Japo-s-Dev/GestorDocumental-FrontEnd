@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { SharedModule } from '../../../../../../shared/shared.module';
 import { SearchCriteriaComponent } from './components/search-criteria/search-criteria.component';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RouterModule } from '@angular/router';
+import { SearchResultModalComponent } from './components/search-result-modal/search-result-modal.component';
 
 // Función necesaria para cargar los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -16,13 +17,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [SearchCriteriaComponent, SearchResultComponent],
+  declarations: [SearchCriteriaComponent, SearchResultComponent, SearchResultModalComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FormlyModule.forRoot(),
-    FormlyBootstrapModule,
+    SharedModule,
+    RouterModule,
     SearchRoutingModule,
     TranslateModule.forChild({
       loader: {
