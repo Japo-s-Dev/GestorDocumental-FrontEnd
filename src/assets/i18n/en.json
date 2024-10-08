@@ -51,7 +51,6 @@
   "search:search_criteria": "Search Criteria",
   "button:search": "Search",
   "button:save_search": "Save Search",
-  "document-management:search_results": "Search Result",
 
   "PROJECTS": "****************************************************PROJECTS****************************************************",
   "project:label": "Project",
@@ -115,16 +114,8 @@
   "projects:error_loading": "Error loading projects.",
 
   "RESULT": "****************************************************RESULT****************************************************",
-  "result:criteria": "Results Criteria",
-  "result:nombre": "Name",
-  "result:status": "Status",
-  "result:idLiquidacion": "Settlement ID",
-  "result:transaccion": "Transaction",
-  "result:fecha": "Date",
-  "result:opciones": "Options",
-  "status:approved": "Approved",
-  "status:pending": "Pending",
-  "status:not_started": "Not Started",
+  "search_results:title": "Search Result",
+  "search_results:alert": "No search results found",
 
   "USERS": "****************************************************USERS****************************************************",
   "users:title": "Users",
