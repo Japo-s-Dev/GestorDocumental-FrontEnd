@@ -122,7 +122,6 @@ export class ExpedientModalComponent implements OnInit {
 
             if (this.isEditMode && existingValue) {
               this.servicesService.updateValue(existingValue.id, value).subscribe({
-                next: (res) => console.log('Valor actualizado:', res),
                 error: (err) => console.error('Error al actualizar el valor:', err)
               });
             } else {
@@ -134,7 +133,6 @@ export class ExpedientModalComponent implements OnInit {
               };
 
               this.servicesService.createValue(valueData).subscribe({
-                next: (res) => console.log('Valor creado:', res),
                 error: (err) => console.error('Error al crear el valor:', err)
               });
             }

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ServicesService } from '../../../../services/services.service';  // Importar el servicio
-import * as XLSX from 'xlsx'; // Para archivos Excel
-import * as mammoth from 'mammoth'; // Para archivos Word
+import * as XLSX from 'xlsx';
+import * as mammoth from 'mammoth';
 import { Location } from '@angular/common';
+import { FileManagementService } from '../../services/file-management.service';
 
 @Component({
   selector: 'app-upload-document',
@@ -26,7 +26,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private sanitizer: DomSanitizer,
-    private service: ServicesService,
+    private apiService: FileManagementService,
     private location: Location
   ) {}
 
@@ -106,7 +106,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
 
 
-      this.service.uploadDocument(this.selectedFile, Number(separatorId))
+      this.apiService.uploadDocument(this.selectedFile, Number(separatorId))
         .subscribe(
           response => {
             this.location.back();

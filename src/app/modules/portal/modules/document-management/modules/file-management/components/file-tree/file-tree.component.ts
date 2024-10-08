@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { ServicesService } from '../../../../services/services.service';
 import { FileNode, FlatNode } from '../../interfaces/tree.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FolderModalComponent } from '../folder-modal/folder-modal.component';
@@ -9,6 +8,7 @@ import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-mo
 import { TranslateService } from '@ngx-translate/core';
 import { LoaderService } from '../../../../../../../../services/loader.service';
 import { Router } from '@angular/router';
+import { FileManagementService } from '../../services/file-management.service';
 
 @Component({
   selector: 'app-file-tree',
@@ -52,7 +52,7 @@ export class FileTreeComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
-    private service: ServicesService,
+    private apiService: FileManagementService,
     private modalService: NgbModal,
     private translate: TranslateService,
     private loaderService: LoaderService,
@@ -75,6 +75,7 @@ export class FileTreeComponent implements OnInit {
       name: doc.name,
       type: doc.doc_type.split('/').pop(),
       url: doc.url,
+      id: doc.id,
       children: []
     })) || [];
 
@@ -86,9 +87,10 @@ export class FileTreeComponent implements OnInit {
     };
   }
 
+
   loadFileTree(expedientId: number) {
     this.loaderService.showLoader();
-    this.service.getFileTree(expedientId).subscribe(response => {
+    this.apiService.getFileTree(expedientId).subscribe(response => {
       const treeData = response.body.result;
       const mappedTreeData = this.mapTreeData(treeData);
       this.dataSource.data = [mappedTreeData];
@@ -119,10 +121,26 @@ export class FileTreeComponent implements OnInit {
   }
 
   selectFile(node: FlatNode) {
-    if (node.type !== 'folder' && node.url) {
-      this.fileSelected.emit({ url: node.url, name: node.name });
+
+    if (node.type !== 'folder' && node.id) {
+      this.loaderService.showLoader();
+      this.apiService.getDocumentUrl(node.id).subscribe(
+        response => {
+          const documentUrl = response.body.result;
+          this.fileSelected.emit({ url: documentUrl, name: node.name });
+          this.loaderService.hideLoader();
+        },
+        error => {
+          console.error('Error al obtener la URL del documento:', error);
+          this.loaderService.hideLoader();
+        }
+      );
+    } else {
+      console.log("No es un documento válido o no tiene id.");
     }
   }
+
+
 
   onOptionsClick(event: MouseEvent, node: FlatNode) {
     event.preventDefault();
@@ -186,7 +204,7 @@ export class FileTreeComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result === 'confirm' && separatorId) {
         this.loaderService.showLoader();
-        this.service.deleteSeparator(separatorId).subscribe(response => {
+        this.apiService.deleteSeparator(separatorId).subscribe(response => {
           this.loadFileTree(this.idExpediente);
           setTimeout(() => {
             this.loaderService.hideLoader();
@@ -209,7 +227,7 @@ export class FileTreeComponent implements OnInit {
       if (folderName) {
         const resolvedParentId = this.selectedNode?.id ?? null;
         this.loaderService.showLoader();
-        this.service.createSeparator(folderName, resolvedParentId, this.idExpediente).subscribe(response => {
+        this.apiService.createSeparator(folderName, resolvedParentId, this.idExpediente).subscribe(response => {
           this.loadFileTree(this.idExpediente);
           setTimeout(() => {
             this.loaderService.hideLoader();
@@ -237,7 +255,7 @@ export class FileTreeComponent implements OnInit {
     modalRef.result.then((newFolderName) => {
       if (newFolderName && separatorId) {
         this.loaderService.showLoader();
-        this.service.updateSeparator(separatorId, newFolderName).subscribe(response => {
+        this.apiService.updateSeparator(separatorId, newFolderName).subscribe(response => {
           this.loadFileTree(this.idExpediente);
           setTimeout(() => {
             this.loaderService.hideLoader();
