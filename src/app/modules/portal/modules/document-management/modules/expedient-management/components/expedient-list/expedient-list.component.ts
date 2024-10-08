@@ -37,6 +37,7 @@ export class ExpedientListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loaderService.hideLoader();
     localStorage.removeItem('selectedExpedientId');
     this.loadProjects();
     const storedProjectId = localStorage.getItem('selectedProject');
