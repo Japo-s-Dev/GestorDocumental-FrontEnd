@@ -60,7 +60,7 @@
   "projects:title": "Projects",
   "projects:add_project": "Add Project",
   "projects:search_placeholder": "Search projects",
-  
+
   "projects:id": "ID",
   "projects:nombre": "Name",
   "projects:actions": "Actions",
@@ -79,7 +79,7 @@
   "projects:alert_name_index": "The name of the index is required.",
   "projects:alert_exist_index": "An index with this name already exists.",
   "projects:alert_type_index": "The data type of the index is required.",
-    
+
   "projects:add_index": "Add index",
   "projects:save_changes": "Save changes",
   "projects:index_name": "Name",
@@ -114,16 +114,8 @@
   "projects:error_loading": "Error loading projects.",
 
   "RESULT": "****************************************************RESULT****************************************************",
-  "result:criteria": "Results Criteria",
-  "result:nombre": "Name",
-  "result:status": "Status",
-  "result:idLiquidacion": "Settlement ID",
-  "result:transaccion": "Transaction",
-  "result:fecha": "Date",
-  "result:opciones": "Options",
-  "status:approved": "Approved",
-  "status:pending": "Pending",
-  "status:not_started": "Not Started",
+  "search_results:title": "Search Result",
+  "search_results:alert": "No search results found",
 
   "USERS": "****************************************************USERS****************************************************",
   "users:title": "Users",
@@ -140,21 +132,21 @@
 
   "users:add_success_title": "Creation",
   "users:add_success_message": "User successfully created.",
-  
+
   "users:update_success_title": "Update",
   "users:update_success_message": "User successfully updated.",
-  
+
   "users:delete_success_title": "Deletion",
   "users:delete_success_message": "User successfully deleted.",
-  
+
   "users:delete_error_logged_in_title": "Error",
   "users:delete_error_logged_in_message": "You cannot delete the logged-in user.",
-  
+
   "users:confirm_delete": "Are you sure you want to delete the user \"{{username}}\"?",
-  
+
   "users:error_loading_title": "Error",
   "users:error_loading_message": "Error loading users.",
-  
+
   "users:error_deleting_title": "Error",
   "users:error_deleting_message": "Error deleting the user.",
 

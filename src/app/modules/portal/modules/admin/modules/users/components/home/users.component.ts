@@ -50,7 +50,6 @@ export class UsersComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.users = response.body.result;
-          console.log('Usuarios:', this.users);
         }
       },
       (error) => {
@@ -119,7 +118,7 @@ export class UsersComponent implements OnInit {
     this.translate.get('users:confirm_delete', { username: user.username }).subscribe((translatedText: string) => {
       const modalRef = this.modalService.open(ConfirmModalComponent);
       modalRef.componentInstance.message = translatedText;
-  
+
       modalRef.result.then((result) => {
         if (result === 'confirm') {
           this.userCrudService.deleteUser(user.id).subscribe(

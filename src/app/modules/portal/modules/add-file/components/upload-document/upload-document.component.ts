@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import * as XLSX from 'xlsx';
-import * as mammoth from 'mammoth';
-import { Location } from '@angular/common';
-import { FileManagementService } from '../../services/file-management.service';
+import * as XLSX from 'xlsx'; // Para archivos Excel
+import * as mammoth from 'mammoth'; // Para archivos Word
 
 @Component({
   selector: 'app-upload-document',
@@ -17,18 +15,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   filePreviewUrl: SafeResourceUrl | null = null;
   filePreviewContent: string | null = null;
 
-  alertVisible = false;
-  alertTitle = '';
-  alertMessage = '';
-  alertType = 'alert-info';
-  alertIcon = 'icon-info';
-
-  constructor(
-    private router: Router,
-    private sanitizer: DomSanitizer,
-    private apiService: FileManagementService,
-    private location: Location
-  ) {}
+  constructor(private router: Router, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {}
 
@@ -96,48 +83,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
   saveDocument(): void {
     if (this.selectedFile) {
-      const separatorId = localStorage.getItem('selectedSeparatorId');
-
-      if (!separatorId) {
-        console.error('No se ha seleccionado un separador');
-        return;
-      }
-
-
-
-
-      this.apiService.uploadDocument(this.selectedFile, Number(separatorId))
-        .subscribe(
-          response => {
-            this.location.back();
-          },
-          error => {
-            console.error('Error al subir el documento', error);
-          }
-        );
+      localStorage.setItem('uploadedFile', this.selectedFile.name);
+      this.router.navigate(['/portal/add/file-entry']);
     }
   }
-
-  handleAlertClosed(): void {
-    this.alertVisible = false;
-  }
-
-  // Método para mostrar la alerta
-  showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
-    this.alertTitle = title;
-    this.alertMessage = message;
-    this.alertType = `alert-${type}`;
-    this.alertIcon = `fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}`;
-    this.alertVisible = true;
-
-    setTimeout(() => {
-      this.alertVisible = false;
-    }, 5000); // Ocultar la alerta después de 5 segundos
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-
 }

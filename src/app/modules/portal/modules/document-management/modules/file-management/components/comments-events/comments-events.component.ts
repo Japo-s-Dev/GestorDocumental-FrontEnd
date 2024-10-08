@@ -1,6 +1,6 @@
 import { UserCrudService } from '../../../../../admin/modules/users/services/users-crud.service';
-import { ServicesService } from '../../../../services/services.service';
 import { Component, OnInit } from '@angular/core';
+import { FileManagementService } from '../../services/file-management.service';
 
 @Component({
   selector: 'app-comments-events',
@@ -20,7 +20,7 @@ export class CommentsEventsComponent implements OnInit {
   dropdownOpen = false;
 
   constructor(
-    private servicesService: ServicesService,
+    private apiService: FileManagementService,
     private userCrudService: UserCrudService
   ) {}
 
@@ -56,7 +56,7 @@ export class CommentsEventsComponent implements OnInit {
 
   loadCommentsAndEvents() {
     if (this.archiveId !== null) {
-      this.servicesService.listComments().subscribe((response) => {
+      this.apiService.listComments().subscribe((response) => {
         if (response && response.body) {
           const filteredComments = response.body.result.filter(
             (comment: any) => comment.archive_id === this.archiveId
@@ -70,7 +70,7 @@ export class CommentsEventsComponent implements OnInit {
             comment.dateTime = new Date(comment.ctime);
           });
 
-          this.servicesService.listEvents(this.archiveId!).subscribe(
+          this.apiService.listEvents(this.archiveId!).subscribe(
             (eventResponse) => {
               if (eventResponse && eventResponse.body) {
                 const events = eventResponse.body.result.map((event: any) => {
@@ -127,7 +127,7 @@ export class CommentsEventsComponent implements OnInit {
 
   addComment() {
     if (this.newComment.trim() && this.archiveId !== null) {
-      this.servicesService.createComment(this.archiveId, this.newComment).subscribe(() => {
+      this.apiService.createComment(this.archiveId, this.newComment).subscribe(() => {
         this.newComment = '';
         this.loadCommentsAndEvents();
       });

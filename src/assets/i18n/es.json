@@ -114,16 +114,8 @@
   "projects:error_loading": "Error al cargar los proyectos.",
 
   "RESULT": "****************************************************RESULT****************************************************",
-  "result:criteria": "Criterios de Resultados",
-  "result:nombre": "Nombre",
-  "result:status": "Estado",
-  "result:idLiquidacion": "ID Liquidación",
-  "result:transaccion": "Transacción",
-  "result:fecha": "Fecha",
-  "result:opciones": "Opciones",
-  "status:approved": "Aprobado",
-  "status:pending": "Pendiente",
-  "status:not_started": "No Iniciado",
+  "search_results:title": "Resultados de Búsqueda",
+  "search_results:alert": "No se encontraron resultados para su Busqueda",
 
   "USERS": "****************************************************USERS****************************************************",
   "users:title": "Usuarios",
