@@ -51,6 +51,7 @@
   "search:search_criteria": "Search Criteria",
   "button:search": "Search",
   "button:save_search": "Save Search",
+  "document-management:search_results": "Search Result",
 
   "PROJECTS": "****************************************************PROJECTS****************************************************",
   "project:label": "Project",
@@ -60,7 +61,7 @@
   "projects:title": "Projects",
   "projects:add_project": "Add Project",
   "projects:search_placeholder": "Search projects",
-  
+
   "projects:id": "ID",
   "projects:nombre": "Name",
   "projects:actions": "Actions",
@@ -79,7 +80,7 @@
   "projects:alert_name_index": "The name of the index is required.",
   "projects:alert_exist_index": "An index with this name already exists.",
   "projects:alert_type_index": "The data type of the index is required.",
-    
+
   "projects:add_index": "Add index",
   "projects:save_changes": "Save changes",
   "projects:index_name": "Name",
@@ -140,21 +141,21 @@
 
   "users:add_success_title": "Creation",
   "users:add_success_message": "User successfully created.",
-  
+
   "users:update_success_title": "Update",
   "users:update_success_message": "User successfully updated.",
-  
+
   "users:delete_success_title": "Deletion",
   "users:delete_success_message": "User successfully deleted.",
-  
+
   "users:delete_error_logged_in_title": "Error",
   "users:delete_error_logged_in_message": "You cannot delete the logged-in user.",
-  
+
   "users:confirm_delete": "Are you sure you want to delete the user \"{{username}}\"?",
-  
+
   "users:error_loading_title": "Error",
   "users:error_loading_message": "Error loading users.",
-  
+
   "users:error_deleting_title": "Error",
   "users:error_deleting_message": "Error deleting the user.",
 
