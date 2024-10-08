@@ -1,4 +1,3 @@
-// LoginComponent.ts
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -60,20 +59,26 @@ export class LoginComponent {
 
           const currentDateTime = new Date().toLocaleString();
           localStorage.setItem('lastLogin', currentDateTime);
+          localStorage.removeItem('selectedProject');
 
           this.loaderService.showLoader();
-          this.router.navigate(['/portal']);
+          this.router.navigate(['/portal/document-management/expedient-list']);
         } else {
           this.showAlert('Error', 'Credenciales incorrectas', 'danger');
           this.loaderService.hideLoader();
         }
       },
       error: (error: HttpErrorResponse) => {
-        this.showAlert('Error', 'Interno del servidor', 'danger');
+        if (error.status === 403) {
+          this.showAlert('Error', 'Credenciales incorrectas', 'danger');
+        } else {
+          this.showAlert('Error', 'Interno del servidor', 'danger');
+        }
         this.loaderService.hideLoader();
       }
     });
   }
+
 
   showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
     this.alertTitle = title;

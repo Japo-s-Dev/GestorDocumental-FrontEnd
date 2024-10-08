@@ -1,0 +1,172 @@
+.search-criteria-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Título de la sección */
+.search-title {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Select de proyecto */
+.project-select-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Ajusta el espacio entre el select y el botón */
+  margin-bottom: 20px;
+}
+
+.project-select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* Campos del formulario */
+/* Ajustamos el contenedor del formulario */
+.attributeForm {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Controlamos que el label ocupe un ancho fijo */
+.attributeForm > label {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+  width: 20%; /* Ajustamos el label para ocupar el 20% del ancho total */
+  margin-right: 15px; /* Margen a la derecha del label */
+}
+
+/* Los inputs ocuparán el resto del espacio */
+.custom-input-class {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex-grow: 1; /* Esto hace que el input ocupe el espacio restante */
+  font-family: "Poppins", sans-serif;
+}
+
+/* Ajustes específicos para los campos de tipo número */
+.input-range {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px; /* Espacio entre los campos y el botón */
+}
+
+.input-range input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Botón de rango */
+.range-button {
+  padding: 10px;
+  background-color: #007bff; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.range-button:hover {
+  background-color: #0056b3; /* Cambio de color en hover */
+}
+
+/* Botón de cancelar rango */
+.cancel-range-button {
+  padding: 10px;
+  background-color: #dc3545; /* Color rojo para cancelar */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-range-button:hover {
+  background-color: #c82333; /* Cambio de color en hover */
+}
+
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.date-range input {
+  flex-grow: 1; /* Ambos inputs de fecha crecerán para ocupar espacio */
+}
+
+.date-separator {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  margin: 0 10px;
+}
+
+
+
+
+/* Botones de Acción */
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.navigation button {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.submit {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.submint:hover {
+  background-color: #218838;
+}
+
+.reset {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.reset:hover {
+  background-color: #5a6268;
+}

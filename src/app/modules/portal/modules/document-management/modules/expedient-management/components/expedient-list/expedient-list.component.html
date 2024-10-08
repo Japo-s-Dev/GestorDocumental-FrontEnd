@@ -1,0 +1,96 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()"
+>
+</app-alert>
+
+<div class="expedient-list-container">
+  <!-- Título y botones -->
+  <div class="header">
+    <h2 class="expedient-title">
+      {{ "document-management:expedient_list" | translate }}
+    </h2>
+    <div class="header-buttons">
+      <button class="add-expedient-button" (click)="openExpedientModal()">
+        <i class="fa-solid fa-plus"></i>
+        {{ "document-management:add_expedient" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="project-select-refresh-container">
+    <select
+      class="project-select"
+      [(ngModel)]="selectedProject"
+      (change)="onProjectChange(selectedProject)"
+    >
+      <option value="0" disabled selected>
+        {{ "document-management:select_structure" | translate }}
+      </option>
+      <option *ngFor="let project of projects" [value]="project.id">
+        {{ project.name }}
+      </option>
+    </select>
+    <button class="refresh-table-button" (click)="buildTable()">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+  </div>
+
+  <!-- Buscador con botón de Búsqueda Avanzada -->
+  <div class="search-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="{{ 'document-management:search_placeholder' | translate }}"
+      (input)="onSearch($event)"
+    />
+
+    <button class="advanced-search-button" (click)="navigateToAdvancedSearch()">
+      {{ 'document-management:advanced_search' | translate }}
+    </button>
+  </div>
+
+
+  <!-- Tabla dinámica basada en el proyecto seleccionado -->
+  <table *ngIf="tableData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        <th>
+          {{ "document-management:actions" | translate }}
+        </th>
+        <!-- Columna para las acciones -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of filteredData">
+        <td>
+          <a (click)="nextStep(row['id'])" class="expedient-link">{{
+            row["id"]
+          }}</a>
+        </td>
+        <td *ngFor="let header of tableHeaders.slice(1)">
+          {{ row[header] }}
+        </td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editExpedient(row['id'])">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteExpedient(row['id'])">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="tableData.length === 0">
+    {{ "document-management:no_data" | translate }}
+  </p>
+</div>

@@ -10,33 +10,17 @@
 
   <h4>{{ "navbar:menu" | translate }}</h4>
 
-  <div class="box" (click)="toggleSearch('/portal/search')">
+  <div class="box" (click)="toggleSearch('/portal/document-management/search')">
     <i class="fa-solid fa-magnifying-glass"></i>
     {{ "navbar:search" | translate }}
   </div>
 
-  <!-- Nueva opción para el Gestor Documental -->
   <div class="box" (click)="navigate('/portal/document-management')">
     <i class="fa-solid fa-folder-tree"></i>
     {{ "navbar:document_manager" | translate }}
   </div>
 
-  <div class="box" (click)="toggleAdd('/portal/add')">
-    <i class="fa-solid fa-plus"></i>
-    {{ "navbar:add" | translate }}
-  </div>
-
-  <div *ngIf="showAdd">
-    <div class="sub-box" routerLink="/portal/add/file-entry">
-      <i class="fa-solid fa-file"></i>
-      {{ "navbar:file_entry" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/add/upload-document">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      {{ "navbar:upload_documents" | translate }}
-    </div>
-  </div>
-
+  <!-- Sección para Administrador -->
   <div *ngIf="isAdmin" class="spacer"></div>
   <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>
   <div *ngIf="isAdmin" class="box" (click)="toggleAdmin()">
@@ -55,6 +39,25 @@
     <div class="sub-box" routerLink="/portal/admin/roles">
       <i class="fa-solid fa-user-shield"></i>
       {{ "navbar:roles" | translate }}
+    </div>
+  </div>
+  <!-- Nueva sección de Reportes -->
+  <div class="box" (click)="toggleReports()">
+    <i class="fa-solid fa-chart-line"></i>
+    {{ "navbar:reports" | translate }}
+  </div>
+  <div *ngIf="showReports">
+    <div class="sub-box" routerLink="/portal/reports/actions">
+      <i class="fa-solid fa-file-lines"></i>
+      {{ "navbar:actions_report" | translate }}
+    </div>
+    <div class="sub-box" routerLink="/portal/reports/structures">
+      <i class="fa-solid fa-building"></i>
+      {{ "navbar:structures_report" | translate }}
+    </div>
+    <div class="sub-box" routerLink="/portal/reports/users">
+      <i class="fa-solid fa-user"></i>
+      {{ "navbar:users_report" | translate }}
     </div>
   </div>
 </div>

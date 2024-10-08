@@ -18,31 +18,31 @@ export class ProjectsCrudService {
   }
 
   listProjects(): Observable<any> {
-    const payload = { id: 1, method: 'list_projects', params: {} };
+    const payload = { id: 1, method: 'list_structures', params: {} };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
   createProject(projectData: any): Observable<any> {
-    const payload = { id: 1, method: 'create_project', params: { data: projectData } };
+    const payload = { id: 1, method: 'create_structure', params: { data: projectData } };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
   updateProject(projectId: number, projectData: any): Observable<any> {
-    const payload = { id: 1, method: 'update_project', params: { id: projectId, data: projectData } };
+    const payload = { id: 1, method: 'update_structure', params: { id: projectId, data: projectData } };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
   deleteProject(projectId: number): Observable<any> {
-    const payload = { id: 1, method: 'delete_project', params: { id: projectId } };
+    const payload = { id: 1, method: 'delete_structure', params: { id: projectId } };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
   getProjectById(projectId: number): Observable<any> {
-    const payload = { id: 1, method: 'get_project', params: { id: projectId } };
+    const payload = { id: 1, method: 'get_structure', params: { id: projectId } };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }

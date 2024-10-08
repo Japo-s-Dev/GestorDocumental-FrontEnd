@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RolesCrudService } from '../../services/roles-crud.service';
 import { IRole } from '../../interfaces/role.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-roles-modal',
@@ -21,7 +22,8 @@ export class RolesModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
-    private rolesCrudService: RolesCrudService
+    private rolesCrudService: RolesCrudService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +64,9 @@ export class RolesModalComponent implements OnInit {
             this.activeModal.close('updated');
           },
           (error) => {
-            this.showAlert('Error al actualizar el rol');
+            this.translate.get('roles:error_update_role').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
             console.error('Error al actualizar el rol', error);
           }
         );
@@ -72,13 +76,17 @@ export class RolesModalComponent implements OnInit {
             this.activeModal.close('created');
           },
           (error) => {
-            this.showAlert('Error al crear el rol');
+            this.translate.get('roles:error_create_role').subscribe((translatedText: string) => {
+              this.showAlert(translatedText);
+            });
             console.error('Error al crear el rol', error);
           }
         );
       }
     } else {
-      this.showAlert('Por favor, completa el formulario correctamente');
+      this.translate.get('roles:form_error').subscribe((translatedText: string) => {
+        this.showAlert(translatedText);
+      });
     }
   }
 

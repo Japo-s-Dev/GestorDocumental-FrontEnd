@@ -50,6 +50,7 @@ describe('AddFileHomeComponent', () => {
   });
 
   beforeEach(() => {
+    localStorage.clear(); // Clear localStorage before each test
     fixture = TestBed.createComponent(AddFileHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

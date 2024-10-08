@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersModalComponent } from '../users-modal/users-modal.component';
 import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
 import { LoaderService } from '../../../../../../../../services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-users',
@@ -26,7 +27,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private userCrudService: UserCrudService,
     private modalService: NgbModal,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -48,11 +50,14 @@ export class UsersComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.users = response.body.result;
-          console.log('Usuarios:', this.users);
         }
       },
       (error) => {
-        this.showAlert('Error', 'Error al obtener los usuarios.', 'danger');
+        this.translate.get('users:error_loading_title').subscribe((title: string) => {
+          this.translate.get('users:error_loading_message').subscribe((message: string) => {
+            this.showAlert({ title, message }, 'danger');
+          });
+        });
         console.error('Error al obtener los usuarios:', error);
       }
     );
@@ -67,14 +72,22 @@ export class UsersComponent implements OnInit {
       if (result) {
         this.loadUsers();
         if (result === 'created') {
+          this.translate.get('users:add_success_title').subscribe((title: string) => {
+            this.translate.get('users:add_success_message').subscribe((message: string) => {
+              this.showAlert({ title, message }, 'success');
+            });
+          });
           this.loaderService.showLoader();
-          this.showAlert('Agregación', 'Usuario creado con éxito.', 'success');
           setTimeout(() => {
             this.loaderService.hideLoader();
           }, 1000);
         } else if (result === 'updated') {
+          this.translate.get('users:update_success_title').subscribe((title: string) => {
+            this.translate.get('users:update_success_message').subscribe((message: string) => {
+              this.showAlert({ title, message }, 'warning');
+            });
+          });
           this.loaderService.showLoader();
-          this.showAlert('Actualización', 'Usuario actualizado con éxito.', 'warning');
           setTimeout(() => {
             this.loaderService.hideLoader();
           }, 1000);
@@ -95,34 +108,48 @@ export class UsersComponent implements OnInit {
 
   deleteUser(user: IUser): void {
     if (user.username === this.loggedInUsername) {
-      this.showAlert('Error', 'No puedes eliminar al usuario logueado.', 'danger');
+      this.translate.get('users:delete_error_logged_in_title').subscribe((title: string) => {
+        this.translate.get('users:delete_error_logged_in_message').subscribe((message: string) => {
+          this.showAlert({ title, message }, 'danger');
+        });
+      });
       return;
     }
-    const modalRef = this.modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.message = `¿Está seguro de querer eliminar al usuario "${user.username}"?`;
-    modalRef.result.then((result) => {
-      if (result === 'confirm') {
-        this.userCrudService.deleteUser(user.id).subscribe(
-          () => {
-            this.loaderService.showLoader();
-            this.showAlert('Eliminación', 'Usuario eliminado con éxito.', 'info');
-            this.loadUsers(); // Recargar los usuarios después de eliminar
-            setTimeout(() => {
-              this.loaderService.hideLoader();
-            }, 1000);
-          },
-          (error) => {
-            this.loaderService.showLoader();
-            this.showAlert('Error', 'Error al eliminar el usuario.', 'danger');
-            console.error('Error al eliminar el usuario:', error);
-            setTimeout(() => {
-              this.loaderService.hideLoader();
-            }, 1000);
-          }
-        );
-      }
-    }).catch((error) => {
-      console.log('Modal dismissed', error);
+    this.translate.get('users:confirm_delete', { username: user.username }).subscribe((translatedText: string) => {
+      const modalRef = this.modalService.open(ConfirmModalComponent);
+      modalRef.componentInstance.message = translatedText;
+
+      modalRef.result.then((result) => {
+        if (result === 'confirm') {
+          this.userCrudService.deleteUser(user.id).subscribe(
+            () => {
+              this.translate.get('users:delete_success_title').subscribe((title: string) => {
+                this.translate.get('users:delete_success_message').subscribe((message: string) => {
+                  this.showAlert({ title, message }, 'info');
+                });
+              });
+              this.loaderService.showLoader();
+              this.loadUsers(); // Recargar los usuarios después de eliminar
+              setTimeout(() => {
+                this.loaderService.hideLoader();
+              }, 1000);
+            },
+            (error) => {
+              this.translate.get('users:error_deleting_title').subscribe((title: string) => {
+                this.translate.get('users:error_deleting_message').subscribe((message: string) => {
+                  this.showAlert({ title, message }, 'danger');
+                });
+              });
+              this.loaderService.showLoader();
+              setTimeout(() => {
+                this.loaderService.hideLoader();
+              }, 1000);
+            }
+          );
+        }
+      }).catch((error) => {
+        console.log('Modal dismissed', error);
+      });
     });
   }
 
@@ -137,9 +164,9 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
-    this.alertTitle = title;
-    this.alertMessage = message;
+  showAlert(translatedText: any, type: 'success' | 'warning' | 'danger' | 'info'): void {
+    this.alertTitle = translatedText.title;
+    this.alertMessage = translatedText.message;
     this.alertType = `alert-${type}`;
     this.alertIcon = `fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}`;
     this.alertVisible = true;

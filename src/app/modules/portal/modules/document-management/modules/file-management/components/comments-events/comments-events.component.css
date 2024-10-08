@@ -1,0 +1,242 @@
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-input {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.comment-input textarea {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  resize: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: 60px;
+}
+
+.comment-input button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  background-color: #ff4d00;
+  color: white;
+  width: 35%;
+  align-items: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.comment-input button:hover {
+  background-color: #d76b00;
+  transform: scale(1.05);
+}
+
+.comment-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.comment-item {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  background-color: #e0e0e0;
+  margin-bottom: 5px;
+  position: relative;
+  word-wrap: break-word;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.own {
+  background-color: #e07c51; /* Different background color for own comments */
+  color: #3c2109;
+  align-self: flex-end;
+  border: 1px solid #d76b00;
+  margin-left: auto; /* Align own comments to the right */
+}
+
+.event-bubble {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #ffc107; /* Distinct background color for events */
+  margin: 10px auto; /* Center the event bubble */
+  position: relative;
+  word-wrap: break-word;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center text in the event bubble */
+  color: #802200;
+}
+
+.comment-date, .event-date {
+  font-size: 10px;
+  color: #552f00;
+  text-align: right;
+  margin-top: 5px;
+  display: block;
+  opacity: 0.8;
+}
+
+/* Dropdown filter styles */
+.filter-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+  width: fit-content; /* Restrict the width to fit content */
+}
+
+.dropdown-button {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: inline-block; /* Ensure button doesn't take up excess width */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.dropdown-button:hover {
+  background-color: #f38333;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content {
+  visibility: hidden; /* Use visibility instead of display for transitions */
+  opacity: 0;
+  transform: translateY(5px);
+  transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  z-index: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 2px; /* Ensure a slight gap */
+  white-space: nowrap; /* Prevent the content from wrapping */
+}
+
+.filter-dropdown:hover .dropdown-content,
+.filter-dropdown:focus-within .dropdown-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content label {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content label:hover {
+  background-color: #f3f3f3;
+}
+
+.dropdown-content input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.show {
+  display: block;
+}
+
+/* Estilo de checkbox adaptado */
+.comments-section .dropdown-content {
+  --_clr-primary: #666;
+  --_clr-hover: #f33195;
+  --_clr-checked: #127acf;
+}
+
+.comments-section .dropdown-content > div {
+  --_clr-current: var(--_clr-primary);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comments-section .dropdown-content label {
+  cursor: pointer;
+  color: var(--_clr-current);
+  transition: color 150ms ease-in-out;
+}
+
+/* Estilo de checkbox personalizado */
+.comments-section .dropdown-content input[type="checkbox"] {
+  appearance: none;
+  outline: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  aspect-ratio: 1;
+  padding: 0.25rem;
+  background: transparent;
+  border: 1px solid var(--_clr-current);
+  border-radius: 2px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.comments-section .dropdown-content input[type="checkbox"]::after {
+  content: "\2714";
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  color: var(--_clr-checked);
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.comments-section .dropdown-content label:hover,
+.comments-section .dropdown-content input[type="checkbox"]:focus-visible,
+.comments-section .dropdown-content input[type="checkbox"]:focus-visible + label,
+.comments-section .dropdown-content input[type="checkbox"]:hover,
+.comments-section .dropdown-content input[type="checkbox"]:hover + label {
+  --_clr-current: var(--_clr-hover);
+}
+
+.comments-section .dropdown-content input[type="checkbox"]:focus-visible::after,
+.comments-section .dropdown-content input[type="checkbox"]:hover::after {
+  opacity: 0.5;
+  color: var(--_clr-hover);
+}
+
+.comments-section .dropdown-content input[type="checkbox"]:checked + label:not(:hover),
+.comments-section .dropdown-content input[type="checkbox"]:checked:not(:hover) {
+  --_clr-current: var(--_clr-checked);
+}
+
+.comments-section .dropdown-content input[type="checkbox"]:checked::after {
+  opacity: 1;
+}

@@ -7,6 +7,7 @@ import { LoaderService } from '../../../../services/loader.service';
 import { HeaderComponent } from './header.component';
 import { RouteLabels } from '../../../../core/route-labels';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -15,6 +16,7 @@ describe('HeaderComponent', () => {
   let translateService: TranslateService;
   let authService: AuthService;
   let loaderService: LoaderService;
+  let modalService: jasmine.SpyObj<NgbModal>;
   let routerEventsSubject: Subject<any>;
 
   const translateServiceMock = {
@@ -31,6 +33,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     // Create a mock for Router and its events
     routerEventsSubject = new Subject<NavigationEnd>();
+    modalService = jasmine.createSpyObj('NgbModal', ['open']);
     router = {
       events: routerEventsSubject.asObservable(),
       navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)),
@@ -53,7 +56,8 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: router },
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: AuthService, useValue: authService },
-        { provide: LoaderService, useValue: loaderService }
+        { provide: LoaderService, useValue: loaderService },
+        { provide: NgbModal, useValue: modalService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -93,8 +97,19 @@ describe('HeaderComponent', () => {
   });
 
   it('should navigate to profile when viewProfile is called', () => {
+    const modalRef = {
+      result: Promise.resolve('logout')
+    };
+    modalService.open.and.returnValue(modalRef as any); // Configura el modal para resolver con 'logout'
+  
     component.viewProfile();
-    expect(router.navigate).toHaveBeenCalledWith(['/profile']);
+    
+    // Verifica que la función logout fue llamada
+    modalRef.result.then(() => {
+      expect(authService.logoff).toHaveBeenCalled();
+      expect(loaderService.showLoader).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
   });
 
   it('should log out and navigate to login', () => {
@@ -117,5 +132,47 @@ describe('HeaderComponent', () => {
 
     expect(translateServiceMock.get).toHaveBeenCalledWith('route:search_criteria');
     expect(component.currentLabel).toBe('translated label');
+  });
+
+  it('should set the correct styles and icons for ADMIN role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'adminUser', role: 'ADMIN' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('adminUser');
+    expect(component.userRole).toBe('ADMIN');
+    expect(component.usernameStyle).toBe('admin-style');
+    expect(component.roleIcon).toBe('fa-crown');
+  });
+  
+  it('should set the correct styles and icons for ADMIN JUNIOR role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'juniorAdmin', role: 'ADMIN JUNIOR' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('juniorAdmin');
+    expect(component.userRole).toBe('ADMIN JUNIOR');
+    expect(component.usernameStyle).toBe('admin-junior-style');
+    expect(component.roleIcon).toBe('fa-star');
+  });
+  
+  it('should set the correct styles and icons for a regular user role', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'userStatus') return JSON.stringify({ username: 'regularUser', role: 'USER' });
+      return null;
+    });
+  
+    component.ngOnInit(); // Ejecuta la inicialización
+  
+    expect(component.username).toBe('regularUser');
+    expect(component.userRole).toBe('USER');
+    expect(component.usernameStyle).toBe('regular-user-style');
+    expect(component.roleIcon).toBe('');
   });
 });

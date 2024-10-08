@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../../../../enums/app.constants';
 import { IIndexRequest } from '../../admin/modules/projects/interfaces/index.interface';
+import { IExpedientRequest, IValueRequest } from '../interfaces/services.interface';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class ServicesService {
   }
 
   listProjects(): Observable<any> {
-    const payload = { id: 1, method: 'list_projects', params: {} };
+    const payload = { id: 1, method: 'list_structures', params: {} };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
@@ -43,15 +44,12 @@ export class ServicesService {
   }
 
   // Crear expediente
-  createArchive(projectId: number, tag: string): Observable<any> {
+  createArchive(data: IExpedientRequest): Observable<any> {
     const payload = {
       id: 1,
       method: 'create_archive',
       params: {
-        data: {
-          project_id: projectId,
-          tag: tag
-        }
+        data
       }
     };
     const formData = this.createFormData(payload);
@@ -60,6 +58,7 @@ export class ServicesService {
       withCredentials: true
     });
   }
+
 
   // Obtener expediente por ID
   getArchiveById(expedientId: number): Observable<any> {
@@ -78,15 +77,13 @@ export class ServicesService {
   }
 
   // Actualizar expediente
-  updateArchive(expedientId: number, tag: string): Observable<any> {
+  updateArchive(expedientId: number, data: Partial<IExpedientRequest>): Observable<any> {
     const payload = {
       id: 1,
       method: 'update_archive',
       params: {
         id: expedientId,
-        data: {
-          tag: tag
-        }
+        data
       }
     };
     const formData = this.createFormData(payload);
@@ -95,6 +92,7 @@ export class ServicesService {
       withCredentials: true
     });
   }
+
 
   // Eliminar expediente
   deleteArchive(expedientId: number): Observable<any> {
@@ -176,6 +174,7 @@ export class ServicesService {
     const payload = {
       id: 1,
       method: 'list_datatypes',
+      params: {}
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {
@@ -184,17 +183,12 @@ export class ServicesService {
     });
   }
 
-  createValue(indexId: number, projectId: number, expedientId: number, value: string): Observable<any> {
+  createValue(data: IValueRequest): Observable<any> {
     const payload = {
       id: 1,
       method: 'create_value',
       params: {
-        data: {
-          index_id: indexId,
-          project_id: projectId,
-          archive_id: expedientId,
-          value: value
-        }
+        data
       }
     };
     const formData = this.createFormData(payload);
@@ -221,6 +215,7 @@ export class ServicesService {
   }
 
   // Método para actualizar un valor
+
   updateValue(valueId: number, newValue: string): Observable<any> {
     const payload = {
       id: 1,

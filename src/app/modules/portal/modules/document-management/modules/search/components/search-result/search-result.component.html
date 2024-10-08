@@ -1,0 +1,71 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()"
+>
+</app-alert>
+
+
+<button class="back-button" (click)="goBack()">
+  <i class="fa-solid fa-arrow-left"></i>
+</button>
+<div class="search-result-container">
+  <!-- Back button -->
+  <div class="header">
+
+    <h2 class="result-title">
+      {{ "search_results:title" | translate }}
+    </h2>
+
+  </div>
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="{{ 'document-management:search_placeholder' | translate }}"
+      (input)="onSearch($event)"
+    />
+    <button class="refresh-table-button" (click)="buildTable()">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+  </div>
+
+  <!-- Tabla dinámica de resultados de la búsqueda -->
+  <table *ngIf="tableData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        <th>{{ "document-management:actions" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of filteredData">
+        <td>
+          <a (click)="nextStep(row['id'])" class="expedient-link">{{ row["id"] }}</a>
+        </td>
+        <td *ngFor="let header of tableHeaders.slice(1)">
+          {{ row[header] }}
+        </td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editExpedient(row['id'])">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteExpedient(row['id'])">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="tableData.length === 0">
+    {{ "document-management:no_data" | translate }}
+  </p>
+</div>

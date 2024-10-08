@@ -1,0 +1,135 @@
+.viewer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px;
+}
+
+.back-button {
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #F1842C;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  background-color: #d76b00;
+}
+
+.tabs {
+  display: flex;
+}
+
+
+.tabs button {
+  --primary-color: #111;
+  --hovered-color: #F1842C; /* Color anaranjado */
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary-color);
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.tabs button::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  bottom: -7px;
+  background: var(--hovered-color);
+  height: 2px;
+  transition: 0.3s ease-out;
+}
+
+.tabs button:hover::after {
+  width: 100%;
+}
+
+.tabs button:hover {
+  color: var(--hovered-color);
+}
+
+/* Estilo del botón cuando está activo */
+.tabs button.active {
+  font-weight: bold;
+  color: var(--hovered-color); /* Color anaranjado cuando está activo */
+}
+
+.tabs button.active::after {
+  width: 100%; /* Mostrar la línea completa cuando el botón está activo */
+  background: var(--hovered-color);
+}
+
+.tab-content {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+}
+
+/* File tree container should only show when "Archivos" is active */
+.file-tree-container {
+  width: 35%;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  transition: width 0.3s ease;
+}
+
+/* Comments container should take the file tree's space when active */
+.comments-container {
+  width: 35%;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  transition: width 0.3s ease;
+}
+
+.file-display-container {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.document-header {
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: #333;
+}
+
+ngx-doc-viewer {
+  width: 100%;
+  height: 100%; /* Ensure it occupies the full height of the container */
+  border: none;
+}

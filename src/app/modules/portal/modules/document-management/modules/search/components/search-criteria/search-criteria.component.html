@@ -1,0 +1,113 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()"
+>
+</app-alert>
+
+<div class="search-criteria-container">
+  <!-- Título de la sección -->
+  <header>
+    <h1 class="search-title">{{ "search:search_criteria" | translate }}</h1>
+  </header>
+
+  <main>
+
+    <div class="project-select-container">
+      <select
+        class="project-select"
+        id="project"
+        [(ngModel)]="selectedProject"
+        (ngModelChange)="onProjectChange($event)"
+        name="project"
+      >
+        <option value="0" disabled selected>
+          {{ "document-management:select_structure" | translate }}
+        </option>
+        <option *ngFor="let project of projects" [value]="project.id">
+          {{ project.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Formulario controlado por Angular -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-class">
+      <!-- Itera sobre los campos generados dinámicamente -->
+      <div *ngFor="let field of formFields" class="attributeForm">
+        <label>{{ field.index_name }}</label>
+
+        <!-- Caso especial para los campos de tipo 'date' -->
+        <div *ngIf="field.datatype_id === 5" class="date-range">
+          <input type="date" [formControlName]="replaceSpaces(field.index_name) + '_inicio'" class="custom-input-class">
+          <span class="date-separator">al</span>
+          <input type="date" [formControlName]="replaceSpaces(field.index_name) + '_fin'" class="custom-input-class">
+          <div *ngIf="dateError[field.index_name]" class="text-danger">La fecha de inicio debe ser menor o igual que la fecha final.</div>
+        </div>
+
+        <!-- Para campos numéricos con opción de rango -->
+        <div *ngIf="field.datatype_id === 4" class="input-range">
+          <!-- Muestra un solo campo cuando no es rango -->
+          <input
+            *ngIf="!rangeActive[field.index_name]"
+            [formControlName]="replaceSpaces(field.index_name)"
+            class="custom-input-class"
+            [placeholder]="'Ingrese ' + field.index_name"
+          />
+
+          <!-- Muestra dos campos cuando es rango -->
+          <div *ngIf="rangeActive[field.index_name]" class="range-fields">
+            <input
+              [formControlName]="replaceSpaces(field.index_name) + '_inicio'"
+              class="custom-input-class"
+              placeholder="Desde"
+            />
+            <span class="date-separator">al</span>
+            <input
+              [formControlName]="replaceSpaces(field.index_name) + '_fin'"
+              class="custom-input-class"
+              placeholder="Hasta"
+            />
+          </div>
+
+
+          <!-- Botón para alternar entre rango y campo único -->
+          <button
+            type="button"
+            class="range-button"
+            *ngIf="!rangeActive[field.index_name]"
+            (click)="toggleRange(field.index_name)"
+          >
+            Rango
+          </button>
+
+          <button
+            type="button"
+            class="cancel-range-button"
+            *ngIf="rangeActive[field.index_name]"
+            (click)="toggleRange(field.index_name)"
+          >
+            Cancelar
+          </button>
+        </div>
+
+        <!-- Otros tipos de campos (ej. texto) -->
+        <div *ngIf="field.datatype_id === 3" class="input-range">
+          <input [type]="getInputType(field.datatype_id)" [formControlName]="replaceSpaces(field.index_name)" class="custom-input-class" [placeholder]="'Ingrese ' + field.index_name">
+        </div>
+      </div> <!-- Cierra correctamente el *ngFor -->
+
+      <!-- Botones de Acción -->
+      <div class="navigation">
+        <button class="btn submit" type="submit" [disabled]="!form.valid">
+          {{ "button:search" | translate }}
+        </button>
+        <button class="btn reset" type="button" (click)="onReset()">
+          Limpiar campos
+        </button>
+      </div>
+    </form>
+  </main>
+</div>

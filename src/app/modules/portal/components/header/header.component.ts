@@ -83,6 +83,12 @@ export class HeaderComponent implements OnInit {
     localStorage.setItem('selectedLanguage', language);
   }
 
+  toggleLanguage() {
+    this.currentLanguage = this.currentLanguage === 'en' ? 'es' : 'en';
+    this.translate.use(this.currentLanguage);
+    localStorage.setItem('selectedLanguage', this.currentLanguage);
+  }
+
   toggleUserMenu(): void {
     this.userMenuOpen = !this.userMenuOpen;
   }

@@ -85,7 +85,7 @@ describe('NavbarComponent', () => {
 
   it('should toggle showAdmin', () => {
     component.showAdmin = false;
-    component.toggleAdmin('some/path');
+    component.toggleAdmin();
     expect(component.showAdmin).toBeTrue();
   });
 

@@ -5,9 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RolesModalComponent } from '../roles-modal/roles-modal.component';
 import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-modal/confirm-modal.component';
 import { LoaderService } from '../../../../../../../../services/loader.service';
-
-
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-roles',
@@ -28,7 +26,8 @@ export class RolesComponent implements OnInit {
   constructor(
     private rolesCrudService: RolesCrudService,
     private modalService: NgbModal,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +43,14 @@ export class RolesComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.roles = response.body.result;
-          console.log('Roles:', this.roles);
         }
       },
       (error) => {
-        this.showAlert('Error', 'Error al obtener los roles.', 'danger');
+        this.translate.get('roles:error_loading').subscribe((translatedText: string) => {
+          this.translate.get('roles:error').subscribe((title: string) => {
+            this.showAlert(title, translatedText, 'danger');
+          });
+        });
         console.error('Error al obtener los roles:', error);
       }
     );
@@ -64,13 +66,21 @@ export class RolesComponent implements OnInit {
         this.loadRoles();
         if (result === 'created') {
           this.loaderService.showLoader();
-          this.showAlert('Agregación', 'Rol creado con éxito.', 'success');
+          this.translate.get('roles:created_success').subscribe((translatedText: string) => {
+            this.translate.get('roles:aggregation').subscribe((title: string) => {
+              this.showAlert(title, translatedText, 'success');
+            });
+          });
           setTimeout(() => {
             this.loaderService.hideLoader();
           }, 1000);
         } else if (result === 'updated') {
           this.loaderService.showLoader();
-          this.showAlert('Actualización', 'Rol actualizado con éxito.', 'warning');
+          this.translate.get('roles:updated_success').subscribe((translatedText: string) => {
+            this.translate.get('roles:update').subscribe((title: string) => {
+              this.showAlert(title, translatedText, 'warning');
+            });
+          });
           setTimeout(() => {
             this.loaderService.hideLoader();
           }, 1000);
@@ -91,13 +101,20 @@ export class RolesComponent implements OnInit {
 
   deleteRole(role: IRole): void {
     const modalRef = this.modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.message = `¿Está seguro de querer eliminar el rol "${role.role_name}"?`;
+    this.translate.get('roles:confirm_delete', { roleName: role.role_name }).subscribe((translatedText: string) => {
+      modalRef.componentInstance.message = translatedText;
+    });
+
     modalRef.result.then((result) => {
       if (result === 'confirm') {
         this.rolesCrudService.deleteRole(role.id).subscribe(
           () => {
             this.loaderService.showLoader();
-            this.showAlert('Eliminación', 'Rol eliminado con éxito.', 'info');
+            this.translate.get('roles:deleted_success').subscribe((translatedText: string) => {
+              this.translate.get('roles:deletion').subscribe((title: string) => {
+                this.showAlert(title, translatedText, 'info');
+              });
+            });
             this.loadRoles();
             setTimeout(() => {
               this.loaderService.hideLoader();
@@ -105,7 +122,11 @@ export class RolesComponent implements OnInit {
           },
           (error) => {
             this.loaderService.showLoader();
-            this.showAlert('Error', 'El Rol no se puede eliminar porque esta asignado a un Usuario.', 'danger');
+            this.translate.get('roles:delete_error').subscribe((translatedText: string) => {
+              this.translate.get('roles:error').subscribe((title: string) => {
+                this.showAlert(title, translatedText, 'danger');
+              });
+            });
             console.error('Error al eliminar el rol:', error);
             setTimeout(() => {
               this.loaderService.hideLoader();

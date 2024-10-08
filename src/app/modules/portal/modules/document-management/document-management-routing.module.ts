@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExpedientListComponent } from './components/expedient-list/expedient-list.component';
-import { DocumentViewerComponent } from './components/document-viewer/document-viewer.component';
 
 const routes: Routes = [
   {
@@ -11,12 +9,16 @@ const routes: Routes = [
   },
   {
     path: 'expedient-list',
-    component: ExpedientListComponent
+    loadChildren: () => import('./modules/expedient-management/expedient-management.module').then(m => m.ExpedientManagementModule)
   },
   {
     path: 'viewer',
-    component: DocumentViewerComponent
-  }
+    loadChildren: () => import('./modules/file-management/file-management.module').then(m => m.FileManagementModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule)
+  },
 
 ];
 

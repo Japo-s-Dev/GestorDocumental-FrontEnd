@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ParameterManagerService {
-  private parametersSource = new BehaviorSubject<any>({});
+  private parametersSource = new BehaviorSubject<any>(this.getStoredParameters());
   parameters$ = this.parametersSource.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   // Obtiene parámetros compartidos como un observable
   getSharedParameter() {
@@ -17,7 +17,6 @@ export class ParameterManagerService {
 
   // Envía y guarda los parámetros en localStorage
   sendParameters(newParameters: any): void {
-    console.log('Sending parameters:', newParameters); // Verifica los parámetros enviados
     let parameterListStorage = this.getStoredParameters();
     for (const key in newParameters) {
       parameterListStorage[key] = newParameters[key];
@@ -43,3 +42,4 @@ export class ParameterManagerService {
     localStorage.setItem('parameterList', JSON.stringify(params));
   }
 }
+

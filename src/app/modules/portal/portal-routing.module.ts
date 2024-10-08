@@ -13,10 +13,7 @@ const routes: Routes = [
         component: HomePortalComponent,
         pathMatch: 'full'
       },
-      {
-        path: 'search',
-        loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule)
-      },
+
       {
         path: 'add',
         loadChildren: () => import('./modules/add-file/add-file.module').then(m => m.AddFileModule)
@@ -28,6 +25,10 @@ const routes: Routes = [
       {
         path: 'document-management',
         loadChildren: () => import('./modules/document-management/document-management.module').then(m => m.DocumentManagementModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./modules/reports/reports.module').then(m => m.ReportsModule)
       }
     ]
   }
