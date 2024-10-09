@@ -3,6 +3,7 @@ export const RouteLabels: { [key: string]: string } = {
   '/portal/document-management/expedient-list': 'route:document_management',
   '/portal/document-management/viewer': 'route:document_viewer',
   '/portal/document-management/search': 'route:search_criteria',
+  '/portal/document-management/search/result': 'route:search_result',
   '/portal/search/result': 'route:search_result',
   '/portal/add/file-entry': 'route:add_file_entry',
   '/portal/reports/actions': 'route:actions_report',

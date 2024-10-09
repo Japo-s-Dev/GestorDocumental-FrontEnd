@@ -5,11 +5,11 @@ import { ServicesService } from '../../../../services/services.service';
 import { IExpedientRequest, IIndex, IValue, IValueRequest } from '../../../../interfaces/services.interface';
 
 @Component({
-  selector: 'app-expedient-modal',
-  templateUrl: './expedient-modal.component.html',
-  styleUrls: ['./expedient-modal.component.css']
+  selector: 'app-search-result-modal',
+  templateUrl: './search-result-modal.component.html',
+  styleUrls: ['./search-result-modal.component.css']
 })
-export class ExpedientModalComponent implements OnInit {
+export class SearchResultModalComponent implements OnInit {
   @Input() isEditMode = false;
   @Input() expedientId: number = 0;
   @Input() projectId: number = 0;
@@ -28,7 +28,6 @@ export class ExpedientModalComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
 
-    // Si está en modo de edición, cargar los datos existentes
     if (this.isEditMode && this.expedientId) {
       this.loadExpedientData();
     }
@@ -36,10 +35,9 @@ export class ExpedientModalComponent implements OnInit {
 
   initializeForm(): void {
     this.expedientForm = this.fb.group({
-      tag: ['', Validators.required] // Campo para el tag
+      tag: ['', Validators.required]
     });
 
-    // Agregar los campos dinámicos basados en los índices, usando el nombre real del índice
     this.indices.forEach(index => {
       this.expedientForm.addControl(
         index.index_name,
@@ -116,12 +114,13 @@ export class ExpedientModalComponent implements OnInit {
         if (controlKey !== 'tag') {
           const index = this.indices.find(idx => idx.index_name === controlKey);
           if (index) {
-            let value = this.expedientForm.get(controlKey)?.value || ''; // Asegura que value no sea undefined
+            let value = this.expedientForm.get(controlKey)?.value || '';
 
             const existingValue = existingValues.find((val: IValue) => val.index_id === index.id);
 
             if (this.isEditMode && existingValue) {
               this.servicesService.updateValue(existingValue.id, value).subscribe({
+                next: (res) => console.log('Valor actualizado:', res),
                 error: (err) => console.error('Error al actualizar el valor:', err)
               });
             } else {
@@ -133,6 +132,7 @@ export class ExpedientModalComponent implements OnInit {
               };
 
               this.servicesService.createValue(valueData).subscribe({
+                next: (res) => console.log('Valor creado:', res),
                 error: (err) => console.error('Error al crear el valor:', err)
               });
             }
@@ -144,19 +144,18 @@ export class ExpedientModalComponent implements OnInit {
 
   getInputType(datatypeId: number): string {
     switch (datatypeId) {
-      case 2:  // Suponiendo que '2' es 'number'
+      case 2:
         return 'number';
-      case 3:  // Suponiendo que '3' es 'text'
+      case 3:
         return 'text';
-      case 4:  // Suponiendo que '4' es 'number'
+      case 4:
         return 'number';
-      case 5:  // Suponiendo que '5' es 'date'
+      case 5:
         return 'date';
       default:
-        return 'text';  // Default input type
+        return 'text';
     }
   }
-
 
   close(): void {
     this.activeModal.dismiss();

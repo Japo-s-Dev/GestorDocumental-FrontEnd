@@ -43,7 +43,6 @@ export class ProjectsComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.projects = response.body.result;
-          console.log('Projects:', this.projects);
         }
       },
       (error) => {

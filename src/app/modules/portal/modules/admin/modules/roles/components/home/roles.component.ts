@@ -43,7 +43,6 @@ export class RolesComponent implements OnInit {
       (response) => {
         if (response && response.body.result) {
           this.roles = response.body.result;
-          console.log('Roles:', this.roles);
         }
       },
       (error) => {

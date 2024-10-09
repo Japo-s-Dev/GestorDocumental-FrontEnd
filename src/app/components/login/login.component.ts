@@ -1,4 +1,3 @@
-// LoginComponent.ts
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -49,7 +48,7 @@ export class LoginComponent {
       username: this.loginForm.value.username ?? '',
       pwd: this.loginForm.value.password ?? ''
     };
-  
+
     this.authService.login(loginRequest).subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.body.result && response.body.result.success) {
@@ -57,13 +56,13 @@ export class LoginComponent {
             username: response.body.result.username,
             role: response.body.result.role
           }));
-  
+
           const currentDateTime = new Date().toLocaleString();
           localStorage.setItem('lastLogin', currentDateTime);
           localStorage.removeItem('selectedProject');
-  
+
           this.loaderService.showLoader();
-          this.router.navigate(['/portal']);
+          this.router.navigate(['/portal/document-management/expedient-list']);
         } else {
           this.showAlert('Error', 'Credenciales incorrectas', 'danger');
           this.loaderService.hideLoader();
@@ -79,7 +78,7 @@ export class LoginComponent {
       }
     });
   }
-  
+
 
   showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
     this.alertTitle = title;
