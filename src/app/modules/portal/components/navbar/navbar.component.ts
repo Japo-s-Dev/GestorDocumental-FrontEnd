@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   isAdmin = false;
   username: string | null = null;
   currentLanguage: string;
+  menuOpen: boolean = false;
 
   constructor(
     private router: Router,
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit {
     if (this.showAdd && this.showSearch) {
       this.showSearch = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   toggleSearch(path: string) {
@@ -47,24 +49,38 @@ export class NavbarComponent implements OnInit {
     if (this.showAdd && this.showSearch) {
       this.showAdd = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   toggleAdmin() {
     this.showAdmin = !this.showAdmin;
     if (this.showAdmin) {
-      this.showReports = false; // Oculta los reportes si se muestran las opciones de Admin
+      this.showReports = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   toggleReports() {
     this.showReports = !this.showReports;
     if (this.showReports) {
-      this.showAdmin = false; // Oculta las opciones de Admin si se muestran los reportes
+      this.showAdmin = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   navigate(path: string) {
     this.router.navigate([path]);
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenuOnOptionClick() {
+    // Si estamos en una pantalla pequeña y el menú está abierto, lo cerramos
+    if (window.innerWidth <= 768) {
+      this.menuOpen = false;
+    }
+  }
 }
