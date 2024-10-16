@@ -17,9 +17,10 @@ input {
   min-height: 100vh;
   display: flex;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #f1842c; /* Cambiar el fondo del container para evitar zonas blancas */
 }
 
+/* Asegurarse que el panel izquierdo siempre cubra el 100% de la altura de la pantalla */
 .panels-container {
   position: relative;
   width: 50%;
@@ -27,7 +28,7 @@ input {
   display: flex;
   align-items: center; /* Centra el contenido verticalmente */
   justify-content: center; /* Centra el contenido horizontalmente */
-  background-color: #F1842C;
+  background-color: #f1842c; /* Mantén el fondo color naranja */
   color: #fff;
 }
 
@@ -67,6 +68,7 @@ input {
   align-items: center;
   z-index: 2;
   padding: 20px;
+  background-color: #fff; /* Fondo blanco para el formulario */
 }
 
 .signin-signup {
@@ -210,4 +212,79 @@ app-alert .msg {
 
 app-alert .close-btn {
   font-size: 0.8rem; /* Ajusta el tamaño del botón de cierre */
+}
+
+
+/* Media Queries para hacerlo responsive */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1842c; /* Mantener el fondo naranja en pantallas más pequeñas */
+  }
+
+  .panels-container,
+  .forms-container {
+    width: 100%;
+    height: auto;
+  }
+
+  .signin-signup {
+    width: 90%;
+    max-width: 500px;
+  }
+
+  .panel .content .title-panel {
+    font-size: 1.5rem;
+  }
+
+  .panel .image {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .signin-signup {
+    padding: 30px;
+  }
+
+  .panel .content .title-panel {
+    font-size: 1.2rem;
+  }
+
+  .input-field {
+    height: 45px;
+  }
+
+  .btn.solid {
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .signin-signup {
+    padding: 20px;
+  }
+
+  .panel .content .title-panel {
+    font-size: 1rem;
+  }
+
+  .panel .image {
+    max-width: 200px;
+  }
+
+  .input-field {
+    height: 40px;
+  }
+
+  .btn.solid {
+    padding: 10px 0;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 5px;
+  }
 }
