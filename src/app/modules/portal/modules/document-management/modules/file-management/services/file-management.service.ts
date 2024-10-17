@@ -160,7 +160,6 @@ export class FileManagementService {
     });
   }
 
-
   // Método para eliminar un separador (carpeta)
   deleteSeparator(separatorId: number): Observable<any> {
     const payload = {
@@ -177,24 +176,26 @@ export class FileManagementService {
     });
   }
 
-  uploadDocument(file: File, separatorId: number): Observable<any> {
+  uploadDocument(file: File, separatorId: number, fileName: string): Observable<any> {
     const payload = {
       id: 1,
       method: 'create_document',
       params: {
         data: {
-          separator_id: separatorId
+          separator_id: separatorId,
+          name: fileName
         }
       }
     };
 
     const formData = this.createFormData(payload);
-    formData.append('json', JSON.stringify(payload));
-    formData.append('file', file); // Añadir el archivo al FormData
+    formData.append('file', file);
 
     return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
       withCredentials: true
     });
   }
+
 }
+

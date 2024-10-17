@@ -242,9 +242,11 @@
   "upload_document:title": "Subir Documentos",
   "upload_document:drag_drop": "Arrastra y suelta o selecciona archivos desde el dispositivo",
   "upload_document:max_size": "máx. 50MB",
-  "upload_document:preview": "Vista previa del documento",
-  "upload_document:no_preview_available": "No hay vista previa disponible para este tipo de archivo",
+  "upload_document:file_preview": "Vista previa del documento",
   "upload_document:save_button": "Guardar Documento",
+  "upload_document:file_preview_validator": "No hay vista previa disponible para este tipo de archivo.",
+  "upload_document:file_name": "Nombre de archivo",
+  "upload_document:file_name_placeholder": "Ingrese el nombre del archivo",
 
   "COMMENTS": "****************************************************COMMENTS****************************************************",
   "comments:no_yets": "No hay comentarios aún.",
