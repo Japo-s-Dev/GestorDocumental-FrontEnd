@@ -39,13 +39,31 @@ export class FileManagementService {
     });
   }
 
-  createComment(archiveId: number, text: string): Observable<any> {
+  createCommentArchive(archiveId: number, text: string): Observable<any> {
     const payload = {
       id: 1,
-      method: 'create_comment',
+      method: 'create_archive_comment',
       params: {
         data: {
           archive_id: archiveId,
+          text: text
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  createCommentDocument(documentId: number, text: string): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'create_document_comment',
+      params: {
+        data: {
+          document_id: documentId,
           text: text
         }
       }
@@ -72,11 +90,15 @@ export class FileManagementService {
     });
   }
 
-  listComments(): Observable<any> {
+  listCommentsArchive(archiveId: number): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_comments',
-      params: {}
+      method: 'list_archive_comments',
+      params: {
+        filters: {
+          archive_id: archiveId
+        }
+      }
     };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {
@@ -85,13 +107,50 @@ export class FileManagementService {
     });
   }
 
-  listEvents(archiveId: number): Observable<any> {
+  listCommentsDocument(documentId: number): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_events',
+      method: 'list_document_comments',
+      params: {
+        filters: {
+          document_id: documentId
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  listEventsArchive(archiveId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_archive_events',
       params: {
         filters: {
           archive_id: archiveId
+        },
+        list_options: {
+          order_bys: "timestamp"
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  listEventsDocument(documentId: number): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_document_events',
+      params: {
+        filters: {
+          document_id: documentId
         },
         list_options: {
           order_bys: "timestamp"
