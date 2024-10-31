@@ -1,0 +1,55 @@
+<div class="report-table-container">
+  <header>
+    <h2 class="reports-title">{{ "Reportes" }}</h2>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Usuario</th>
+        <th>Acción</th>
+        <th>Objeto</th>
+        <th>ID Objeto</th>
+        <th>Cambios</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.timestamp }}</td>
+        <td>{{ event.username }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'action-insert': event.action === 'INSERT',
+              'action-update': event.action === 'UPDATE',
+              'action-delete': event.action === 'DELETE',
+              'action-restore': event.action === 'RESTORE',
+              'action-physical-delete': event.action === 'PHYSICAL DELETE'
+            }"
+          >
+            {{ event.action }}
+          </span>
+        </td>
+        <td>{{ event.object }}</td>
+        <td>{{ event.object_id }}</td>
+        <td>
+          <ng-container *ngIf="event.action === 'UPDATE'; else insertOrDelete">
+            {{ formatChanges(event.old_data, event.new_data, event.object) }}
+          </ng-container>
+          <ng-template #insertOrDelete>
+            <span *ngIf="event.action === 'INSERT'">
+              {{ formatNewData(event.new_data, event.object) }}
+            </span>
+            <span
+              *ngIf="
+                event.action === 'DELETE' || event.action === 'PHYSICAL DELETE'
+              "
+            >
+              {{ formatOldData(event.old_data, event.object) }}
+            </span>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
