@@ -53,24 +53,10 @@
       </div>
     </div>
 
-    <div class="box" (click)="toggleReports()">
+    <!-- Reportes: Opción única para todos los reportes -->
+    <div class="box" routerLink="/portal/reports">
       <i class="fa-solid fa-chart-line"></i>
       {{ "navbar:reports" | translate }}
-    </div>
-
-    <div *ngIf="showReports">
-      <div class="sub-box" routerLink="/portal/reports/actions">
-        <i class="fa-solid fa-file-lines"></i>
-        {{ "navbar:actions_report" | translate }}
-      </div>
-      <div class="sub-box" routerLink="/portal/reports/structures">
-        <i class="fa-solid fa-building"></i>
-        {{ "navbar:structures_report" | translate }}
-      </div>
-      <div class="sub-box" routerLink="/portal/reports/users">
-        <i class="fa-solid fa-user"></i>
-        {{ "navbar:users_report" | translate }}
-      </div>
     </div>
   </div>
 </div>
