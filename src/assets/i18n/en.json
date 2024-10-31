@@ -46,6 +46,7 @@
   "route:actions_report": "Reports > Actions",
   "route:structures_report": "Reports > Structures",
   "route:users_report": "Reports > Users",
+  "route:reports": "Reports",
 
   "SEARCH": "****************************************************SEARCH****************************************************",
   "search:search_criteria": "Search Criteria",
