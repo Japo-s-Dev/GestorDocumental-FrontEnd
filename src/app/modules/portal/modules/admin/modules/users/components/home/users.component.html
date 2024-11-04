@@ -15,24 +15,45 @@
     <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
   </button>
 
-
-
-   <!-- Buscador -->
-   <div class="search-container">
+  <!-- Buscador -->
+  <div class="search-container">
     <input
-    type="text"
-    [placeholder]="'users:search_placeholder' | translate"
-    [(ngModel)]="searchTerm"
-    class="search-input"
+      type="text"
+      [placeholder]="'users:search_placeholder' | translate"
+      [(ngModel)]="searchTerm"
+      class="search-input"
     />
   </div>
 
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Tabla de Usuarios -->
   <table>
     <thead>
       <tr>
-        <th>{{ "users:username" | translate }}</th>
-        <th>{{ "users:email" | translate }}</th>
-        <th>{{ "users:role" | translate }}</th>
+        <th (click)="sortBy('username')">
+          {{ "users:username" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('username')"></i>
+        </th>
+        <th (click)="sortBy('email')">
+          {{ "users:email" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('email')"></i>
+        </th>
+        <th (click)="sortBy('assigned_role')">
+          {{ "users:role" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('assigned_role')"></i>
+        </th>
         <th>{{ "users:actions" | translate }}</th>
       </tr>
     </thead>
@@ -57,5 +78,17 @@
       </tr>
     </tbody>
   </table>
-</div>
 
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

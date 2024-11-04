@@ -283,5 +283,11 @@
   "expedient-modal:save_expedient": "Guardar Expediente",
   "expedient-modal:add_expedient": "Agregar Expediente",
 
-  "REPORTS": "****************************************************REPORTS****************************************************"
+  "REPORTS": "****************************************************REPORTS****************************************************",
+
+  "PAGINATION": "****************************************************PAGINATION****************************************************",
+  "pagination:previous": "Anterior",
+  "pagination:next": "Siguiente",
+  "pagination:page": "Página",
+  "pagination:of": "de"
 }

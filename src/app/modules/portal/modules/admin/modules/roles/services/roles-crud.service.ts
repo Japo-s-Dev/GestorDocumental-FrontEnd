@@ -17,11 +17,33 @@ export class RolesCrudService {
     return formData;
   }
 
-  listRoles(): Observable<any> {
-    const payload = { id: 1, method: 'list_roles', params: {} };
+  listRoles(limit: number = 10, offset: number = 0, orderBys: string = '!id'): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_roles',
+      params: {
+        list_options: {
+          order_bys: orderBys,
+          limit: limit,
+          offset: offset
+        }
+      }
+    };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
+
+  getTotalRoles(): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_roles',
+      params: {}  // Sin opciones de paginación para obtener todo
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
+  }
+
+
 
   createRole(roleData: any): Observable<any> {
     const payload = { id: 1, method: 'create_role', params: { data: roleData } };

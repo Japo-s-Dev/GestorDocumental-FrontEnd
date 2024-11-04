@@ -166,8 +166,8 @@ export class SearchCriteriaComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loaderService.showLoader()
-    localStorage.removeItem('searchResults')
+    this.loaderService.showLoader();
+    localStorage.removeItem('searchResults');
     const formValues = this.form.value;
     const filters: any[] = [];
 
@@ -181,22 +181,18 @@ export class SearchCriteriaComponent implements OnInit {
             if (this.rangeActive[index.index_name]) {
               const inicio = formValues[fieldName + '_inicio'];
               const fin = formValues[fieldName + '_fin'];
-              console.log("Inicio: ",inicio)
-              console.log("Fin: ",fin)
               if (inicio && fin) {
-                filters.push({ index_id: index.id, value: inicio, operator: 'Gte' });
-                filters.push({ index_id: index.id, value: fin, operator: 'Lte' });
+                filters.push({ index_id: index.id, value: inicio, operator: 'Gte', datatype_id: datatype.id });
+                filters.push({ index_id: index.id, value: fin, operator: 'Lte', datatype_id: datatype.id });
               } else if (inicio) {
-                filters.push({ index_id: index.id, value: inicio, operator: 'Eq' });
+                filters.push({ index_id: index.id, value: inicio, operator: 'Eq', datatype_id: datatype.id });
               } else if (fin) {
-                filters.push({ index_id: index.id, value: fin, operator: 'Eq' });
-              } else if (fin === inicio) {
-                filters.push({ index_id: index.id, value: fin, operator: 'Eq' });
+                filters.push({ index_id: index.id, value: fin, operator: 'Eq', datatype_id: datatype.id });
               }
             } else {
               const value = formValues[fieldName];
               if (value) {
-                filters.push({ index_id: index.id, value, operator: 'Eq' });
+                filters.push({ index_id: index.id, value, operator: 'Eq', datatype_id: datatype.id });
               }
             }
             break;
@@ -210,10 +206,10 @@ export class SearchCriteriaComponent implements OnInit {
             } else {
               this.dateError[fieldName] = false;
               if (startDate && endDate) {
-                filters.push({ index_id: index.id, value: startDate, operator: 'Gte' });
-                filters.push({ index_id: index.id, value: endDate, operator: 'Lte' });
+                filters.push({ index_id: index.id, value: startDate, operator: 'Gte', datatype_id: datatype.id });
+                filters.push({ index_id: index.id, value: endDate, operator: 'Lte', datatype_id: datatype.id });
               } else if (startDate && !endDate) {
-                filters.push({ index_id: index.id, value: startDate, operator: 'Eq' });
+                filters.push({ index_id: index.id, value: startDate, operator: 'Eq', datatype_id: datatype.id });
               }
             }
             break;
@@ -221,11 +217,7 @@ export class SearchCriteriaComponent implements OnInit {
           case 'text':
             const fieldValue = formValues[fieldName];
             if (fieldValue && fieldValue.trim() !== '') {
-              filters.push({
-                index_id: index.id,
-                value: fieldValue.trim(),
-                operator: 'Eq'
-              });
+              filters.push({ index_id: index.id, value: fieldValue.trim(), operator: 'Eq', datatype_id: datatype.id });
             }
             break;
 
@@ -236,34 +228,32 @@ export class SearchCriteriaComponent implements OnInit {
       }
     });
 
-    console.log("Filtros: ", filters)
-
     if (filters.length > 0) {
       this.searchService.searchArchives(filters).subscribe(
         (response) => {
           const results = response.body.result;
           if (response.body.result.length === 0) {
-            this.loaderService.hideLoader()
-            const error = "Error"
+            this.loaderService.hideLoader();
+            const error = 'Error';
             this.translate.get('search_results:alert').subscribe((message: string) => {
               this.showAlert({ error, message }, 'danger');
             });
           } else {
-            console.log("resultado: ",results)
             this.nextStep(results, this.selectedProject);
           }
         },
         (error) => {
-          this.loaderService.hideLoader()
+          this.loaderService.hideLoader();
           console.error('Error al realizar la búsqueda:', error);
         }
       );
     } else {
-      this.loaderService.hideLoader()
+      this.loaderService.hideLoader();
       console.log('No se encontraron filtros válidos para aplicar.');
     }
-    this.loaderService.hideLoader()
+    this.loaderService.hideLoader();
   }
+
 
   replaceSpaces(indexName: string): string {
     return indexName.toLowerCase().replace(/\s+/g, '_');
