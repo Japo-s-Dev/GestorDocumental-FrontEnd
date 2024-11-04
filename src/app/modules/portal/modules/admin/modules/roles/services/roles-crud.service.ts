@@ -43,7 +43,15 @@ export class RolesCrudService {
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
-
+  listPrivileges(): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_privileges',
+      params: {}  // Sin opciones de paginación para obtener todo
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
+  }
 
   createRole(roleData: any): Observable<any> {
     const payload = { id: 1, method: 'create_role', params: { data: roleData } };

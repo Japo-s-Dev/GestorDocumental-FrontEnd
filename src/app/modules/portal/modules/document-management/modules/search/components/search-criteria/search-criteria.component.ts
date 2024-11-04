@@ -50,7 +50,7 @@ export class SearchCriteriaComponent implements OnInit {
     this.service.listProjects().subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.projects = response.body.result.map((project: any) => ({
+          this.projects = response.body.result.items.map((project: any) => ({
             id: Number(project.id),
             name: project.project_name,
           })) as IProject[];
@@ -71,7 +71,7 @@ export class SearchCriteriaComponent implements OnInit {
     this.service.listDatatypes().subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.datatypes = response.body.result;
+          this.datatypes = response.body.result.items;
         }
       },
       (error) => {
@@ -92,7 +92,7 @@ export class SearchCriteriaComponent implements OnInit {
     this.service.listIndices(Number(projectId)).subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.indices = response.body.result as IIndex[];
+          this.indices = response.body.result.items as IIndex[];
           this.createFormControls(this.indices);
           this.loaderService.hideLoader();
         }
@@ -137,13 +137,11 @@ export class SearchCriteriaComponent implements OnInit {
 
   getInputType(datatypeId: number): string {
     switch (datatypeId) {
+      case 1:
+        return 'text';
       case 2:
         return 'number';
       case 3:
-        return 'text';
-      case 4:
-        return 'number';
-      case 5:
         return 'date';
       default:
         return 'text';
@@ -231,12 +229,12 @@ export class SearchCriteriaComponent implements OnInit {
     if (filters.length > 0) {
       this.searchService.searchArchives(filters).subscribe(
         (response) => {
-          const results = response.body.result;
+          const results = response.body.result.items;
           if (response.body.result.length === 0) {
             this.loaderService.hideLoader();
             const error = 'Error';
             this.translate.get('search_results:alert').subscribe((message: string) => {
-              this.showAlert({ error, message }, 'danger');
+              this.showAlert( error, message , 'danger');
             });
           } else {
             this.nextStep(results, this.selectedProject);
@@ -249,7 +247,11 @@ export class SearchCriteriaComponent implements OnInit {
       );
     } else {
       this.loaderService.hideLoader();
-      console.log('No se encontraron filtros válidos para aplicar.');
+      this.translate.get('No se aplicaron filtros').subscribe((translatedText: string) => {
+        this.translate.get('Error').subscribe((title: string) => {
+          this.showAlert(title, translatedText, 'danger');
+        });
+      });
     }
     this.loaderService.hideLoader();
   }
@@ -274,13 +276,11 @@ export class SearchCriteriaComponent implements OnInit {
     this.form.reset();
   }
 
-  showAlert(translatedText: any, type: 'success' | 'warning' | 'danger' | 'info'): void {
-    this.alertTitle = translatedText.title;
-    this.alertMessage = translatedText.message;
+  showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
+    this.alertTitle = title;
+    this.alertMessage = message;
     this.alertType = `alert-${type}`;
-    this.alertIcon = `fa-${
-      type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'
-    }`;
+    this.alertIcon = `fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}`;
     this.alertVisible = true;
 
     setTimeout(() => {

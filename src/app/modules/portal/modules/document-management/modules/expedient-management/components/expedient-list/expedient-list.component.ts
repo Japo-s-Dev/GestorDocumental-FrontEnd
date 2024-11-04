@@ -92,7 +92,7 @@ export class ExpedientListComponent implements OnInit {
 
   fetchExpedients(projectId: number): void {
     const offset = (this.currentPage - 1) * this.pageSize;
-    this.service.listArchives(projectId, this.pageSize, offset).subscribe((response) => {
+    this.service.listArchives(Number(projectId), this.pageSize, offset).subscribe((response) => {
       if (response && response.body.result && response.body.result.items.length > 0) {
         this.expedients = response.body.result.items as IExpedient[];
         this.totalExpedients = response.body.result.total_count;

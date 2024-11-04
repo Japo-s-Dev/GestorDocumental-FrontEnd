@@ -34,6 +34,12 @@ export class RolesModalComponent implements OnInit {
       }
     });
 
+    this.rolesCrudService.listPrivileges().subscribe(response => {
+      if (response && response.body.result.items) {
+        console.log('Privileges:', response.body.result.items);
+      }
+    });
+
     this.roleForm = this.fb.group({
       role_name: [
         this.roleData?.role_name || '',
