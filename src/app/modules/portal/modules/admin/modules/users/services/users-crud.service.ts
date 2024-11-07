@@ -20,17 +20,20 @@ export class UserCrudService {
     return formData;
   }
 
-  listUsers(): Observable<any> {
+  listUsers(limit: number = 10, offset: number = 0, orderBys: string = '!id'): Observable<any> {
     const payload = {
       id: 1,
       method: 'list_users',
-      params: {}
+      params: {
+        list_options: {
+          order_bys: orderBys,
+          limit: limit,
+          offset: offset
+        }
+      }
     };
     const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
   createUser(userData: CreateUserRequest): Observable<any> {

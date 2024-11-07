@@ -16,6 +16,12 @@ export class RolesComponent implements OnInit {
   roles: IRole[] = [];
   searchTerm: string = '';
 
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalRoles: number = 0;
+  isLastPage: boolean = false; // Indica si hemos llegado a la última página
+  orderBy: string = '!id'; // Puedes cambiar esto para ordenar por otros campos
+
   // Alert properties
   alertVisible: boolean = false;
   alertTitle: string = '';
@@ -32,17 +38,25 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaderService.showLoader();
-    this.loadRoles();
-    setTimeout(() => {
-      this.loaderService.hideLoader();
-    }, 2000);
+    this.loadRoles(); // Cargar los roles y total de registros directamente al inicio
   }
 
   loadRoles(): void {
-    this.rolesCrudService.listRoles().subscribe(
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.rolesCrudService.listRoles(this.pageSize, offset, this.orderBy).subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.roles = response.body.result;
+          this.roles = response.body.result.items;
+          this.totalRoles = response.body.result.total_count;
+
+          // Verificamos si estamos en la última página
+          if (this.roles.length < this.pageSize) {
+            this.isLastPage = true;
+          } else {
+            this.isLastPage = false;
+          }
+
+          this.loaderService.hideLoader(); // Ocultamos el loader una vez cargados los datos
         }
       },
       (error) => {
@@ -51,7 +65,7 @@ export class RolesComponent implements OnInit {
             this.showAlert(title, translatedText, 'danger');
           });
         });
-        console.error('Error al obtener los roles:', error);
+        this.loaderService.hideLoader(); // Ocultamos el loader incluso si hay error
       }
     );
   }
@@ -63,7 +77,7 @@ export class RolesComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result) {
-        this.loadRoles();
+        this.loadRoles(); // Recalculamos el total de roles al crear o actualizar
         if (result === 'created') {
           this.loaderService.showLoader();
           this.translate.get('roles:created_success').subscribe((translatedText: string) => {
@@ -115,7 +129,7 @@ export class RolesComponent implements OnInit {
                 this.showAlert(title, translatedText, 'info');
               });
             });
-            this.loadRoles();
+            this.loadRoles(); // Recalculamos el total de roles después de la eliminación
             setTimeout(() => {
               this.loaderService.hideLoader();
             }, 1000);
@@ -163,5 +177,44 @@ export class RolesComponent implements OnInit {
 
   handleAlertClosed(): void {
     this.alertVisible = false;
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.totalRoles / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() && !this.isLastPage) {
+      this.currentPage++;
+      this.loaderService.showLoader();
+      this.loadRoles();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loaderService.showLoader();
+      this.loadRoles();
+    }
+  }
+
+  sortBy(field: string): void {
+    if (this.orderBy === field) {
+      this.orderBy = `!${field}`; // Cambiar entre ascendente y descendente
+    } else {
+      this.orderBy = field;
+    }
+    this.loaderService.showLoader();
+    this.loadRoles();
+  }
+
+  getSortIcon(field: string): string {
+    if (this.orderBy === field) {
+      return 'fa-sort-asc';
+    } else if (this.orderBy === `!${field}`) {
+      return 'fa-sort-desc';
+    }
+    return 'fa-sort';
   }
 }

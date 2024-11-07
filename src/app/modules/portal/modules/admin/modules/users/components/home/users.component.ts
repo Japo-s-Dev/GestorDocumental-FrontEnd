@@ -17,6 +17,13 @@ export class UsersComponent implements OnInit {
   searchTerm: string = '';
   loggedInUsername: string | null = null;
 
+  // Paginación
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalUsers: number = 0;
+  isLastPage: boolean = false;
+  orderBy: string = '!id';
+
   // Alert properties
   alertVisible: boolean = false;
   alertTitle: string = '';
@@ -46,10 +53,21 @@ export class UsersComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userCrudService.listUsers().subscribe(
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.userCrudService.listUsers(this.pageSize, offset, this.orderBy).subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.users = response.body.result;
+          this.users = response.body.result.items;
+          this.totalUsers = response.body.result.total_count;
+
+          // Verificamos si estamos en la última página
+          if (this.users.length < this.pageSize) {
+            this.isLastPage = true;
+          } else {
+            this.isLastPage = false;
+          }
+
+          this.loaderService.hideLoader(); // Ocultamos el loader una vez cargados los datos
         }
       },
       (error) => {
@@ -59,8 +77,48 @@ export class UsersComponent implements OnInit {
           });
         });
         console.error('Error al obtener los usuarios:', error);
+        this.loaderService.hideLoader();
       }
     );
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.totalUsers / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() && !this.isLastPage) {
+      this.currentPage++;
+      this.loaderService.showLoader();
+      this.loadUsers();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loaderService.showLoader();
+      this.loadUsers();
+    }
+  }
+
+  sortBy(field: string): void {
+    if (this.orderBy === field) {
+      this.orderBy = `!${field}`;
+    } else {
+      this.orderBy = field;
+    }
+    this.loaderService.showLoader();
+    this.loadUsers();
+  }
+
+  getSortIcon(field: string): string {
+    if (this.orderBy === field) {
+      return 'fa-sort-asc';
+    } else if (this.orderBy === `!${field}`) {
+      return 'fa-sort-desc';
+    }
+    return 'fa-sort';
   }
 
   openUserModal(user: IUser | null = null): void {

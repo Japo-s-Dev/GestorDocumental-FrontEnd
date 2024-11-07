@@ -188,3 +188,41 @@ button.delete:hover {
   background-color: #c82333;
 }
 
+/* Estilos para la paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #F1842C;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pagination-button:hover {
+  background-color: #ce7125;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pagination-button i {
+  margin: 0;
+}
+

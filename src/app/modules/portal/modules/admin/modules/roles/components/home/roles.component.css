@@ -61,11 +61,11 @@
   border-color: #F1842C;
 }
 
-
 /* Estilos para Tabla */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 table,
@@ -93,8 +93,14 @@ th {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-style: normal;
+  cursor: pointer; /* Indica que es clickable para ordenar */
 }
 
+th i {
+  margin-left: 5px;
+}
+
+/* Estilos para botones */
 button {
   display: inline-block;
   padding: 5px 10px;
@@ -149,4 +155,42 @@ tr.disabled {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+/* Estilos para la paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #F1842C;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pagination-button:hover {
+  background-color: #ce7125;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pagination-button i {
+  margin: 0;
 }

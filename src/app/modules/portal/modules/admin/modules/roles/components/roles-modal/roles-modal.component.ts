@@ -27,10 +27,16 @@ export class RolesModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener todos los roles para las validaciones
-    this.rolesCrudService.listRoles().subscribe(response => {
-      if (response && response.body.result) {
-        this.existingRoles = response.body.result;
+
+    this.rolesCrudService.getTotalRoles().subscribe(response => {
+      if (response && response.body.result.items) {
+        this.existingRoles = response.body.result.items;
+      }
+    });
+
+    this.rolesCrudService.listPrivileges().subscribe(response => {
+      if (response && response.body.result.items) {
+        console.log('Privileges:', response.body.result.items);
       }
     });
 
@@ -47,7 +53,7 @@ export class RolesModalComponent implements OnInit {
   }
 
   save() {
-    // Marca todos los controles como tocados para activar las validaciones visuales al intentar guardar
+
     this.roleForm.markAllAsTouched();
 
     if (this.roleForm.valid) {
@@ -107,22 +113,22 @@ export class RolesModalComponent implements OnInit {
     this.showWarningAlert = false;
   }
 
-  // Validación para no permitir "ADMIN" como nombre de rol
   private adminNameValidator(control: FormControl) {
-    if (control.value.toUpperCase() === 'ADMIN') {
+    if (control.value?.toUpperCase() === 'ADMIN') {
       return { adminNameNotAllowed: true };
     }
     return null;
   }
 
-  // Validación para evitar duplicados de nombres de roles
   private duplicateNameValidator(control: FormControl) {
-    if (
-      this.existingRoles.some(
-        role => role.role_name.toLowerCase() === control.value.toLowerCase() &&
-        this.roleData?.role_name !== control.value
-      )
-    ) {
+
+    if (this.isEditMode && this.roleData?.role_name.toLowerCase() === control.value.toLowerCase()) {
+      return null;
+    }
+
+    if (this.existingRoles.some(
+      role => role.role_name.toLowerCase() === control.value.toLowerCase()
+    )) {
       return { duplicateName: true };
     }
     return null;

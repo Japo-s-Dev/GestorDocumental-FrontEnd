@@ -16,6 +16,11 @@ export class ProjectsComponent implements OnInit {
   projects: IProject[] = [];
   searchTerm: string = '';
 
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalProjects: number = 0;
+  isLastPage: boolean = false;
+
   // Alert properties
   alertVisible: boolean = false;
   alertTitle: string = '';
@@ -32,17 +37,25 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaderService.showLoader();
-    this.loadProjects();
-    setTimeout(() => {
-      this.loaderService.hideLoader();
-    }, 2000);
+    this.loadProjects(); // Cargamos proyectos al iniciar
   }
 
   loadProjects(): void {
-    this.projectsCrudService.listProjects().subscribe(
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.projectsCrudService.listProjects(this.pageSize, offset).subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.projects = response.body.result;
+          this.projects = response.body.result.items;
+          this.totalProjects = response.body.result.total_count;
+
+          // Verificar si estamos en la última página
+          if (this.projects.length < this.pageSize) {
+            this.isLastPage = true;
+          } else {
+            this.isLastPage = false;
+          }
+
+          this.loaderService.hideLoader();
         }
       },
       (error) => {
@@ -51,6 +64,7 @@ export class ProjectsComponent implements OnInit {
             this.showAlert({ title, message }, 'danger');
           });
         });
+        this.loaderService.hideLoader();
         console.error('Error al obtener los proyectos:', error);
       },
     );
@@ -167,5 +181,25 @@ export class ProjectsComponent implements OnInit {
 
   handleAlertClosed(): void {
     this.alertVisible = false;
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.totalProjects / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() && !this.isLastPage) {
+      this.currentPage++;
+      this.loaderService.showLoader();
+      this.loadProjects();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loaderService.showLoader();
+      this.loadProjects();
+    }
   }
 }
