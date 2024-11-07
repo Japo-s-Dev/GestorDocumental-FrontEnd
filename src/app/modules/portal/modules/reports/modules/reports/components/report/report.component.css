@@ -1,80 +1,107 @@
-/* Estilos de tabla */
+/* Título de la tabla */
 .reports-title {
-    font-size: 24px;
-    font-family: "Poppins", sans-serif;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
 
+/* Contenedor de la tabla */
 .report-table-container {
-    max-width: 100%;
-    overflow-x: auto;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1em;
-  }
-  
-  th, td {
-    padding: 0.75em;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  /* Burbujas de colores para cada tipo de acción */
-  .action-insert {
-    background-color: #cce5ff;
-    color: #004085;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .action-update {
-    background-color: #fff3cd;
-    color: #856404;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .action-delete {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .action-restore {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .action-physical-delete {
-    background-color: #f5c6cb;
-    color: #721c24;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 20px;
+  background-color: #f9fafb; /* Fondo suave para el contenedor */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Cabecera */
+th {
+  background-color: #f0f4f8; /* Color de fondo para cabecera */
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+/* Filas */
+td {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Alternar color de filas */
+tr:nth-child(even) {
+  background-color: #f8f9fb;
+}
+
+/* Colores y estilo de burbujas para cada tipo de acción */
+.action-insert {
+  background-color: #e7f3ff;
+  color: #007bff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-update {
+  background-color: #fff6e6;
+  color: #ffae00;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-delete {
+  background-color: #ffe6e6;
+  color: #ff4d4d;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-restore {
+  background-color: #e6f7e6;
+  color: #28a745;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-physical-delete {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Espaciado y alineación */
+th, td {
+  vertical-align: middle;
+}
+
+/* Ajuste de fuente para mejorar legibilidad */
+body, table {
+  font-family: "Poppins", sans-serif;
+}
