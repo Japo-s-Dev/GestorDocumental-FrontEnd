@@ -5,8 +5,7 @@
   [alertType]="alertType"
   [iconType]="alertIcon"
   (closed)="handleAlertClosed()"
->
-</app-alert>
+></app-alert>
 
 <div class="roles-container">
   <header>
@@ -26,14 +25,30 @@
     />
   </div>
 
+   <!-- Controles de Paginación -->
+   <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+       <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Tabla de Roles -->
   <table>
     <thead>
       <tr>
-        <th>
+        <th (click)="sortBy('role_name')">
           {{ "roles:role_name" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('role_name')"></i>
         </th>
-        <th>
+        <th (click)="sortBy('description')">
           {{ "roles:description" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('description')"></i>
         </th>
         <th>
           {{ "roles:actions" | translate }}
@@ -74,4 +89,17 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+       <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProject } from '../../interfaces/project.interface';
 import { ProjectsCrudService } from '../../services/projects-crud.service';
@@ -51,26 +51,20 @@ export class ProjectsModalComponent implements OnInit {
     }
   }
 
+  // Inicializa el formulario de proyecto sin validaciones
   initProjectForm() {
     this.projectForm = this.fb.group({
       project_name: [
-        this.projectData?.project_name || '',
-        [Validators.required, Validators.maxLength(20), this.projectNameExistsValidator.bind(this)],
+        this.projectData?.project_name || '', // Sin validaciones
       ],
     });
   }
 
+  // Inicializa el formulario de índices sin validaciones
   initIndexForm() {
     this.indexForm = this.fb.group({
-      index_name: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9 ]*$'), // Solo permite letras, números y espacios
-          this.indexNameExistsValidator.bind(this)
-        ]
-      ],
-      datatype_id: ['', Validators.required],
+      index_name: [''], // Sin validaciones
+      datatype_id: [''],
       required: [false],
     });
   }
@@ -94,7 +88,7 @@ export class ProjectsModalComponent implements OnInit {
     if (this.projectData) {
       this.indexService.listIndices(this.projectData.id).subscribe((response) => {
         if (response && response.body.result) {
-          this.indices = response.body.result;
+          this.indices = response.body.result.items;
         }
       });
     }
@@ -103,8 +97,9 @@ export class ProjectsModalComponent implements OnInit {
   loadDataTypes() {
     this.indexService.listDatatypes().subscribe(
       (response) => {
+        console.log(response);
         if (response && response.body.result) {
-          this.dataTypes = response.body.result;
+          this.dataTypes = response.body.result.items;
         }
       },
       (error) => {
@@ -117,100 +112,91 @@ export class ProjectsModalComponent implements OnInit {
 
   save() {
     this.projectForm.markAllAsTouched();
-    if (this.projectForm.valid) {
-      const formValue = this.projectForm.value;
+    const formValue = this.projectForm.value;
 
-      if (this.isEditMode && this.projectData) {
-        this.projectsCrudService.updateProject(this.projectData.id, formValue).subscribe(
-          () => {
-            this.translate.get('projects:project_updated_success').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-            this.activeModal.close('updated');
-          },
-          (error) => {this.translate.get('projects:error_updating_project').subscribe((translatedText: string) => {
-          this.showAlert(translatedText);
-        });}
-        );
-      } else if (!this.projectCreated) {
-        // Crear proyecto si aún no ha sido creado
-        this.projectsCrudService.createProject(formValue).subscribe(
-          (response) => {
-            if (response.body.result) {
-              this.projectData = response.body.result;
-              if (this.projectData) {
-                this.tempProjectId = this.projectData.id;
-                this.projectCreated = true;
-                this.translate.get('projects:project_created_success').subscribe((translatedText: string) => {
-                  this.showAlert(translatedText);
-                });
-              }
-            }
-            this.loadIndices();
-          },
-          (error) => {
-            this.translate.get('projects:error_creating_project').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-          }
-        );
-      } else {
-        if (this.indices.length < 1) {
-          this.translate.get('projects:add_at_least_one_index').subscribe((translatedText: string) => {
+    if (this.isEditMode && this.projectData) {
+      this.projectsCrudService.updateProject(this.projectData.id, formValue).subscribe(
+        () => {
+          this.translate.get('projects:project_updated_success').subscribe((translatedText: string) => {
             this.showAlert(translatedText);
           });
-          return;
+          this.activeModal.close('updated');
+        },
+        (error) => {
+          this.translate.get('projects:error_updating_project').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          });
         }
-        this.activeModal.close('created');
-      }
+      );
+    } else if (!this.projectCreated) {
+      // Crear proyecto si aún no ha sido creado
+      this.projectsCrudService.createProject(formValue).subscribe(
+        (response) => {
+          if (response.body.result) {
+            this.projectData = response.body.result;
+            if (this.projectData) {
+              this.tempProjectId = this.projectData.id;
+              this.projectCreated = true;
+              this.translate.get('projects:project_created_success').subscribe((translatedText: string) => {
+                this.showAlert(translatedText);
+              });
+            }
+          }
+          this.loadIndices();
+        },
+        (error) => {
+          this.translate.get('projects:error_creating_project').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          });
+        }
+      );
     } else {
-      this.translate.get('projects:alert_complete_form').subscribe((translatedText: string) => {
-        this.showAlert(translatedText);
-      });
+      if (this.indices.length < 1) {
+        this.translate.get('projects:add_at_least_one_index').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });
+        return;
+      }
+      this.activeModal.close('created');
     }
   }
 
   onSubmitIndex() {
-    if (this.indexForm.valid) {
-      const indexData: IIndexRequest = {
-        required: this.indexForm.value.required,
-        project_id: Number(this.projectData!.id),
-        datatype_id: Number(this.indexForm.value.datatype_id),
-        index_name: this.indexForm.value.index_name,
-      };
+    const indexData: IIndexRequest = {
+      required: this.indexForm.value.required,
+      project_id: Number(this.projectData!.id),
+      datatype_id: Number(this.indexForm.value.datatype_id),
+      index_name: this.indexForm.value.index_name,
+    };
 
-      if (this.isEditing && this.editingIndexId) {
-        // Actualizar índice existente
-        this.indexService.updateIndex(this.editingIndexId, indexData).subscribe(
-          () => {
-            this.loadIndices();  // Recargar los índices
-            this.cancelEdit();    // Cerrar el formulario y volver al listado
-          },
-          (error) => {
-            this.translate.get('projects:error_updating_index').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-          }
-        );
-      } else {
-        // Crear nuevo índice
-        this.indexService.createIndex(indexData).subscribe(
-          () => {
-            this.loadIndices();  // Recargar los índices
-            this.cancelEdit();    // Cerrar el formulario y volver al listado
-          },
-          (error) => {
-            this.translate.get('projects:error_creating_index').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-          }
-        );
-      }
+    if (this.isEditing && this.editingIndexId) {
+      // Actualizar índice existente
+      this.indexService.updateIndex(this.editingIndexId, indexData).subscribe(
+        () => {
+          this.loadIndices();  // Recargar los índices
+          this.cancelEdit();    // Cerrar el formulario y volver al listado
+        },
+        (error) => {
+          this.translate.get('projects:error_updating_index').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          });
+        }
+      );
     } else {
-      this.showIndexAlert('Nombre del índice solo puede contener letras o números.');
+      // Crear nuevo índice
+      this.indexService.createIndex(indexData).subscribe(
+        () => {
+          this.loadIndices();  // Recargar los índices
+          this.cancelEdit();    // Cerrar el formulario y volver al listado
+        },
+        (error) => {
+          this.translate.get('projects:error_creating_index').subscribe((translatedText: string) => {
+            this.showAlert(translatedText);
+          });
+        }
+      );
     }
   }
-
 
   editIndex(index: any) {
     this.isEditing = true;
@@ -231,9 +217,11 @@ export class ProjectsModalComponent implements OnInit {
       () => {
         this.loadIndices();
       },
-      (error) => {this.translate.get('projects:error_deleting_index').subscribe((translatedText: string) => {
-        this.showAlert(translatedText);
-      }); }
+      (error) => {
+        this.translate.get('projects:error_deleting_index').subscribe((translatedText: string) => {
+          this.showAlert(translatedText);
+        });
+      }
     );
   }
 
@@ -271,26 +259,6 @@ export class ProjectsModalComponent implements OnInit {
 
   closeIndexAlert(): void {
     this.showIndexWarningAlert = false;
-  }
-
-  private projectNameExistsValidator(control: FormControl) {
-    if (this.existingProjects.some((project) => project.project_name === control.value && this.projectData?.project_name !== control.value)) {
-      return { projectNameExists: true };
-    }
-    return null;
-  }
-
-  private indexNameExistsValidator(control: FormControl) {
-    if (
-      this.indices.some(
-        (index) =>
-          index.index_name.toLowerCase() === control.value.toLowerCase() &&
-          (!this.isEditing || index.id !== this.editingIndexId)
-      )
-    ) {
-      return { indexNameExists: true };
-    }
-    return null;
   }
 
   toggleIndexForm() {

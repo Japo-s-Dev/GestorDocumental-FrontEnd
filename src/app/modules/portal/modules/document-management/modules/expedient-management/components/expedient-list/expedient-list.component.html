@@ -54,6 +54,18 @@
     </button>
   </div>
 
+  <!-- Controles de Paginación -->
+  <div class="pagination-container" *ngIf="tableData.length > 0">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
 
   <!-- Tabla dinámica basada en el proyecto seleccionado -->
   <table *ngIf="tableData.length > 0">
@@ -63,15 +75,12 @@
         <th>
           {{ "document-management:actions" | translate }}
         </th>
-        <!-- Columna para las acciones -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of filteredData">
         <td>
-          <a (click)="nextStep(row['id'])" class="expedient-link">{{
-            row["id"]
-          }}</a>
+          <a (click)="nextStep(row['id'])" class="expedient-link">{{ row["id"] }}</a>
         </td>
         <td *ngFor="let header of tableHeaders.slice(1)">
           {{ row[header] }}
@@ -93,4 +102,17 @@
   <p *ngIf="tableData.length === 0">
     {{ "document-management:no_data" | translate }}
   </p>
+
+  <!-- Controles de Paginación -->
+  <div class="pagination-container" *ngIf="tableData.length > 0">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
 </div>

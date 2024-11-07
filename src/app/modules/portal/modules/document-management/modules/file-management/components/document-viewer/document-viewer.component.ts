@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-document-viewer',
@@ -12,7 +13,10 @@ export class DocumentViewerComponent implements OnInit {
   activeTab: string = 'archivos'; // Default tab set to 'archivos'
   idExpediente: number | null = null;
 
-  constructor(private location: Location) {}
+  constructor(
+    private location: Location,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.idExpediente = Number(localStorage.getItem('selectedExpedientId')) || null;
@@ -24,6 +28,6 @@ export class DocumentViewerComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/portal/document-management/expedient-list']);
   }
 }

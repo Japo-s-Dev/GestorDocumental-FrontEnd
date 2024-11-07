@@ -17,8 +17,18 @@ export class ProjectsCrudService {
     return formData;
   }
 
-  listProjects(): Observable<any> {
-    const payload = { id: 1, method: 'list_structures', params: {} };
+  listProjects(limit: number = 10, offset: number = 0, orderBys: string = '!id'): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_structures',
+      params: {
+        list_options: {
+          order_bys: orderBys,
+          limit: limit,
+          offset: offset
+        }
+      }
+    };
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
