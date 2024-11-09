@@ -5,6 +5,7 @@
       {{ "comments:filter_by" | translate }}
     </button>
     <div class="dropdown-content" [class.show]="dropdownOpen">
+      <!-- Opciones de filtro -->
       <div>
         <input
           id="check-all"
@@ -65,9 +66,26 @@
     </div>
   </div>
 
+  <!-- Selector de nivel de comentario (expediente o documento) -->
+  <div class="comment-level-toggle">
+    <button
+      [class.active]="commentLevel === 'archive'"
+      (click)="setCommentLevel('archive')"
+    >
+      {{ "comments:archive_level" | translate }}
+    </button>
+    <button
+      [class.active]="commentLevel === 'document'"
+      (click)="setCommentLevel('document')"
+    >
+      {{ "comments:document_level" | translate }}
+    </button>
+  </div>
+
+  <!-- Lista de comentarios y eventos -->
   <div class="comment-list" *ngIf="filteredCommentsAndEvents.length > 0">
     <div class="comment-item" *ngFor="let item of filteredCommentsAndEvents">
-      <!-- Display regular comments -->
+      <!-- Mostrar los comentarios normales -->
       <div
         *ngIf="item.text"
         [class]="item.isOwnComment ? 'bubble own' : 'bubble'"
@@ -78,12 +96,13 @@
         <span class="comment-date">{{ item.ctime | date : "short" }}</span>
       </div>
 
-      <!-- Display events with a different style -->
+      <!-- Mostrar los eventos -->
       <div *ngIf="!item.text" class="event-bubble">
         <p>
-          <strong>{{ item.username }}</strong> performed
-          <strong>{{ item.action }}</strong> on <em>{{ item.object }}</em> with
-          ID <em>{{ item.object_id }}</em>
+          <strong>{{ item.username }}</strong> realizó
+          <strong>{{ item.action }}</strong> sobre
+          <em>{{ item.object }}</em> (ID: <em>{{ item.object_id }}</em
+          >)
         </p>
         <span class="event-date">{{ item.timestamp | date : "short" }}</span>
       </div>
@@ -94,7 +113,7 @@
     <p>{{ "comments:no_yets" | translate }}</p>
   </div>
 
-  <!-- Comment input area always at the bottom -->
+  <!-- Área de input para agregar un comentario -->
   <div class="comment-input">
     <textarea
       [(ngModel)]="newComment"
