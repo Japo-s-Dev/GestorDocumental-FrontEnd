@@ -123,6 +123,7 @@ export class FileTreeComponent implements OnInit {
   selectFile(node: FlatNode) {
 
     if (node.type !== 'folder' && node.id) {
+      localStorage.setItem('selectedDocumentId', node.id.toString());
       this.loaderService.showLoader();
       this.apiService.getDocumentUrl(node.id).subscribe(
         response => {
