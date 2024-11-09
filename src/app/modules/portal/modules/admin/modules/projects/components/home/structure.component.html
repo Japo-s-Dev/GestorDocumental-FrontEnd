@@ -1,0 +1,52 @@
+<app-alert
+  *ngIf="alertVisible"
+  [title]="alertTitle"
+  [message]="alertMessage"
+  [alertType]="alertType"
+  [iconType]="alertIcon"
+  (closed)="handleAlertClosed()"
+>
+</app-alert>
+
+<div class="structures-container">
+  <header>
+    <h2 class="structures-title">{{ "structures:title" | translate }}</h2>
+  </header>
+  <button class="add-structure-button" (click)="addStructure()">
+    <i class="fa-solid fa-plus"></i> {{ "structures:add_structure" | translate }}
+  </button>
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="{{ 'projects:search_project' | translate }}"
+      [(ngModel)]="searchTerm"
+      class="search-input"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ "projects:title_project" | translate }}</th>
+        <th class="actions-col">{{ "projects:actions" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let structure of filteredStructures(); let i = index">
+        <td>{{ structure.structure_name }}</td>
+        <td>
+          <div class="actions-buttons">
+            <button class="edit" (click)="editStructure(structure)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete" (click)="deleteStructure(structure)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

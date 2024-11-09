@@ -1,0 +1,362 @@
+/* Cubre toda la pantalla */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 95%; /* Ajuste para hacer el modal más ancho */
+  max-width: 600px; /* Se aumentó el tamaño máximo */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: 0 auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #f7f7f7;
+}
+
+.modal-header .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-header .btn-close {
+  display: inline-block;
+  height: 1em;
+  color: #000;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  opacity: 1;
+}
+
+.modal-header .btn-close:hover {
+  color: #000;
+  opacity: 0.75;
+}
+
+.modal-body {
+  padding: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.form-label {
+  margin-top: 0.5rem;
+  display: block;
+  font-weight: 500;
+}
+
+.form-check-inputl {
+  margin-top: 0.5rem;
+  display: block;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el label y el checkbox */
+  margin-top: 15px; /* Margen superior para separación del campo anterior */
+}
+
+.form-check-input {
+  transform: scale(1.3); /* Agranda el checkbox */
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Botón Cancelar */
+button.cancel-button {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.cancel-button:hover {
+  background-color: #c82333;
+}
+
+/* Botón Agregar o Guardar */
+button.add-project-button {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.add-project-button:hover {
+  background-color: #218838;
+}
+
+/* Ajuste del tamaño de las alertas */
+.alert {
+  background: #f8d7da;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border-left: 5px solid #f5c6cb;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espacia los elementos hacia los lados opuestos */
+}
+
+.alert .msg {
+  flex-grow: 1;
+}
+
+.alert .close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #721c24;
+  font-size: 16px;
+  padding: 0;
+  margin-left: auto; /* Mueve el botón de cierre hacia la derecha */
+}
+
+.alert .close-btn:hover {
+  color: #491217;
+}
+
+.alert .close-btn .fas {
+  font-size: 20px;
+}
+
+.text-danger {
+  color: #721c24;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Modificación de la alerta superior para que no sea tan grande */
+.alert.showAlert {
+  display: flex;
+  font-size: 14px;
+  padding: 8px 15px;
+}
+
+.alert.hide {
+  display: none;
+}
+
+/* Elementos relacionados con los índices */
+.index-form {
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+/* Botón Añadir Índice */
+.btn-add-index {
+  margin-top: 8px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-index:hover {
+  background-color: #0056b3;
+}
+
+/* Botones dentro del formulario de índice */
+.btn-save-index {
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-save-index:hover {
+  background-color: #218838;
+}
+
+.btn-cancel-index {
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel-index:hover {
+  background-color: #5a6268;
+}
+
+td:last-child {
+  width: 100px; /* Ajusta el ancho de la columna para hacerla más estrecha */
+  text-align: center;
+}
+
+button {
+  display: inline-block;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+button.edit {
+  width: 36px;
+  height: 36px;
+  background-color: #343a40;
+  color: white;
+}
+
+button.edit:hover {
+  background-color: #23272b;
+}
+
+button.delete {
+  width: 36px;
+  height: 36px;
+  background-color: #dc3545;
+  color: white;
+}
+
+button.delete:hover {
+  background-color: #c82333;
+}
+
+.actions-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  gap: 5px;
+}
+
+/* Diseño de la tabla de índices */
+
+/* Estilo para el contenedor de la tabla con scroll */
+.table-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 10px;
+  border: 1px solid #ddd; /* Opcional: añade un borde para resaltar el área de scroll */
+  border-radius: 5px;
+}
+
+
+.table-indices {
+  margin-top: 15px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-indices th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
+}
+
+.table-indices td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.table-indices th,
+.table-indices td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Ajustar el ancho de la tabla para que se vea más limpia */
+.table-indices th:first-child,
+.table-indices td:first-child {
+  text-align: left;
+  padding-left: 15px;
+}
+
+.table-indices th:last-child,
+.table-indices td:last-child {
+  text-align: right;
+  padding-right: 15px;
+}

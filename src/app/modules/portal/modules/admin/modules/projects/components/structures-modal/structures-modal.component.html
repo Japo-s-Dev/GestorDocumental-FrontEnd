@@ -1,0 +1,200 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        {{
+          isEditMode
+            ? ("projects:edit" | translate)
+            : ("projects:add_project" | translate)
+        }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div
+      class="alert"
+      [class.showAlert]="showWarningAlert"
+      [class.hide]="!showWarningAlert"
+    >
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <!-- Formulario para el proyecto -->
+      <form [formGroup]="StructureForm">
+        <div class="mb-3">
+          <label for="structure_name" class="form-label">{{
+            "projects:title_project" | translate
+          }}</label>
+          <input
+            id="structure_name"
+            formControlName="structure_name"
+            type="text"
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              structureForm.get('structure_name')?.hasError('required') &&
+              structureForm.get('structure_name')?.touched
+            "
+            class="alert"
+          >
+            {{ "projects:alert_name_project" | translate }}
+          </div>
+        </div>
+      </form>
+
+      <!-- Mostrar formulario de índices solo si el proyecto fue creado o está en modo de edición -->
+      <ng-container *ngIf="structureCreated || isEditMode">
+        <!-- Botón para añadir índice -->
+        <button
+          class="btn btn-primary btn-add-index mt-3"
+          (click)="toggleIndexForm()"
+          [disabled]="!structureData"
+        >
+          <i class="fa fa-plus"></i> {{ "projects:add_index" | translate }}
+        </button>
+
+        <!-- Formulario para crear o editar un índice -->
+        <form
+          *ngIf="showIndexForm"
+          [formGroup]="indexForm"
+          (ngSubmit)="onSubmitIndex()"
+          class="index-form mt-3"
+        >
+          <div class="mb-3">
+            <label for="indexName" class="form-label">{{
+              "projects:index_title" | translate
+            }}</label>
+            <input
+              id="indexName"
+              formControlName="index_name"
+              type="text"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                indexForm.get('index_name')?.hasError('required') &&
+                indexForm.get('index_name')?.touched
+              "
+              class="alert"
+            >
+              {{ "projects:alert_name_index" | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="datatypeId" class="form-label">
+              {{ "projects:index_datatype" | translate }}
+            </label>
+            <select
+              id="datatypeId"
+              formControlName="datatype_id"
+              class="form-control"
+            >
+              <option *ngFor="let type of dataTypes" [value]="type.id">
+                {{ type.datatype_name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                indexForm.get('datatype_id')?.hasError('required') &&
+                indexForm.get('datatype_id')?.touched
+              "
+              class="alert"
+            >
+              {{ "projects:alert_type_index" | translate }}
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <label class="form-check-label" for="requiredCheck">{{
+              "projects:index_required" | translate
+            }}</label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              formControlName="required"
+              id="requiredCheck"
+            />
+          </div>
+          <div class="form-buttons">
+            <button
+              type="submit"
+              class="btn btn-success btn-save-index"
+              [disabled]="!structureData"
+            >
+              <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-cancel-index"
+              (click)="cancelEdit()"
+              [disabled]="!structureData"
+            >
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Listado de índices -->
+        <div *ngIf="!showIndexForm" class="table-scroll">
+          <table class="table mt-3 table-indices">
+            <thead>
+              <tr>
+                <th>{{ "projects:index_name" | translate }}</th>
+                <th>{{ "projects:index_datatype" | translate }}</th>
+                <th>{{ "projects:index_required" | translate }}</th>
+                <th>{{ "projects:index_actions" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let index of indices">
+                <td>{{ index.index_name }}</td>
+                <td>{{ getTypeName(index.datatype_id) }}</td>
+                <td>{{ index.required ? "Sí" : "No" }}</td>
+                <td>
+                  <div class="actions-buttons">
+                    <button class="edit" (click)="editIndex(index)">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="delete" (click)="deleteIndex(index.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">
+        {{ "projects:cancel" | translate }}
+      </button>
+      <button type="button" class="add-project-button btn" (click)="save()">
+        {{
+          isEditMode
+            ? ("projects:save_changes" | translate)
+            : structureCreated
+            ? ("projects:add_project" | translate)
+            : ("projects:create_project" | translate)
+        }}
+      </button>
+    </div>
+  </div>
+</div>
