@@ -140,14 +140,6 @@ body, table {
   display: inline-block;
 }
 
-/* Estilo de cuadrícula para los checkboxes de acciones */
-.action-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas para los checkboxes */
-  gap: 10px;
-  padding-top: 5px;
-}
-
 /* Estilo individual de los checkboxes */
 .report-filter-container input[type="checkbox"] {
   margin-right: 8px;
@@ -221,4 +213,87 @@ body, table {
   display: flex;
   justify-content:space-evenly;
   margin-top: 20px;
+}
+
+/* Container for each checkbox */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for actions */
+  gap: 10px;
+  padding-top: 5px;
+}
+
+/* Individual checkbox styling */
+.check {
+  cursor: pointer;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px; /* Space between checkbox and label text */
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.check:before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34, 50, 84, 0.03);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+
+.check:hover:before {
+  opacity: 1;
+}
+
+.check:hover svg {
+  stroke: #ff8800; /* Orange color on hover */
+}
+
+input[type="checkbox"]:checked + .check svg {
+  stroke: #ff8800; /* Orange color when checked */
+}
+
+input[type="checkbox"]:checked + .check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+
+input[type="checkbox"]:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+
+/* Label text styling */
+.checkbox-group span {
+  font-size: 14px;
+  color: #333;
 }
