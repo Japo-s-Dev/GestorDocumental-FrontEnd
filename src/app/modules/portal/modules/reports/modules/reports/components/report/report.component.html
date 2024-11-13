@@ -1,4 +1,41 @@
 <div class="report-table-container">
+  <div class="report-filter-container">
+    <h3>Filtrar Reportes</h3>
+    <form (ngSubmit)="searchReports()">
+      <div>
+        <label>Acción:</label>
+        <select multiple [(ngModel)]="filters.action" name="action">
+          <option *ngFor="let action of actionOptions" [value]="action">
+            {{ action }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label>Objeto:</label>
+        <input type="text" [(ngModel)]="filters.object" name="object" />
+      </div>
+
+      <div>
+        <label>ID Objeto:</label>
+        <input type="number" [(ngModel)]="filters.object_id" name="object_id" />
+      </div>
+
+      <div>
+        <label>Fecha (timestamp):</label>
+        <input type="date" [(ngModel)]="filters.timestamp" name="timestamp" />
+      </div>
+
+      <div>
+        <label>Usuario:</label>
+        <input type="text" [(ngModel)]="filters.username" name="username" />
+      </div>
+
+      <button type="submit">Buscar</button>
+      <button type="button" (click)="resetFilters()">Limpiar</button>
+    </form>
+  </div>
+
   <header>
     <h2 class="reports-title">{{ "Reportes" }}</h2>
   </header>
