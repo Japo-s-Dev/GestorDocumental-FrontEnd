@@ -11,14 +11,14 @@ export class ReportService {
 
   constructor(private http: HttpClient) {}
 
-  listEvents(filters: any = {}): Observable<any> {
+  listEvents(filters: any = {}, order_by: string): Observable<any> {
     const payload = {
       id: 1,
       method: 'list_events',
       params: {
         filters: filters,
         list_options: {
-          order_bys: 'user_id',
+          order_bys: order_by,
         },
       },
     };
