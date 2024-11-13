@@ -11,18 +11,18 @@ export class ReportService {
 
   constructor(private http: HttpClient) {}
 
-  listEvents(): Observable<any> {
+  listEvents(filters: any = {}): Observable<any> {
     const payload = {
       id: 1,
       method: 'list_events',
       params: {
-        filters: {},
+        filters: filters,
         list_options: {
           order_bys: 'user_id',
         },
       },
     };
-    
+  
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, {
       observe: 'response',
