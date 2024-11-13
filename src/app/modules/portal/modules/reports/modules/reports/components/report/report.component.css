@@ -201,12 +201,12 @@ body, table {
 }
 
 .report-filter-container button[type="submit"] {
-  background-color: #007bff;
+  background-color: #d76b00;
   margin-right: 10px;
 }
 
 .report-filter-container button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #a87937;
 }
 
 .report-filter-container button[type="button"] {
@@ -215,4 +215,10 @@ body, table {
 
 .report-filter-container button[type="button"]:hover {
   background-color: #5a6268;
+}
+
+.botones {
+  display: flex;
+  justify-content:space-evenly;
+  margin-top: 20px;
 }
