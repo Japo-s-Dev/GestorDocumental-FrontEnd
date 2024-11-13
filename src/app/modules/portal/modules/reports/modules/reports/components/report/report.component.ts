@@ -9,7 +9,9 @@ import { EventData } from '../../interfaces/report.interface';
 })
 export class ReportComponent implements OnInit {
   events: EventData[] = [];
-  filters: any = {};  // Objeto para almacenar los filtros
+  filters: any = {
+    action: [],  // Mantiene las acciones seleccionadas como array
+  };
   actionOptions = ['INSERT', 'UPDATE', 'DELETE', 'RESTORE', 'PHYSICAL DELETE'];
 
   constructor(private reportService: ReportService) {}
@@ -19,7 +21,10 @@ export class ReportComponent implements OnInit {
   }
 
   loadEvents(filters: any = {}): void {
-    this.reportService.listEvents(filters).subscribe((response) => {
+    const order_by = filters.order_by || 'timestamp'; // valor por defecto
+    delete filters.order_by; // Eliminamos para no enviar como filtro
+
+    this.reportService.listEvents(filters, order_by).subscribe((response) => {
       const items = response.body?.result;
       if (Array.isArray(items)) {
         this.events = items.map((item: any) => ({
@@ -39,11 +44,21 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  toggleActionSelection(action: string, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      if (!this.filters.action.includes(action)) {
+        this.filters.action.push(action);
+      }
+    } else {
+      this.filters.action = this.filters.action.filter((a: string) => a !== action);
+    }
+  }
+
   searchReports(): void {
-    // Construye los filtros usando operadores específicos
     const filters: any = {};
 
-    if (this.filters.action && this.filters.action.length > 0) {
+    if (this.filters.action.length > 0) {
       filters.action = { "$in": this.filters.action };
     }
     if (this.filters.object) {
@@ -52,20 +67,36 @@ export class ReportComponent implements OnInit {
     if (this.filters.object_id) {
       filters.object_id = { "$eq": this.filters.object_id };
     }
-    if (this.filters.timestamp) {
-      filters.timestamp = { "$gte": this.filters.timestamp };
+    if (this.filters.fechaDesde && this.filters.fechaHasta) {
+      filters.timestamp = {
+        "$gte": this.formatRFC3339Date(this.filters.fechaDesde, 'start'),
+        "$lt": this.formatRFC3339Date(this.filters.fechaHasta, 'end'),
+      };
+    } else if (this.filters.fechaDesde) {
+      filters.timestamp = { "$gte": this.formatRFC3339Date(this.filters.fechaDesde, 'start') };
     }
     if (this.filters.username) {
       filters.username = { "$eq": this.filters.username };
     }
 
-    // Llama a loadEvents con los filtros definidos
+    filters.order_by = this.filters.order_by || 'timestamp'; // orden seleccionado
+
     this.loadEvents(filters);
   }
 
   resetFilters(): void {
-    this.filters = {};
+    this.filters = { action: [] };
     this.loadEvents(); // Carga todos los eventos sin filtros
+  }
+
+  private formatRFC3339Date(date: string, time: 'start' | 'end'): string {
+    const dateObj = new Date(date);
+    if (time === 'start') {
+      dateObj.setHours(0, 0, 0, 0); // Comienza a medianoche
+    } else if (time === 'end') {
+      dateObj.setHours(23, 59, 59, 999); // Termina justo antes de la medianoche siguiente
+    }
+    return dateObj.toISOString(); // Formato RFC3339 (ej. "2024-10-29T00:00:00.000Z")
   }
 
   formatChanges(oldData: any, newData: any, object: string): string {
