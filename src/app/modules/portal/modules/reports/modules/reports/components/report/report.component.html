@@ -5,55 +5,70 @@
       <!-- Selección Múltiple para Acción usando Checkboxes -->
       <div>
         <label>Acción:</label>
-        <div *ngFor="let action of actionOptions" class="checkbox-group">
-          <input
-            type="checkbox"
-            [value]="action"
-            (change)="toggleActionSelection(action, $event)"
-            [checked]="filters.action.includes(action)"
-          />
-          <span>{{ action }}</span>
+        <div class="action-grid">
+          <div *ngFor="let action of actionOptions" class="checkbox-group">
+            <input
+              type="checkbox"
+              [value]="action"
+              (change)="toggleActionSelection(action, $event)"
+              [checked]="filters.action.includes(action)"
+            />
+            <span>{{ action }}</span>
+          </div>
         </div>
       </div>
 
-      <!-- Filtro para Objeto -->
-      <div>
-        <label>Objeto:</label>
-        <input type="text" [(ngModel)]="filters.object" name="object" />
-      </div>
-
-      <!-- Filtro para ID de Objeto -->
-      <div>
-        <label>ID Objeto:</label>
-        <input type="number" [(ngModel)]="filters.object_id" name="object_id" />
+      <!-- Filtro para Objeto e ID Objeto -->
+      <div class="field-pair">
+        <div>
+          <label>Objeto:</label>
+          <input type="text" [(ngModel)]="filters.object" name="object" />
+        </div>
+        <div>
+          <label>ID Objeto:</label>
+          <input
+            type="number"
+            [(ngModel)]="filters.object_id"
+            name="object_id"
+          />
+        </div>
       </div>
 
       <!-- Filtro de Rango de Fechas -->
-      <div>
-        <label>Fecha Desde:</label>
-        <input type="date" [(ngModel)]="filters.fechaDesde" name="fechaDesde" />
-      </div>
-      <div>
-        <label>Fecha Hasta:</label>
-        <input type="date" [(ngModel)]="filters.fechaHasta" name="fechaHasta" />
+      <div class="field-pair">
+        <div>
+          <label>Fecha Desde:</label>
+          <input
+            type="date"
+            [(ngModel)]="filters.fechaDesde"
+            name="fechaDesde"
+          />
+        </div>
+        <div>
+          <label>Fecha Hasta:</label>
+          <input
+            type="date"
+            [(ngModel)]="filters.fechaHasta"
+            name="fechaHasta"
+          />
+        </div>
       </div>
 
-      <!-- Filtro para Usuario -->
-      <div>
-        <label>Usuario:</label>
-        <input type="text" [(ngModel)]="filters.username" name="username" />
-      </div>
-
-      <!-- Selección de Orden -->
-      <div>
-        <label>Ordenar por:</label>
-        <select [(ngModel)]="filters.order_by" name="order_by">
-          <option value="username">Usuario</option>
-          <option value="object">Objeto</option>
-          <option value="action">Acción</option>
-          <option value="timestamp">Fecha</option>
-          <option value="object_id">ID Objeto</option>
-        </select>
+      <div class="field-pair">
+        <div>
+          <label>Usuario:</label>
+          <input type="text" [(ngModel)]="filters.username" name="username" />
+        </div>
+        <div>
+          <label>Ordenar por:</label>
+          <select [(ngModel)]="filters.order_by" name="order_by">
+            <option value="username">Usuario</option>
+            <option value="object">Objeto</option>
+            <option value="action">Acción</option>
+            <option value="timestamp">Fecha</option>
+            <option value="object_id">ID Objeto</option>
+          </select>
+        </div>
       </div>
 
       <button type="submit">Buscar</button>

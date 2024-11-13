@@ -105,3 +105,114 @@ th, td {
 body, table {
   font-family: "Poppins", sans-serif;
 }
+
+/* Contenedor principal del filtro */
+.report-filter-container {
+  padding: 20px;
+  background-color: #f9fafb;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Título del filtro */
+.report-filter-container h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Diseño de los grupos de campos */
+.report-filter-container div {
+  margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.report-filter-container label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* Estilo de cuadrícula para los checkboxes de acciones */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas para los checkboxes */
+  gap: 10px;
+  padding-top: 5px;
+}
+
+/* Estilo individual de los checkboxes */
+.report-filter-container input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Inputs de texto, número, y fechas */
+.report-filter-container input[type="text"],
+.report-filter-container input[type="number"],
+.report-filter-container input[type="date"],
+.report-filter-container select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.report-filter-container input[type="text"]:focus,
+.report-filter-container input[type="number"]:focus,
+.report-filter-container input[type="date"]:focus,
+.report-filter-container select:focus {
+  border-color: #007bff;
+}
+
+/* Flexbox para pares de campos en una fila */
+.field-pair {
+  display: flex;
+  gap: 15px; /* Espacio entre los campos */
+}
+
+.field-pair > div {
+  flex: 1;
+}
+
+/* Estilos para el botón */
+.report-filter-container button[type="submit"],
+.report-filter-container button[type="button"] {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.report-filter-container button[type="submit"] {
+  background-color: #007bff;
+  margin-right: 10px;
+}
+
+.report-filter-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.report-filter-container button[type="button"] {
+  background-color: #6c757d;
+}
+
+.report-filter-container button[type="button"]:hover {
+  background-color: #5a6268;
+}
