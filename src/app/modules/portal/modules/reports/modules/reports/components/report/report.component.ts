@@ -74,6 +74,8 @@ export class ReportComponent implements OnInit {
       };
     } else if (this.filters.fechaDesde) {
       filters.timestamp = { "$gte": this.formatRFC3339Date(this.filters.fechaDesde, 'start') };
+    } else if (this.filters.fechaHasta) {
+      filters.timestamp = { "$lt": this.formatRFC3339Date(this.filters.fechaHasta, 'end') };
     }
     if (this.filters.username) {
       filters.username = { "$eq": this.filters.username };
@@ -94,7 +96,7 @@ export class ReportComponent implements OnInit {
     if (time === 'start') {
       dateObj.setHours(0, 0, 0, 0); // Comienza a medianoche
     } else if (time === 'end') {
-      dateObj.setHours(23, 59, 59, 999); // Termina justo antes de la medianoche siguiente
+      dateObj.setUTCHours(23, 59, 59, 999); // Último momento del día en UTC
     }
     return dateObj.toISOString(); // Formato RFC3339 (ej. "2024-10-29T00:00:00.000Z")
   }
