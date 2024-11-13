@@ -169,16 +169,48 @@ body, table {
   border-color: #007bff;
 }
 
-/* Flexbox para pares de campos en una fila */
+/* Custom styling for date inputs */
+.custom-date-input {
+  appearance: none;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5; /* Soft background color */
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Focus state */
+.custom-date-input:focus {
+  border-color: #ff8800; /* Orange border on focus */
+  box-shadow: 0 0 5px rgba(255, 136, 0, 0.3);
+}
+
+/* Date icon appearance inside input */
+.custom-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(50%) sepia(50%) saturate(300%) hue-rotate(20deg); /* Light orange icon */
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effect on the date picker icon */
+.custom-date-input:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+
 .field-pair {
   display: flex;
-  gap: 15px; /* Espacio entre los campos */
+  gap: 15px;
 }
 
 .field-pair > div {
   flex: 1;
 }
-
 /* Estilos para el botón */
 .report-filter-container button[type="submit"],
 .report-filter-container button[type="button"] {
