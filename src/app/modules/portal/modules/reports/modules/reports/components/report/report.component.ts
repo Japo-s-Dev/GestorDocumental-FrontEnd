@@ -9,6 +9,8 @@ import { EventData } from '../../interfaces/report.interface';
 })
 export class ReportComponent implements OnInit {
   events: EventData[] = [];
+  filters: any = {};  // Objeto para almacenar los filtros
+  actionOptions = ['INSERT', 'UPDATE', 'DELETE', 'RESTORE', 'PHYSICAL DELETE'];
 
   constructor(private reportService: ReportService) {}
 
@@ -16,9 +18,8 @@ export class ReportComponent implements OnInit {
     this.loadEvents();
   }
 
-  loadEvents(): void {
-    this.reportService.listEvents().subscribe((response) => {
-      // Verificamos si `result` es un arreglo
+  loadEvents(filters: any = {}): void {
+    this.reportService.listEvents(filters).subscribe((response) => {
       const items = response.body?.result;
       if (Array.isArray(items)) {
         this.events = items.map((item: any) => ({
@@ -36,6 +37,35 @@ export class ReportComponent implements OnInit {
     }, (error) => {
       console.error('Error loading events:', error);
     });
+  }
+
+  searchReports(): void {
+    // Construye los filtros usando operadores específicos
+    const filters: any = {};
+
+    if (this.filters.action && this.filters.action.length > 0) {
+      filters.action = { "$in": this.filters.action };
+    }
+    if (this.filters.object) {
+      filters.object = { "$eq": this.filters.object };
+    }
+    if (this.filters.object_id) {
+      filters.object_id = { "$eq": this.filters.object_id };
+    }
+    if (this.filters.timestamp) {
+      filters.timestamp = { "$gte": this.filters.timestamp };
+    }
+    if (this.filters.username) {
+      filters.username = { "$eq": this.filters.username };
+    }
+
+    // Llama a loadEvents con los filtros definidos
+    this.loadEvents(filters);
+  }
+
+  resetFilters(): void {
+    this.filters = {};
+    this.loadEvents(); // Carga todos los eventos sin filtros
   }
 
   formatChanges(oldData: any, newData: any, object: string): string {
