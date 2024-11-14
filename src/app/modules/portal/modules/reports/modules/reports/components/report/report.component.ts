@@ -21,11 +21,12 @@ export class ReportComponent implements OnInit {
   }
 
   loadEvents(filters: any = {}): void {
-    const order_by = filters.order_by || 'timestamp'; // valor por defecto
-    delete filters.order_by; // Eliminamos para no enviar como filtro
-
+    const order_by = filters.order_by || 'timestamp';
+    delete filters.order_by;
+  
     this.reportService.listEvents(filters, order_by).subscribe((response) => {
       const items = response.body?.result;
+      console.log('items:', items);
       if (Array.isArray(items)) {
         this.events = items.map((item: any) => ({
           action: item.action,
@@ -142,7 +143,10 @@ export class ReportComponent implements OnInit {
       user: ['username', 'email', 'assigned_role', 'pwd'],
       separator: ['name'],
       structure: ['project_name'],
-      document: ['name', 'doc_type']
+      document: ['name', 'doc_type'],
+      archive_comment: ['text'],
+      document_comment: ['text'],
+      assosiated_privilege: ['privilege_id', 'role_name', 'is_deleted', 'is_enabled', 'mtime'],
     };
     return relevantKeys[object]?.includes(key) || false;
   }
