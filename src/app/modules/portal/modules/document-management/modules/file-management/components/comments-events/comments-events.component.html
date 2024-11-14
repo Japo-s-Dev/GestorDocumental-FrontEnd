@@ -7,20 +7,22 @@
         [class.active]="commentLevel === 'archive'"
         (click)="setCommentLevel('archive')"
       >
-        Expediente
+        {{ "comments:archive_level" | translate }}
       </button>
       <button
         [class.active]="commentLevel === 'document'"
         (click)="setCommentLevel('document')"
         [disabled]="!documentSelected"
       >
-        Documento
+        {{ "comments:document_level" | translate }}
       </button>
     </div>
 
     <!-- Dropdown Checkbox Filter Menu -->
     <div class="filter-dropdown">
-      <button (click)="toggleDropdown()" class="dropdown-button">Filtro</button>
+      <button (click)="toggleDropdown()" class="dropdown-button">
+        {{ "comments:filter" | translate }}
+      </button>
       <div class="dropdown-content" [class.show]="dropdownOpen">
         <div>
           <input
@@ -29,7 +31,9 @@
             (change)="toggleViewOption('comments')"
             [checked]="viewComments"
           />
-          <label for="check-comments">Ver comentarios</label>
+          <label for="check-comments">
+            {{ "comments:view_comments" | translate }}
+          </label>
         </div>
         <div>
           <input
@@ -38,7 +42,9 @@
             (change)="toggleViewOption('events')"
             [checked]="viewEvents"
           />
-          <label for="check-events">Ver eventos</label>
+          <label for="check-events">
+            {{ "comments:view_events" | translate }}
+          </label>
         </div>
       </div>
     </div>
@@ -69,15 +75,19 @@
   </div>
 
   <div *ngIf="filteredCommentsAndEvents.length === 0">
-    <p>No hay comentarios o eventos</p>
+    <p>
+      {{ "comments:no_yets" | translate }}
+    </p>
   </div>
 
   <!-- Área de input para agregar un comentario -->
   <div class="comment-input">
     <textarea
       [(ngModel)]="newComment"
-      placeholder="Agregar comentario..."
+      placeholder="{{ 'comments:add_comment' | translate }}"
     ></textarea>
-    <button (click)="addComment()">Enviar</button>
+    <button (click)="addComment()">
+      {{ "comments:post_comment" | translate }}
+    </button>
   </div>
 </div>

@@ -261,8 +261,11 @@
   "comments:document_event": "Document Event",
   "comments:filter_by": "Filter by",
   "comments:add_comment": "Add comment...",
-  "comments:document_level": "Document Level",
-  "comments:archive_level": "Expedient Level",
+  "comments:document_level": "Document",
+  "comments:archive_level": "Expedient",
+  "comments:view_comments": "Comments",
+  "comments:view_events": "Events",
+  "comments:filter": "Filters",
 
   "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
   "document-management:files": "Files",

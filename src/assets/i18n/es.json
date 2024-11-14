@@ -250,7 +250,7 @@
   "upload_document:file_name_placeholder": "Ingrese el nombre del archivo",
 
   "COMMENTS": "****************************************************COMMENTS****************************************************",
-  "comments:no_yets": "No hay comentarios aún.",
+  "comments:no_yets": "No hay comentarios o eventos aún.",
   "comments:post_comment": "Enviar",
   "comments:select_all": "Seleccionar todo",
   "comments:archive_comment": "Comentarios de archivos",
@@ -259,8 +259,11 @@
   "comments:document_event": "Eventos de documentos",
   "comments:filter_by": "Filtrar por",
   "comments:add_comment": "Agregar comentario...",
-  "comments:document_level": "Nivel de documento",
-  "comments:archive_level": "Nivel de expediente",
+  "comments:document_level": "Documento",
+  "comments:archive_level": "Expediente",
+  "comments:view_comments": "Comentarios",
+  "comments:view_events": "Eventos",
+  "comments:filter": "Filtros",
 
   "DOCUMENT-MANAGEMENT": "****************************************************DOCUMENT-MANAGEMENT****************************************************",
   "document-management:files": "Archivos",
