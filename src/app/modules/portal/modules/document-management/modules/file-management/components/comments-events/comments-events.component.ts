@@ -58,97 +58,91 @@ export class CommentsEventsComponent implements OnInit {
 
   loadCommentsAndEvents() {
     if (this.archiveId !== null) {
+      const selectedDocumentId = localStorage.getItem('selectedDocumentId');
+
+      // Cargar comentarios de archivo
       this.apiService.listCommentsArchive(this.archiveId).subscribe((response) => {
+        console.log('Archive Comments Response:', response);
         if (response && response.body) {
-          const filteredComments = response.body.result.items.filter(
-            (comment: any) => comment.archive_id === this.archiveId
-          );
-  
-          filteredComments.forEach((comment: any) => {
-            const user = this.users.find((u) => u.id === comment.user_id);
-            comment.username = user ? user.username : 'Unknown User';
-            comment.isOwnComment = comment.username === this.currentUser.username;
-            comment.eventType = 'expedientComment';
-            comment.dateTime = new Date(comment.ctime);
-          });
-  
+          const filteredComments = response.body.result.items.map((comment: any) => ({
+            ...comment,
+            username: comment.username || 'Unknown User',
+            isOwnComment: comment.username === this.currentUser.username,
+            eventType: 'expedientComment',
+            dateTime: new Date(this.formatRFC3339Date(comment.ctime, 'start'))
+          }));
+
+          this.commentsAndEvents = [...filteredComments];
+
           // Cargar eventos de archivo
-          this.apiService.listEventsArchive(this.archiveId!).subscribe(
-            (eventResponse) => {
-              if (eventResponse && eventResponse.body) {
-                const events = eventResponse.body.result.items.map((event: any) => {
-                  const user = this.users.find((u) => u.id === event.user_id);
-                  return {
-                    ...event,
-                    username: user ? user.username : 'Unknown User',
-                    description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
-                    timestamp: event.timestamp,
-                    eventType: 'expedientEvent',
-                    dateTime: new Date(event.timestamp),
-                  };
-                });
-  
-                this.commentsAndEvents = [...filteredComments, ...events];
-  
-                // Cargar comentarios y eventos a nivel de documento si el nivel es 'document'
-                if (this.commentLevel === 'document') {
-                  const selectedDocumentId = localStorage.getItem('selectedDocumentId');
-                  if (selectedDocumentId) {
-                    this.apiService.listCommentsDocument(Number(selectedDocumentId)).subscribe((docResponse) => {
-                      console.log('Document Comments Response:', docResponse); // Log para depuración
-                      const docComments = docResponse.body.result.filter(
-                        (comment: any) => comment.document_id === Number(selectedDocumentId)
-                      );
-  
-                      docComments.forEach((comment: any) => {
-                        const user = this.users.find((u) => u.id === comment.user_id);
-                        comment.username = user ? user.username : 'Unknown User';
-                        comment.isOwnComment = comment.username === this.currentUser.username;
-                        comment.eventType = 'documentComment';
-                        comment.dateTime = new Date(comment.ctime);
-                      });
-  
-                      this.commentsAndEvents.push(...docComments);
-  
-                      // Cargar eventos de documento
-                      this.apiService.listEventsDocument(Number(selectedDocumentId)).subscribe(
-                        (docEventResponse) => {
-                          const docEvents = docEventResponse.body.result.map((event: any) => {
-                            const user = this.users.find((u) => u.id === event.user_id);
-                            return {
-                              ...event,
-                              username: user ? user.username : 'Unknown User',
-                              description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
-                              timestamp: event.timestamp,
-                              eventType: 'documentEvent',
-                              dateTime: new Date(event.timestamp),
-                            };
-                          });
-  
-                          this.commentsAndEvents.push(...docEvents);
-  
-                          // Ordenar todos los comentarios y eventos por fecha
-                          this.commentsAndEvents.sort(
-                            (a, b) => a.dateTime.getTime() - b.dateTime.getTime()
-                          );
-  
-                          this.applyFilter();
-                        }
-                      );
-                    });
+          this.apiService.listEvents('archive', this.archiveId!).subscribe((eventResponse) => {
+            console.log('Archive Events Response:', eventResponse);
+            if (eventResponse && eventResponse.body && eventResponse.body.result) {
+              const events = eventResponse.body.result.map((event: any) => ({
+                ...event,
+                username: event.username || 'Unknown User',
+                description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
+                eventType: 'expedientEvent',
+                dateTime: new Date(this.formatRFC3339Date(event.ctime, 'start'))
+              }));
+              this.commentsAndEvents.push(...events);
+
+              if (selectedDocumentId) {
+                // Cargar comentarios de documento
+                this.apiService.listCommentsDocument(Number(selectedDocumentId)).subscribe((docResponse) => {
+                  console.log('Document Comments Response:', docResponse);
+                  if (docResponse && docResponse.body) {
+                    const docComments = docResponse.body.result.items.map((comment: any) => ({
+                      ...comment,
+                      username: comment.username || 'Unknown User',
+                      isOwnComment: comment.username === this.currentUser.username,
+                      eventType: 'documentComment',
+                      dateTime: new Date(this.formatRFC3339Date(comment.ctime, 'start'))
+                    }));
+                    this.commentsAndEvents.push(...docComments);
                   }
-                } else {
-                  // Si estamos en el nivel de archivo, aplicar el filtro directamente
-                  this.applyFilter();
-                }
+
+                  // Cargar eventos de documento
+                  this.apiService.listEvents('document', Number(selectedDocumentId)).subscribe((docEventResponse) => {
+                    console.log('Document Events Response:', docEventResponse);
+                    if (docEventResponse && docEventResponse.body && docEventResponse.body.result) {
+                      const docEvents = docEventResponse.body.result.items.map((event: any) => ({
+                        ...event,
+                        username: event.username || 'Unknown User',
+                        description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
+                        eventType: 'documentEvent',
+                        dateTime: new Date(this.formatRFC3339Date(event.ctime, 'start'))
+                      }));
+                      this.commentsAndEvents.push(...docEvents);
+
+                      // Ordenar todos los comentarios y eventos por fecha
+                      this.commentsAndEvents.sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime());
+
+                      this.applyFilter();
+                    }
+                  });
+                });
+              } else {
+                // Si solo hay expediente, aplicar el filtro directamente
+                this.commentsAndEvents.sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime());
+                this.applyFilter();
               }
             }
-          );
+          });
         }
       });
     }
   }
-  
+
+  formatRFC3339Date(date: string, time: 'start' | 'end'): string {
+    const dateObj = new Date(date);
+    if (time === 'start') {
+      dateObj.setHours(0, 0, 0, 0);
+    } else if (time === 'end') {
+      dateObj.setUTCHours(23, 59, 59, 999);
+    }
+    return dateObj.toISOString();
+  }  
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
@@ -158,7 +152,6 @@ export class CommentsEventsComponent implements OnInit {
     if (this.selectedFilters.length === 0) {
       this.filteredCommentsAndEvents = [];
     } else {
-      console.log('Filtered Comments and Events:', this.filteredCommentsAndEvents);
       this.filteredCommentsAndEvents = this.commentsAndEvents.filter((item) =>
         this.selectedFilters.includes(item.eventType)
       );
@@ -184,18 +177,12 @@ export class CommentsEventsComponent implements OnInit {
 
   addComment() {
     if (this.newComment.trim()) {
-      if (this.commentLevel === 'archive' && this.archiveId !== null) {
-        // Comentario a nivel de expediente
-        this.apiService.createCommentArchive(this.archiveId, this.newComment).subscribe(() => {
-          this.newComment = '';
-          this.loadCommentsAndEvents();
-        });
-      } else if (this.commentLevel === 'document' && this.archiveId !== null) {
-        // Comentario a nivel de documento
-        const selectedDocumentId = localStorage.getItem('selectedDocumentId');
-        console.log('Selected document ID:', selectedDocumentId); // Verifica el ID del documento
-        if (selectedDocumentId) {
-          this.apiService.createCommentDocument(Number(selectedDocumentId), this.newComment).subscribe(() => {
+      if (this.archiveId !== null) {
+        const targetId = this.commentLevel === 'archive' ? this.archiveId : localStorage.getItem('selectedDocumentId');
+        const commentMethod = this.commentLevel === 'archive' ? this.apiService.createCommentArchive : this.apiService.createCommentDocument;
+        
+        if (targetId) {
+          commentMethod.call(this.apiService, Number(targetId), this.newComment).subscribe(() => {
             this.newComment = '';
             this.loadCommentsAndEvents();
           });
