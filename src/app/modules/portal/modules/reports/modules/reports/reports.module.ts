@@ -5,6 +5,9 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { ReportComponent } from './components/report/report.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '../../reports.module';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,7 +18,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReportsRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ]
 })
 export class ReportsModule { }
