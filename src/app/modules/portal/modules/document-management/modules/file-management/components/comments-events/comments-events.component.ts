@@ -62,7 +62,6 @@ export class CommentsEventsComponent implements OnInit {
 
       // Cargar comentarios de archivo
       this.apiService.listCommentsArchive(this.archiveId).subscribe((response) => {
-        console.log('Archive Comments Response:', response);
         if (response && response.body) {
           const filteredComments = response.body.result.items.map((comment: any) => {
             const user = this.users.find((u) => u.id === comment.user_id); // Encontrar el usuario por user_id
@@ -79,7 +78,6 @@ export class CommentsEventsComponent implements OnInit {
 
           // Cargar eventos de archivo
           this.apiService.listEvents('archive', this.archiveId!).subscribe((eventResponse) => {
-            console.log('Archive Events Response:', eventResponse);
             if (eventResponse && eventResponse.body && eventResponse.body.result) {
               const events = eventResponse.body.result.map((event: any) => ({
                 ...event,
@@ -93,7 +91,6 @@ export class CommentsEventsComponent implements OnInit {
               if (selectedDocumentId) {
                 // Cargar comentarios de documento
                 this.apiService.listCommentsDocument(Number(selectedDocumentId)).subscribe((docResponse) => {
-                  console.log('Document Comments Response:', docResponse);
                   if (docResponse && docResponse.body) {
                     const docComments = docResponse.body.result.items.map((comment: any) => {
                       const user = this.users.find((u) => u.id === comment.user_id); // Encontrar el usuario por user_id
@@ -110,7 +107,6 @@ export class CommentsEventsComponent implements OnInit {
 
                   // Cargar eventos de documento
                   this.apiService.listEvents('document', Number(selectedDocumentId)).subscribe((docEventResponse) => {
-                    console.log('Document Events Response:', docEventResponse);
                     if (docEventResponse && docEventResponse.body && docEventResponse.body.result) {
                       const docEvents = docEventResponse.body.result.map((event: any) => ({
                         ...event,
