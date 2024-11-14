@@ -20,6 +20,7 @@ export class DocumentViewerComponent implements OnInit {
 
   ngOnInit(): void {
     this.idExpediente = Number(localStorage.getItem('selectedExpedientId')) || null;
+    localStorage.removeItem('selectedDocumentId');
   }
 
   setActiveTab(tab: string): void {
