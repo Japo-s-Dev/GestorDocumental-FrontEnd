@@ -124,36 +124,17 @@ export class FileManagementService {
     });
   }
 
-  listEventsArchive(archiveId: number): Observable<any> {
+  listEvents(option: string, archiveId: number): Observable<any> {
     const payload = {
       id: 1,
-      method: 'list_archive_events',
+      method: 'list_events',
       params: {
         filters: {
-          archive_id: archiveId
+          object: option,
+          object_id: archiveId
         },
         list_options: {
-          order_bys: "timestamp"
-        }
-      }
-    };
-    const formData = this.createFormData(payload);
-    return this.http.post<any>(this.apiUrl, formData, {
-      observe: 'response',
-      withCredentials: true
-    });
-  }
-
-  listEventsDocument(documentId: number): Observable<any> {
-    const payload = {
-      id: 1,
-      method: 'list_document_events',
-      params: {
-        filters: {
-          document_id: documentId
-        },
-        list_options: {
-          order_bys: "timestamp"
+          order_bys: "ctime"
         }
       }
     };
