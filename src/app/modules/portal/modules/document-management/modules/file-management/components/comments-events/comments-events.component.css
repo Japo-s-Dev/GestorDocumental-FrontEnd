@@ -121,10 +121,9 @@
 
 /* Dropdown filter styles */
 .filter-dropdown {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 10px;
-  width: fit-content; /* Restrict the width to fit content */
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .dropdown-button {

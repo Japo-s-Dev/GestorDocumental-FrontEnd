@@ -1,43 +1,45 @@
 <div class="comments-section">
   <!-- Selector de nivel de comentario (Expediente o Documento) -->
-  <div class="comment-level-toggle">
-    <button
-      [class.active]="commentLevel === 'archive'"
-      (click)="setCommentLevel('archive')"
-    >
-      Expediente
-    </button>
-    <button
-      [class.active]="commentLevel === 'document'"
-      (click)="setCommentLevel('document')"
-      [disabled]="!documentSelected"
-    >
-      Documento
-    </button>
-  </div>
 
-  <!-- Dropdown Checkbox Filter Menu -->
-  <div class="filter-dropdown">
-    <button (click)="toggleDropdown()" class="dropdown-button">Filtro</button>
-    <div class="dropdown-content" [class.show]="dropdownOpen">
-      <!-- Opciones de filtro -->
-      <div>
-        <input
-          id="check-comments"
-          type="checkbox"
-          (change)="toggleViewOption('comments')"
-          [checked]="viewComments"
-        />
-        <label for="check-comments">Ver comentarios</label>
-      </div>
-      <div>
-        <input
-          id="check-events"
-          type="checkbox"
-          (change)="toggleViewOption('events')"
-          [checked]="viewEvents"
-        />
-        <label for="check-events">Ver eventos</label>
+  <div>
+    <div class="comment-level-toggle">
+      <button
+        [class.active]="commentLevel === 'archive'"
+        (click)="setCommentLevel('archive')"
+      >
+        Expediente
+      </button>
+      <button
+        [class.active]="commentLevel === 'document'"
+        (click)="setCommentLevel('document')"
+        [disabled]="!documentSelected"
+      >
+        Documento
+      </button>
+    </div>
+
+    <!-- Dropdown Checkbox Filter Menu -->
+    <div class="filter-dropdown">
+      <button (click)="toggleDropdown()" class="dropdown-button">Filtro</button>
+      <div class="dropdown-content" [class.show]="dropdownOpen">
+        <div>
+          <input
+            id="check-comments"
+            type="checkbox"
+            (change)="toggleViewOption('comments')"
+            [checked]="viewComments"
+          />
+          <label for="check-comments">Ver comentarios</label>
+        </div>
+        <div>
+          <input
+            id="check-events"
+            type="checkbox"
+            (change)="toggleViewOption('events')"
+            [checked]="viewEvents"
+          />
+          <label for="check-events">Ver eventos</label>
+        </div>
       </div>
     </div>
   </div>
