@@ -64,12 +64,13 @@ export class CommentsEventsComponent implements OnInit {
       this.apiService.listCommentsArchive(this.archiveId).subscribe((response) => {
         console.log('Archive Comments Response:', response);
         if (response && response.body) {
+          console.log('Comments:', response.body.result.items);
           const filteredComments = response.body.result.items.map((comment: any) => ({
             ...comment,
             username: comment.username || 'Unknown User',
             isOwnComment: comment.username === this.currentUser.username,
             eventType: 'expedientComment',
-            dateTime: new Date(this.formatRFC3339Date(comment.ctime, 'start'))
+            dateTime: new Date(comment.ctime)  // Usar directamente ctime
           }));
 
           this.commentsAndEvents = [...filteredComments];
@@ -83,7 +84,7 @@ export class CommentsEventsComponent implements OnInit {
                 username: event.username || 'Unknown User',
                 description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
                 eventType: 'expedientEvent',
-                dateTime: new Date(this.formatRFC3339Date(event.ctime, 'start'))
+                dateTime: new Date(event.timestamp)  // Usar directamente timestamp
               }));
               this.commentsAndEvents.push(...events);
 
@@ -97,7 +98,7 @@ export class CommentsEventsComponent implements OnInit {
                       username: comment.username || 'Unknown User',
                       isOwnComment: comment.username === this.currentUser.username,
                       eventType: 'documentComment',
-                      dateTime: new Date(this.formatRFC3339Date(comment.ctime, 'start'))
+                      dateTime: new Date(comment.ctime)  // Usar directamente ctime
                     }));
                     this.commentsAndEvents.push(...docComments);
                   }
@@ -106,12 +107,12 @@ export class CommentsEventsComponent implements OnInit {
                   this.apiService.listEvents('document', Number(selectedDocumentId)).subscribe((docEventResponse) => {
                     console.log('Document Events Response:', docEventResponse);
                     if (docEventResponse && docEventResponse.body && docEventResponse.body.result) {
-                      const docEvents = docEventResponse.body.result.items.map((event: any) => ({
+                      const docEvents = docEventResponse.body.result.map((event: any) => ({
                         ...event,
                         username: event.username || 'Unknown User',
                         description: `Action: ${event.action}, Object: ${event.object}, Object ID: ${event.object_id}`,
                         eventType: 'documentEvent',
-                        dateTime: new Date(this.formatRFC3339Date(event.ctime, 'start'))
+                        dateTime: new Date(event.timestamp)  // Usar directamente timestamp
                       }));
                       this.commentsAndEvents.push(...docEvents);
 
