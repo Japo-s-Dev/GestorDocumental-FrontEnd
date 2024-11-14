@@ -171,24 +171,26 @@ export class CommentsEventsComponent implements OnInit {
     this.applyFilter();
   }
 
-  // Cambia el nivel de comentario entre expediente y documento
-  setCommentLevel(level: 'archive' | 'document') {
+  setCommentLevel(level: 'archive' | 'document'): void {
     this.commentLevel = level;
-    console.log('Comment level:', this.commentLevel);
+    console.log(`Comment level set to: ${level}`);
   }
 
-  addComment() {
+  addComment(): void {
+    if (this.commentLevel === 'document' && !localStorage.getItem('selectedDocumentId')) {
+      alert('Por favor, seleccione un documento antes de comentar a nivel de documento.');
+      return;
+    }
+
     if (this.newComment.trim()) {
-      if (this.archiveId !== null) {
-        const targetId = this.commentLevel === 'archive' ? this.archiveId : localStorage.getItem('selectedDocumentId');
-        const commentMethod = this.commentLevel === 'archive' ? this.apiService.createCommentArchive : this.apiService.createCommentDocument;
-        
-        if (targetId) {
-          commentMethod.call(this.apiService, Number(targetId), this.newComment).subscribe(() => {
-            this.newComment = '';
-            this.loadCommentsAndEvents();
-          });
-        }
+      const targetId = this.commentLevel === 'archive' ? this.archiveId : localStorage.getItem('selectedDocumentId');
+      const commentMethod = this.commentLevel === 'archive' ? this.apiService.createCommentArchive : this.apiService.createCommentDocument;
+      
+      if (targetId) {
+        commentMethod.call(this.apiService, Number(targetId), this.newComment).subscribe(() => {
+          this.newComment = '';
+          this.loadCommentsAndEvents();
+        });
       }
     }
   }
