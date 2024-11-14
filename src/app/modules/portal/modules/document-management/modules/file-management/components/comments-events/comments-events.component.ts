@@ -64,14 +64,16 @@ export class CommentsEventsComponent implements OnInit {
       this.apiService.listCommentsArchive(this.archiveId).subscribe((response) => {
         console.log('Archive Comments Response:', response);
         if (response && response.body) {
-          console.log('Comments:', response.body.result.items);
-          const filteredComments = response.body.result.items.map((comment: any) => ({
-            ...comment,
-            username: comment.username || 'Unknown User',
-            isOwnComment: comment.username === this.currentUser.username,
-            eventType: 'expedientComment',
-            dateTime: new Date(comment.ctime)  // Usar directamente ctime
-          }));
+          const filteredComments = response.body.result.items.map((comment: any) => {
+            const user = this.users.find((u) => u.id === comment.user_id); // Encontrar el usuario por user_id
+            return {
+              ...comment,
+              username: user ? user.username : 'Unknown User', // Asignar el username correspondiente
+              isOwnComment: user ? user.username === this.currentUser.username : false,
+              eventType: 'expedientComment',
+              dateTime: new Date(comment.ctime)  // Usar directamente ctime
+            };
+          });
 
           this.commentsAndEvents = [...filteredComments];
 
@@ -93,13 +95,16 @@ export class CommentsEventsComponent implements OnInit {
                 this.apiService.listCommentsDocument(Number(selectedDocumentId)).subscribe((docResponse) => {
                   console.log('Document Comments Response:', docResponse);
                   if (docResponse && docResponse.body) {
-                    const docComments = docResponse.body.result.items.map((comment: any) => ({
-                      ...comment,
-                      username: comment.username || 'Unknown User',
-                      isOwnComment: comment.username === this.currentUser.username,
-                      eventType: 'documentComment',
-                      dateTime: new Date(comment.ctime)  // Usar directamente ctime
-                    }));
+                    const docComments = docResponse.body.result.items.map((comment: any) => {
+                      const user = this.users.find((u) => u.id === comment.user_id); // Encontrar el usuario por user_id
+                      return {
+                        ...comment,
+                        username: user ? user.username : 'Unknown User', // Asignar el username correspondiente
+                        isOwnComment: user ? user.username === this.currentUser.username : false,
+                        eventType: 'documentComment',
+                        dateTime: new Date(comment.ctime)  // Usar directamente ctime
+                      };
+                    });
                     this.commentsAndEvents.push(...docComments);
                   }
 
