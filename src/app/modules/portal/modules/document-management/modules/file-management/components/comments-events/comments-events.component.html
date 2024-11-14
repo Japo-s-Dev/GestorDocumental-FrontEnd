@@ -66,20 +66,28 @@
     </div>
   </div>
 
-  <!-- Selector de nivel de comentario (expediente o documento) -->
-  <div class="comment-level-toggle">
-    <button
-      [class.active]="commentLevel === 'archive'"
-      (click)="setCommentLevel('archive')"
-    >
-      {{ "comments:archive_level" | translate }}
-    </button>
-    <button
-      [class.active]="commentLevel === 'document'"
-      (click)="setCommentLevel('document')"
-    >
-      {{ "comments:document_level" | translate }}
-    </button>
+  <!-- Indicador de nivel de comentario y selector -->
+  <div class="comment-level-indicator">
+    <p>
+      Nivel de comentario:
+      <strong>{{
+        commentLevel === "archive" ? "Expediente" : "Documento"
+      }}</strong>
+    </p>
+    <div class="comment-level-toggle">
+      <button
+        [class.active]="commentLevel === 'archive'"
+        (click)="setCommentLevel('archive')"
+      >
+        Nivel de expediente
+      </button>
+      <button
+        [class.active]="commentLevel === 'document'"
+        (click)="setCommentLevel('document')"
+      >
+        Nivel de documento
+      </button>
+    </div>
   </div>
 
   <!-- Lista de comentarios y eventos -->

@@ -240,3 +240,37 @@
 .comments-section .dropdown-content input[type="checkbox"]:checked::after {
   opacity: 1;
 }
+
+.comment-level-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-level-toggle button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-size: 14px;
+  color: white;
+  background-color: #f38333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-level-toggle button.active {
+  background-color: #b3642c;
+  font-weight: bold;
+}
+
+.comment-level-toggle button:hover {
+  background-color: #b3642c;
+}
+
+.comments-section .alert {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
