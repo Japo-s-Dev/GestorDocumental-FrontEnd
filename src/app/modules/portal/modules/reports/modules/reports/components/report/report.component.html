@@ -1,10 +1,12 @@
 <div class="report-table-container">
   <div class="report-filter-container">
-    <h3>Filtrar Reportes</h3>
+    <h3>{{ "reports:filter" | translate }}</h3>
     <form (ngSubmit)="searchReports()">
       <!-- Selección Múltiple para Acción usando Checkboxes -->
       <div>
-        <label>Acción:</label>
+        <label>
+          {{ "reports:action" | translate }}
+        </label>
         <div class="action-grid">
           <div *ngFor="let action of actionOptions" class="checkbox-group">
             <input
@@ -31,11 +33,15 @@
       <!-- Filtro para Objeto e ID Objeto -->
       <div class="field-pair">
         <div>
-          <label>Objeto:</label>
+          <label>
+            {{ "reports:object" | translate }}
+          </label>
           <input type="text" [(ngModel)]="filters.object" name="object" />
         </div>
         <div>
-          <label>ID Objeto:</label>
+          <label>
+            {{ "reports:object_id" | translate }}
+          </label>
           <input
             type="number"
             [(ngModel)]="filters.object_id"
@@ -47,7 +53,9 @@
       <!-- Filtro de Rango de Fechas -->
       <div class="field-pair">
         <div>
-          <label>Fecha Desde:</label>
+          <label>
+            {{ "reports:date_from" | translate }}
+          </label>
           <input
             type="date"
             [(ngModel)]="filters.fechaDesde"
@@ -56,7 +64,9 @@
           />
         </div>
         <div>
-          <label>Fecha Hasta:</label>
+          <label>
+            {{ "reports:date_to" | translate }}
+          </label>
           <input
             type="date"
             [(ngModel)]="filters.fechaHasta"
@@ -68,26 +78,44 @@
 
       <div class="field-pair">
         <div>
-          <label>Usuario:</label>
+          <label>
+            {{ "reports:user" | translate }}
+          </label>
           <input type="text" [(ngModel)]="filters.username" name="username" />
         </div>
         <div>
-          <label>Ordenar por:</label>
+          <label>
+            {{ "reports:order_bys" | translate }}
+          </label>
           <select [(ngModel)]="filters.order_by" name="order_by">
-            <option value="username">Usuario</option>
-            <option value="object">Objeto</option>
-            <option value="action">Acción</option>
-            <option value="timestamp">Fecha</option>
-            <option value="object_id">ID Objeto</option>
+            <option value="username">
+              {{ "reports:order_options_user" | translate }}
+            </option>
+            <option value="object">
+              {{ "reports:order_options_object" | translate }}
+            </option>
+            <option value="action">
+              {{ "reports:order_options_action" | translate }}
+            </option>
+            <option value="timestamp">
+              {{ "reports:order_options_date" | translate }}
+            </option>
+            <option value="object_id">
+              {{ "reports:order_options_object_id" | translate }}
+            </option>
           </select>
         </div>
       </div>
 
       <div class="botones">
         <button class="button" type="submit">
-          <p>Buscar</p>
+          <p>
+            {{ "reports:button_search" | translate }}
+          </p>
         </button>
-        <button type="button" (click)="resetFilters()">Limpiar</button>
+        <button type="button" (click)="resetFilters()">
+          {{ "reports:button_clean" | translate }}
+        </button>
       </div>
     </form>
   </div>

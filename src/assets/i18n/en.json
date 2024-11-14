@@ -291,6 +291,22 @@
 
   "REPORTS": "****************************************************REPORTS****************************************************",
 
+  "reports:filter": "Filter reports",
+  "reports:action": "Action:",
+  "reports:object": "Object:",
+  "reports:object_id": "Object ID:",
+  "reports:date_from": "Date from:",
+  "reports:date_to": "Date to:",
+  "reports:user": "User:",
+  "reports:order_bys": "Order by:",
+  "reports:order_options_user": "User",
+  "reports:order_options_object": "Object",
+  "reports:order_options_action": "Action",
+  "reports:order_options_date": "Date",
+  "reports:order_options_id": "ID Object",
+  "reports:button_search": "Search",
+  "reports:button_clean": "Clean",
+
   "PAGINATION": "****************************************************PAGINATION****************************************************",
   "pagination:previous": "Previous",
   "pagination:next": "Next",
