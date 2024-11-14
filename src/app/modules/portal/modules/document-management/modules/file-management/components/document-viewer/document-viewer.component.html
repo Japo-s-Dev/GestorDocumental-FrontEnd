@@ -10,13 +10,13 @@
     <div class="tabs">
       <button
         [class.active]="activeTab === 'archivos'"
-        (click)="activeTab = 'archivos'"
+        (click)="setActiveTab('archivos')"
       >
         {{ "document-management:files" | translate }}
       </button>
       <button
         [class.active]="activeTab === 'comentarios'"
-        (click)="activeTab = 'comentarios'"
+        (click)="setActiveTab('comentarios')"
       >
         {{ "document-management:comments" | translate }}
       </button>
