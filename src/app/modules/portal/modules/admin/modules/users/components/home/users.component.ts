@@ -152,7 +152,6 @@ export class UsersComponent implements OnInit {
         }
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -206,7 +205,6 @@ export class UsersComponent implements OnInit {
           );
         }
       }).catch((error) => {
-        console.log('Modal dismissed', error);
       });
     });
   }

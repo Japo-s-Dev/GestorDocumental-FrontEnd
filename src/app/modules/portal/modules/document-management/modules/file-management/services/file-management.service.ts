@@ -197,5 +197,23 @@ export class FileManagementService {
     });
   }
 
+  renameDocument(documentId: number, newName: string): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'rename_document',
+      params: {
+        id: documentId,
+        data: {
+          name: newName
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }
 

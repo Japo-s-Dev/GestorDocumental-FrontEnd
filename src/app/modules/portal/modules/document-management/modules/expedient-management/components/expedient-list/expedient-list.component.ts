@@ -168,7 +168,6 @@ export class ExpedientListComponent implements OnInit {
         this.showAlert('Creación', 'Expediente creado con éxito.', 'success');
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -185,7 +184,6 @@ export class ExpedientListComponent implements OnInit {
         this.showAlert('Actualización', 'Expediente actualizado con éxito.', 'success');
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -225,7 +223,6 @@ export class ExpedientListComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log('Modal dismissed', error);
       });
   }
 

@@ -70,4 +70,51 @@ export class RolesCrudService {
     const formData = this.createFormData(payload);
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
+
+
+  listRolePrivileges(roleName: string): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'list_associations_by_role',
+      params: {
+        data: {
+          role_name: roleName
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
+  }
+
+  enableRole(roleName: string, privilegeIds: number[]): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'enable_associated_privilege',
+      params: {
+        data: {
+          role_name: roleName,
+          ids: privilegeIds
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
+  }
+
+  disableRole(roleName: string, privilegeIds: number[]): Observable<any> {
+    const payload = {
+      id: 1,
+      method: 'disable_associated_privilege',
+      params: {
+        data: {
+          role_name: roleName,
+          ids: privilegeIds
+        }
+      }
+    };
+    const formData = this.createFormData(payload);
+    return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
+  }
+
+
 }

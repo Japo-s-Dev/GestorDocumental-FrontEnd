@@ -97,7 +97,6 @@ export class ProjectsModalComponent implements OnInit {
   loadDataTypes() {
     this.indexService.listDatatypes().subscribe(
       (response) => {
-        console.log(response);
         if (response && response.body.result) {
           this.dataTypes = response.body.result.items;
         }

@@ -13,6 +13,23 @@
   padding: 5px 10px;
 }
 
+.edit-button {
+  margin-left: 10px;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.edit-button:hover {
+  color: #F1842C;
+}
+
+
 .back-button {
   margin-right: 10px;
   padding: 5px;

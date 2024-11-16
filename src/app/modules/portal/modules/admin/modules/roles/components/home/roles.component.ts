@@ -101,7 +101,6 @@ export class RolesComponent implements OnInit {
         }
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -149,7 +148,6 @@ export class RolesComponent implements OnInit {
         );
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 

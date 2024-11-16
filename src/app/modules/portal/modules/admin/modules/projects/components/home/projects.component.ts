@@ -103,7 +103,6 @@ export class ProjectsComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log('Modal dismissed', error);
       });
   }
 
@@ -151,7 +150,6 @@ export class ProjectsComponent implements OnInit {
           }
         })
         .catch((error) => {
-          console.log('Modal dismissed', error);
         });
     });
   }

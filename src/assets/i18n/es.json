@@ -177,6 +177,7 @@
   "roles:search_placeholder": "Buscar rol...",
   "roles:role_name": "Nombre del Rol",
   "roles:description": "Descripción",
+  "roles:privileges": "Privilegios",
   "roles:actions": "Acciones",
   "roles:error_loading": "Error al cargar los roles.",
   "roles:created_success": "Rol creado correctamente.",

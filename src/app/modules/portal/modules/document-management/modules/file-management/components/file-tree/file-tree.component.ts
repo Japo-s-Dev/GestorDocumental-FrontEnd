@@ -18,7 +18,7 @@ import { FileManagementService } from '../../services/file-management.service';
 export class FileTreeComponent implements OnInit {
   @ViewChild('treeContainer') treeContainer!: ElementRef;
   @ViewChild('contextMenu') contextMenu!: ElementRef;
-  @Output() fileSelected = new EventEmitter<{ url: string, name: string }>();
+  @Output() fileSelected = new EventEmitter<{ url: string, name: string, fileId: number }>();
   isExpanded = false;
   originalParent: HTMLElement | null = null;
   selectedNode: FlatNode | null = null;
@@ -103,6 +103,7 @@ export class FileTreeComponent implements OnInit {
     });
   }
 
+
   getIcon(node: FlatNode) {
     switch (node.type) {
       case 'folder':
@@ -127,7 +128,10 @@ export class FileTreeComponent implements OnInit {
       this.apiService.getDocumentUrl(node.id).subscribe(
         response => {
           const documentUrl = response.body.result;
-          this.fileSelected.emit({ url: documentUrl, name: node.name });
+          if (node.id !== undefined) {
+            this.fileSelected.emit({ url: documentUrl, name: node.name, fileId: node.id });
+          }
+
           this.loaderService.hideLoader();
         },
         error => {
@@ -215,7 +219,6 @@ export class FileTreeComponent implements OnInit {
         });
       }
     }).catch((error) => {
-      console.log('Modal cerrado sin confirmar', error);
     });
   }
 
@@ -238,7 +241,6 @@ export class FileTreeComponent implements OnInit {
         });
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -266,7 +268,6 @@ export class FileTreeComponent implements OnInit {
         });
       }
     }).catch((error) => {
-      console.log('Modal cerrado sin cambios', error);
     });
   }
 

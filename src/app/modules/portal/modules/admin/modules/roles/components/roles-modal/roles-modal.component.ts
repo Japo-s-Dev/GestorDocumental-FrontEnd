@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RolesCrudService } from '../../services/roles-crud.service';
 import { IRole } from '../../interfaces/role.interface';
@@ -15,6 +15,7 @@ export class RolesModalComponent implements OnInit {
   @Input() roleData: IRole | null = null;
 
   roleForm!: FormGroup;
+  privileges: any[] = []; // Lista de privilegios
   showWarningAlert = false;
   alertMessage = '';
   existingRoles: IRole[] = [];
@@ -27,19 +28,7 @@ export class RolesModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    this.rolesCrudService.getTotalRoles().subscribe(response => {
-      if (response && response.body.result.items) {
-        this.existingRoles = response.body.result.items;
-      }
-    });
-
-    this.rolesCrudService.listPrivileges().subscribe(response => {
-      if (response && response.body.result.items) {
-        console.log('Privileges:', response.body.result.items);
-      }
-    });
-
+    // Inicializar el formulario
     this.roleForm = this.fb.group({
       role_name: [
         this.roleData?.role_name || '',
@@ -48,12 +37,45 @@ export class RolesModalComponent implements OnInit {
       description: [
         this.roleData?.description || '',
         [Validators.required, Validators.maxLength(60)]
-      ]
+      ],
+      privileges: this.fb.array([]) // FormArray para los privilegios
+    });
+
+    // Cargar todos los privilegios
+    this.rolesCrudService.listPrivileges().subscribe(response => {
+      if (response && response.body.result.items) {
+        this.privileges = response.body.result.items;
+
+        // Inicializa los controles en el FormArray para cada privilegio
+        this.privileges.forEach(() => {
+          this.privilegesArray.push(new FormControl(false));
+        });
+
+        // Si estamos en modo de edición, cargar los privilegios asociados al rol
+        if (this.isEditMode && this.roleData?.role_name) {
+          this.rolesCrudService.listRolePrivileges(this.roleData.role_name).subscribe(rolePrivilegesResponse => {
+            if (rolePrivilegesResponse && rolePrivilegesResponse.body.result) {
+              const rolePrivileges = rolePrivilegesResponse.body.result;
+
+              // Actualizar los valores del FormArray según el estado de `is_enabled`
+              this.privileges.forEach((privilege, index) => {
+                const associatedPrivilege = rolePrivileges.find((p: any) => p.privilege_id === privilege.id);
+                if (associatedPrivilege) {
+                  this.privilegesArray.at(index).setValue(associatedPrivilege.is_enabled);
+                }
+              });
+            }
+          });
+        }
+      }
     });
   }
 
-  save() {
+  get privilegesArray(): FormArray<FormControl> {
+    return this.roleForm.get('privileges') as FormArray<FormControl>;
+  }
 
+  save() {
     this.roleForm.markAllAsTouched();
 
     if (this.roleForm.valid) {
@@ -64,33 +86,28 @@ export class RolesModalComponent implements OnInit {
         description: formValue.description
       };
 
+      // Guarda los cambios (creación o edición) usando la estructura del servicio
       if (this.isEditMode) {
-        this.rolesCrudService.updateRole(this.roleData!.id, roleData).subscribe(
-          () => {
-            this.activeModal.close('updated');
-          },
-          (error) => {
-            this.translate.get('roles:error_update_role').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-            console.error('Error al actualizar el rol', error);
-          }
-        );
+        this.rolesCrudService.updateRole(this.roleData!.id, roleData).subscribe(() => {
+          this.activeModal.close('updated');
+        }, error => {
+          this.translate.get('roles:error_update_role').subscribe(translatedText => {
+            this.showAlert(translatedText);
+          });
+          console.error('Error al actualizar el rol', error);
+        });
       } else {
-        this.rolesCrudService.createRole(roleData).subscribe(
-          () => {
-            this.activeModal.close('created');
-          },
-          (error) => {
-            this.translate.get('roles:error_create_role').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-            console.error('Error al crear el rol', error);
-          }
-        );
+        this.rolesCrudService.createRole(roleData).subscribe(() => {
+          this.activeModal.close('created');
+        }, error => {
+          this.translate.get('roles:error_create_role').subscribe(translatedText => {
+            this.showAlert(translatedText);
+          });
+          console.error('Error al crear el rol', error);
+        });
       }
     } else {
-      this.translate.get('roles:form_error').subscribe((translatedText: string) => {
+      this.translate.get('roles:form_error').subscribe(translatedText => {
         this.showAlert(translatedText);
       });
     }
@@ -121,7 +138,6 @@ export class RolesModalComponent implements OnInit {
   }
 
   private duplicateNameValidator(control: FormControl) {
-
     if (this.isEditMode && this.roleData?.role_name.toLowerCase() === control.value.toLowerCase()) {
       return null;
     }

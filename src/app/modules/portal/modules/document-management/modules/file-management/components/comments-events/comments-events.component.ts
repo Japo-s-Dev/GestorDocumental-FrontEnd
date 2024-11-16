@@ -43,7 +43,6 @@ export class CommentsEventsComponent implements OnInit {
   loadUsers(): void {
     this.userCrudService.listUsers().subscribe(
       (response) => {
-        console.log('Users loaded:', response);
         if (response && response.body.result) {
           this.users = response.body.result.items;
           this.loadCommentsAndEvents();
