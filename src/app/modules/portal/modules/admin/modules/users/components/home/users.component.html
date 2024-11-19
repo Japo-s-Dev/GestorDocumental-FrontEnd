@@ -11,11 +11,13 @@
   <header>
     <h2 class="users-title">{{ "users:title" | translate }}</h2>
   </header>
-  <button class="add-user-button" (click)="addUser()">
+  <button
+    class="add-user-button"
+    (click)="addUser()"
+    [disabled]="!hasPrivilege2">
     <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
   </button>
 
-  <!-- Buscador -->
   <div class="search-container">
     <input
       type="text"
@@ -58,19 +60,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let user of filteredUsers(); let i = index"
-        [class.disabled]="user.assigned_role === 'ADMIN'"
-      >
+      <tr *ngFor="let user of filteredUsers()">
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.assigned_role }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editUser(user)" [disabled]="user.assigned_role === 'ADMIN'">
+            <button
+              class="edit"
+              (click)="editUser(user)"
+              [disabled]="!hasPrivilege2">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="delete" (click)="deleteUser(user)" [disabled]="user.assigned_role === 'ADMIN' || user.username === loggedInUsername">
+            <button
+              class="delete"
+              (click)="deleteUser(user)"
+              [disabled]="!hasPrivilege2 || user.username === loggedInUsername">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>

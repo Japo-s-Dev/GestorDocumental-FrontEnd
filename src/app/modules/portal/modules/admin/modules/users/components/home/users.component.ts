@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
   users: IUser[] = [];
@@ -19,10 +19,13 @@ export class UsersComponent implements OnInit {
 
   // Paginación
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 10;
   totalUsers: number = 0;
   isLastPage: boolean = false;
-  orderBy: string = '!id';
+  orderBy: string = '!username';
+
+  // Privilegios
+  hasPrivilege2: boolean = false;
 
   // Alert properties
   alertVisible: boolean = false;
@@ -36,20 +39,20 @@ export class UsersComponent implements OnInit {
     private modalService: NgbModal,
     private loaderService: LoaderService,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loaderService.showLoader();
-    this.loadUsers();
-    setTimeout(() => {
-      this.loaderService.hideLoader();
-    }, 2000);
-
     const userStatus = localStorage.getItem('userStatus');
+    const privileges = JSON.parse(localStorage.getItem('privileges') || '[]');
+    this.hasPrivilege2 = privileges.includes(2);
+
     if (userStatus) {
       const parsedStatus = JSON.parse(userStatus);
       this.loggedInUsername = parsedStatus.username;
     }
+
+    this.loadUsers();
   }
 
   loadUsers(): void {
@@ -59,16 +62,9 @@ export class UsersComponent implements OnInit {
         if (response && response.body.result) {
           this.users = response.body.result.items;
           this.totalUsers = response.body.result.total_count;
-
-          // Verificamos si estamos en la última página
-          if (this.users.length < this.pageSize) {
-            this.isLastPage = true;
-          } else {
-            this.isLastPage = false;
-          }
-
-          this.loaderService.hideLoader(); // Ocultamos el loader una vez cargados los datos
+          this.isLastPage = this.users.length < this.pageSize;
         }
+        this.loaderService.hideLoader();
       },
       (error) => {
         this.translate.get('users:error_loading_title').subscribe((title: string) => {
@@ -76,7 +72,6 @@ export class UsersComponent implements OnInit {
             this.showAlert({ title, message }, 'danger');
           });
         });
-        console.error('Error al obtener los usuarios:', error);
         this.loaderService.hideLoader();
       }
     );
@@ -103,25 +98,18 @@ export class UsersComponent implements OnInit {
   }
 
   sortBy(field: string): void {
-    if (this.orderBy === field) {
-      this.orderBy = `!${field}`;
-    } else {
-      this.orderBy = field;
-    }
-    this.loaderService.showLoader();
+    this.orderBy = this.orderBy === field ? `!${field}` : field;
     this.loadUsers();
   }
 
   getSortIcon(field: string): string {
-    if (this.orderBy === field) {
-      return 'fa-sort-asc';
-    } else if (this.orderBy === `!${field}`) {
-      return 'fa-sort-desc';
-    }
+    if (this.orderBy === field) return 'fa-sort-asc';
+    if (this.orderBy === `!${field}`) return 'fa-sort-desc';
     return 'fa-sort';
   }
 
   openUserModal(user: IUser | null = null): void {
+    if (!this.hasPrivilege2) return;
     const modalRef = this.modalService.open(UsersModalComponent);
     modalRef.componentInstance.userData = user || {};
     modalRef.componentInstance.isEditMode = !!user;
@@ -129,30 +117,8 @@ export class UsersComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.loadUsers();
-        if (result === 'created') {
-          this.translate.get('users:add_success_title').subscribe((title: string) => {
-            this.translate.get('users:add_success_message').subscribe((message: string) => {
-              this.showAlert({ title, message }, 'success');
-            });
-          });
-          this.loaderService.showLoader();
-          setTimeout(() => {
-            this.loaderService.hideLoader();
-          }, 1000);
-        } else if (result === 'updated') {
-          this.translate.get('users:update_success_title').subscribe((title: string) => {
-            this.translate.get('users:update_success_message').subscribe((message: string) => {
-              this.showAlert({ title, message }, 'warning');
-            });
-          });
-          this.loaderService.showLoader();
-          setTimeout(() => {
-            this.loaderService.hideLoader();
-          }, 1000);
-        }
       }
-    }).catch((error) => {
-    });
+    }).catch(() => {});
   }
 
   addUser(): void {
@@ -164,55 +130,21 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: IUser): void {
-    if (user.username === this.loggedInUsername) {
-      this.translate.get('users:delete_error_logged_in_title').subscribe((title: string) => {
-        this.translate.get('users:delete_error_logged_in_message').subscribe((message: string) => {
-          this.showAlert({ title, message }, 'danger');
-        });
-      });
-      return;
-    }
-    this.translate.get('users:confirm_delete', { username: user.username }).subscribe((translatedText: string) => {
-      const modalRef = this.modalService.open(ConfirmModalComponent);
-      modalRef.componentInstance.message = translatedText;
+    if (!this.hasPrivilege2 || user.username === this.loggedInUsername) return;
+    const modalRef = this.modalService.open(ConfirmModalComponent);
+    modalRef.componentInstance.message = `Are you sure you want to delete ${user.username}?`;
 
-      modalRef.result.then((result) => {
-        if (result === 'confirm') {
-          this.userCrudService.deleteUser(user.id).subscribe(
-            () => {
-              this.translate.get('users:delete_success_title').subscribe((title: string) => {
-                this.translate.get('users:delete_success_message').subscribe((message: string) => {
-                  this.showAlert({ title, message }, 'info');
-                });
-              });
-              this.loaderService.showLoader();
-              this.loadUsers(); // Recargar los usuarios después de eliminar
-              setTimeout(() => {
-                this.loaderService.hideLoader();
-              }, 1000);
-            },
-            (error) => {
-              this.translate.get('users:error_deleting_title').subscribe((title: string) => {
-                this.translate.get('users:error_deleting_message').subscribe((message: string) => {
-                  this.showAlert({ title, message }, 'danger');
-                });
-              });
-              this.loaderService.showLoader();
-              setTimeout(() => {
-                this.loaderService.hideLoader();
-              }, 1000);
-            }
-          );
-        }
-      }).catch((error) => {
-      });
-    });
+    modalRef.result.then((result) => {
+      if (result === 'confirm') {
+        this.userCrudService.deleteUser(user.id).subscribe(() => {
+          this.loadUsers();
+        });
+      }
+    }).catch(() => {});
   }
 
   filteredUsers(): IUser[] {
-    if (!this.searchTerm) {
-      return this.users;
-    }
+    if (!this.searchTerm) return this.users;
     return this.users.filter(user =>
       user.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

@@ -45,13 +45,10 @@ export class InactivityService {
 
     this.authService.logoff(logOffRequest).subscribe({
       next: (response) => {
-        // Redirigir al login solo después de que el logoff haya sido exitoso
         this.router.navigate(['/login']);
-        alert('Has sido desconectado por inactividad.');
       },
       error: (error) => {
         console.error('Error during logoff:', error);
-        // Manejar errores si es necesario
       }
     });
   }

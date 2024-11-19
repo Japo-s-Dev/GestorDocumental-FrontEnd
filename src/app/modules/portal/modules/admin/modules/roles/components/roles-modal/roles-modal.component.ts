@@ -42,7 +42,9 @@ export class RolesModalComponent implements OnInit {
     });
 
     // Cargar todos los privilegios
+    console.log('Cargando privilegios...');
     this.rolesCrudService.listPrivileges().subscribe(response => {
+      console.log('Privilegios:', response.body.result);
       if (response && response.body.result.items) {
         this.privileges = response.body.result.items;
 
@@ -50,13 +52,15 @@ export class RolesModalComponent implements OnInit {
         this.privileges.forEach(() => {
           this.privilegesArray.push(new FormControl(false));
         });
-
+        console.log("Edicion", this.isEditMode);
         // Si estamos en modo de edición, cargar los privilegios asociados al rol
         if (this.isEditMode && this.roleData?.role_name) {
+          console.log('Cargando privilegios asociados al rol:', this.roleData.role_name);
           this.rolesCrudService.listRolePrivileges(this.roleData.role_name).subscribe(rolePrivilegesResponse => {
+            console.log('Privilegios asociados al rol:', rolePrivilegesResponse.body.result);
             if (rolePrivilegesResponse && rolePrivilegesResponse.body.result) {
               const rolePrivileges = rolePrivilegesResponse.body.result;
-
+              console.log('Privilegios asociados al rol paso 2:', rolePrivileges);
               // Actualizar los valores del FormArray según el estado de `is_enabled`
               this.privileges.forEach((privilege, index) => {
                 const associatedPrivilege = rolePrivileges.find((p: any) => p.privilege_id === privilege.id);
@@ -86,9 +90,35 @@ export class RolesModalComponent implements OnInit {
         description: formValue.description
       };
 
-      // Guarda los cambios (creación o edición) usando la estructura del servicio
+      // Paso 1: Actualizar el rol
       if (this.isEditMode) {
         this.rolesCrudService.updateRole(this.roleData!.id, roleData).subscribe(() => {
+          // Después de actualizar, obtener el nombre actualizado del rol
+          const updatedRoleName = roleData.role_name;
+
+          // Obtener los IDs de los privilegios habilitados (marcados) y deshabilitados (desmarcados)
+          const enabledPrivilegeIds = this.privileges
+            .filter((_, index) => this.privilegesArray.at(index).value)
+            .map(privilege => privilege.id);
+          const disabledPrivilegeIds = this.privileges
+            .filter((_, index) => !this.privilegesArray.at(index).value)
+            .map(privilege => privilege.id);
+
+          // Paso 2: Llamar a `enableRole` para los privilegios marcados
+          if (enabledPrivilegeIds.length > 0) {
+            this.rolesCrudService.enableRole(updatedRoleName, enabledPrivilegeIds).subscribe(() => {
+              console.log('Privilegios habilitados:', enabledPrivilegeIds);
+            });
+          }
+
+          // Paso 3: Llamar a `disableRole` para los privilegios desmarcados
+          if (disabledPrivilegeIds.length > 0) {
+            this.rolesCrudService.disableRole(updatedRoleName, disabledPrivilegeIds).subscribe(() => {
+              console.log('Privilegios deshabilitados:', disabledPrivilegeIds);
+            });
+          }
+
+          // Cerrar el modal después de completar los cambios
           this.activeModal.close('updated');
         }, error => {
           this.translate.get('roles:error_update_role').subscribe(translatedText => {
@@ -97,6 +127,7 @@ export class RolesModalComponent implements OnInit {
           console.error('Error al actualizar el rol', error);
         });
       } else {
+        // Si no estamos en modo edición, crear el rol sin habilitar o deshabilitar privilegios
         this.rolesCrudService.createRole(roleData).subscribe(() => {
           this.activeModal.close('created');
         }, error => {

@@ -8,7 +8,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { LoaderService } from '../../../../services/loader.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
-
+import { NavigationGuard } from '../../../../core/guards/navigation.guard'; // Importa el guard
 
 @Component({
   selector: 'app-header',
@@ -29,9 +29,9 @@ export class HeaderComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService,
     private loaderService: LoaderService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private navigationGuard: NavigationGuard // Inyecta el guard
   ) {
-
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
     this.currentLanguage = savedLanguage;
     this.translate.setDefaultLang(savedLanguage);
@@ -118,6 +118,13 @@ export class HeaderComponent implements OnInit {
     this.authService.logoff(logOffRequest).subscribe({
       next: () => {
         this.loaderService.showLoader();
+
+        localStorage.removeItem('userStatus');
+        localStorage.removeItem('privileges');
+
+        // Limpia las rutas permitidas en el guard
+        this.navigationGuard.clearValidPaths();
+
         this.router.navigate(['/login']).then(() => {
           setTimeout(() => {
             this.loaderService.hideLoader();
