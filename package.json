@@ -1,6 +1,6 @@
 {
   "name": "gestor-documental",
-  "version": "2.1.1",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -34,6 +34,7 @@
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
     "mammoth": "^1.8.0",
+    "ngx-cookie-service": "^18.0.0",
     "ngx-doc-viewer": "^15.0.1",
     "pdfjs-dist": "^4.6.82",
     "pptx2json": "^0.0.10",

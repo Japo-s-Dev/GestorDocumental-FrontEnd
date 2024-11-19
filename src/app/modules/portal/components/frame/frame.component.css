@@ -4,14 +4,12 @@
   max-width: 100% !important;
   height: 100vh;
   display: grid;
-  place-items: center;
   grid-template-columns: 18% 82%;
 }
 
-.navbar{
+.navbar {
   background-color: white;
   padding-top: 15%;
-  margin-bottom: 30%;
   width: 100%;
   height: 100%;
   box-shadow: 0 0 5px 2px #969696;
@@ -19,7 +17,6 @@
   flex-direction: column;
   align-items: center;
   z-index: 2;
-
 }
 
 .header {
@@ -39,18 +36,41 @@
   display: grid;
   place-items: center;
   grid-template-rows: 13% 87%;
-
 }
 
-.main-content{
-  width: 90%; /* Asegúrate de que ocupe el ancho disponible */
+.main-content {
+  width: 90%;
   height: 90%;
-  flex-grow: 1; /* Permite que el contenido crezca y llene el espacio */
   background-color: #f8f8f8;
   padding: 20px;
   box-shadow: 0 2px 2px 2px #969696;
-  overflow: auto; /* Añadir desplazamiento si el contenido es muy largo */
+  overflow: auto;
   z-index: 0;
 }
 
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .master {
+    grid-template-columns: 100%; /* Navbar desaparece en móviles */
+  }
 
+  .content {
+    grid-template-rows: 10% 90%;
+  }
+
+  .navbar {
+    display: none; /* Escondemos el navbar aquí */
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  /* Muestra el botón del menú en la parte superior derecha */
+  .menu-toggle-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 101;
+  }
+}

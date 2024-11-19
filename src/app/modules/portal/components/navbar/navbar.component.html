@@ -1,63 +1,58 @@
-<div class="sidebar">
-  <img
-    src="../../../../../assets/images/EvolucionaLogo.jpeg"
-    alt="Logo empresa"
-    routerLink="/portal/"
-    class="logo"
-  />
+<div class="navbar-container">
+  <!-- Botón de menú que aparece en pantallas pequeñas
+  <button class="menu-toggle-btn" (click)="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  -->
 
-  <div class="spacer"></div>
+  <!-- El sidebar de navegación -->
+  <div class="sidebar" [ngClass]="{ 'menu-open': menuOpen }">
+    <img
+      src="../../../../../assets/images/EvolucionaLogo.jpeg"
+      alt="Logo empresa"
+      routerLink="/portal/"
+      class="logo"
+    />
 
-  <h4>{{ "navbar:menu" | translate }}</h4>
+    <div class="spacer"></div>
 
-  <div class="box" (click)="toggleSearch('/portal/document-management/search')">
+    <h4>{{ "navbar:menu" | translate }}</h4>
+
+  <div class="box" (click)="navigate('/portal/document-management/search')">
     <i class="fa-solid fa-magnifying-glass"></i>
     {{ "navbar:search" | translate }}
   </div>
 
-  <div class="box" (click)="navigate('/portal/document-management')">
-    <i class="fa-solid fa-folder-tree"></i>
-    {{ "navbar:document_manager" | translate }}
-  </div>
+    <div class="box" (click)="navigate('/portal/document-management')">
+      <i class="fa-solid fa-folder-tree"></i>
+      {{ "navbar:document_manager" | translate }}
+    </div>
 
   <!-- Sección para Administrador -->
-  <div *ngIf="isAdmin" class="spacer"></div>
-  <h4 *ngIf="isAdmin">{{ "navbar:admin" | translate }}</h4>
-  <div *ngIf="isAdmin" class="box" (click)="toggleAdmin()">
+  <div *ngIf="showAdmin" class="spacer"></div>
+  <h4 *ngIf="showAdmin">{{ "navbar:admin" | translate }}</h4>
+  <div *ngIf="showAdmin" class="box" (click)="toggleAdmin()">
     <i class="fa-solid fa-gears"></i>
     {{ "navbar:options" | translate }}
   </div>
-  <div *ngIf="showAdmin">
-    <div class="sub-box" routerLink="/portal/admin/users">
+  <div *ngIf="isAdminExpanded">
+    <div *ngIf="privileges.includes(1)" class="sub-box" routerLink="/portal/admin/users">
       <i class="fa-solid fa-users"></i>
       {{ "navbar:users" | translate }}
     </div>
-    <div class="sub-box" routerLink="/portal/admin/projects">
+    <div *ngIf="privileges.includes(3)" class="sub-box" routerLink="/portal/admin/projects">
       <i class="fa-solid fa-diagram-project"></i>
       {{ "navbar:projects" | translate }}
     </div>
-    <div class="sub-box" routerLink="/portal/admin/roles">
+    <div *ngIf="privileges.includes(5)" class="sub-box" routerLink="/portal/admin/roles">
       <i class="fa-solid fa-user-shield"></i>
       {{ "navbar:roles" | translate }}
     </div>
   </div>
-  <!-- Nueva sección de Reportes -->
-  <div class="box" (click)="toggleReports()">
+
+  <!-- Nueva sección de Reportes (Opción única) -->
+  <div *ngIf="showReports" class="box" routerLink="/portal/reports">
     <i class="fa-solid fa-chart-line"></i>
     {{ "navbar:reports" | translate }}
-  </div>
-  <div *ngIf="showReports">
-    <div class="sub-box" routerLink="/portal/reports/actions">
-      <i class="fa-solid fa-file-lines"></i>
-      {{ "navbar:actions_report" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/reports/structures">
-      <i class="fa-solid fa-building"></i>
-      {{ "navbar:structures_report" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/reports/users">
-      <i class="fa-solid fa-user"></i>
-      {{ "navbar:users_report" | translate }}
-    </div>
   </div>
 </div>

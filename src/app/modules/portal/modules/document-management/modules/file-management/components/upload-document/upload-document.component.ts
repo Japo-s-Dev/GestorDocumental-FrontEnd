@@ -17,6 +17,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   filePreviewUrl: SafeResourceUrl | null = null;
   filePreviewContent: string | null = null;
 
+  fileName: string = ''
+
   alertVisible = false;
   alertTitle = '';
   alertMessage = '';
@@ -95,7 +97,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   saveDocument(): void {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.fileName.trim()) {
       const separatorId = localStorage.getItem('selectedSeparatorId');
 
       if (!separatorId) {
@@ -103,10 +105,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         return;
       }
 
-
-
-
-      this.apiService.uploadDocument(this.selectedFile, Number(separatorId))
+      this.apiService.uploadDocument(this.selectedFile, Number(separatorId), this.fileName)
         .subscribe(
           response => {
             this.location.back();
@@ -115,6 +114,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
             console.error('Error al subir el documento', error);
           }
         );
+    } else {
+      this.showAlert('Error', 'Debe seleccionar un archivo y proporcionar un nombre para el archivo.', 'danger');
     }
   }
 
@@ -138,6 +139,5 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   goBack(): void {
     this.location.back();
   }
-
 
 }

@@ -26,13 +26,17 @@ export class ServicesService {
     return this.http.post<any>(this.apiUrl, formData, { observe: 'response', withCredentials: true });
   }
 
-  listArchives(projectId: number): Observable<any> {
+  listArchives(projectId: number, limit: number = 10, offset: number = 0): Observable<any> {
     const payload = {
       id: 1,
       method: 'list_archives',
       params: {
         filters: {
           project_id: projectId
+        },
+        list_options: {
+          limit: limit,
+          offset: offset,
         }
       }
     };
@@ -42,6 +46,8 @@ export class ServicesService {
       withCredentials: true
     });
   }
+
+
 
   // Crear expediente
   createArchive(data: IExpedientRequest): Observable<any> {

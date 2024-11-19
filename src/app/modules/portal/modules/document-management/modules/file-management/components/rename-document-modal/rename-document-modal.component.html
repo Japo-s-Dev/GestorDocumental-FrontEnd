@@ -1,0 +1,31 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ 'Renombrar Documento' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()">&times;</button>
+    </div>
+
+    <!-- Alerta personalizada -->
+    <div class="alert" [class.showAlert]="showWarningAlert" [class.hide]="!showWarningAlert">
+      <span class="msg">{{ alertMessage }}</span>
+      <div class="close-btn" (click)="closeAlert()">&times;</div>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="renameForm">
+        <div class="mb-3">
+          <label for="document_name" class="form-label">Nombre del Documento</label>
+          <input id="document_name" formControlName="document_name" type="text" class="form-control" />
+          <div *ngIf="renameForm.get('document_name')?.hasError('required') && renameForm.get('document_name')?.touched" class="alert">
+            El nombre del documento es requerido.
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="cancel-button btn" (click)="close()">Cancelar</button>
+      <button type="button" class="add-folder-button btn" (click)="save()">Guardar</button>
+    </div>
+  </div>
+</div>

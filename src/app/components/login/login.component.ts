@@ -6,6 +6,7 @@ import { LoginRequest } from '../../interfaces/login-request.interface';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { LoaderService } from '../../services/loader.service';
+import { NavigationGuard } from '../../core/guards/navigation.guard'; // Importar el guard
 
 @Component({
   selector: 'app-login',
@@ -25,9 +26,9 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     public translate: TranslateService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private navigationGuard: NavigationGuard // Inyectar el guard
   ) {
-
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
     this.currentLanguage = savedLanguage;
     this.translate.setDefaultLang(savedLanguage);
@@ -61,7 +62,14 @@ export class LoginComponent {
           localStorage.setItem('lastLogin', currentDateTime);
           localStorage.removeItem('selectedProject');
 
+          // Agregar rutas permitidas dinámicamente
+          this.navigationGuard.allowPath('/portal');
+          this.navigationGuard.allowPath('/portal/document-management/expedient-list');
+          this.navigationGuard.allowPath('/portal/admin/users');
+
           this.loaderService.showLoader();
+
+          // Navegar a la ruta permitida
           this.router.navigate(['/portal/document-management/expedient-list']);
         } else {
           this.showAlert('Error', 'Credenciales incorrectas', 'danger');
@@ -72,13 +80,12 @@ export class LoginComponent {
         if (error.status === 403) {
           this.showAlert('Error', 'Credenciales incorrectas', 'danger');
         } else {
-          this.showAlert('Error', 'Interno del servidor', 'danger');
+          this.showAlert('Error', 'Error interno del servidor', 'danger');
         }
         this.loaderService.hideLoader();
       }
     });
   }
-
 
   showAlert(title: string, message: string, type: 'success' | 'warning' | 'danger' | 'info'): void {
     this.alertTitle = title;

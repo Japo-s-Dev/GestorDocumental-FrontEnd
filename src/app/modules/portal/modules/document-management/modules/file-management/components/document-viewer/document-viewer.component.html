@@ -10,13 +10,13 @@
     <div class="tabs">
       <button
         [class.active]="activeTab === 'archivos'"
-        (click)="activeTab = 'archivos'"
+        (click)="setActiveTab('archivos')"
       >
         {{ "document-management:files" | translate }}
       </button>
       <button
         [class.active]="activeTab === 'comentarios'"
-        (click)="activeTab = 'comentarios'"
+        (click)="setActiveTab('comentarios')"
       >
         {{ "document-management:comments" | translate }}
       </button>
@@ -38,7 +38,11 @@
     <!-- Document preview that remains visible in both tabs -->
     <div class="file-display-container">
       <div class="document-header" *ngIf="selectedDocumentName">
-        <h3>{{ selectedDocumentName }}</h3>
+        <h3>{{ selectedDocumentName }}
+          <button class="edit-button" (click)="openRenameModal()">
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+        </h3>
       </div>
       <ngx-doc-viewer
         *ngIf="selectedDocumentUrl"

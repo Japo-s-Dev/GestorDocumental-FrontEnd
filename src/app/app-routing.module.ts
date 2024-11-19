@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
+import { NavigationGuard } from './core/guards/navigation.guard';
 
 const routes: Routes = [
   {
@@ -15,9 +16,10 @@ const routes: Routes = [
   {
     path: 'portal',
     loadChildren: () => import('./modules/portal/portal.module').then(m => m.PortalModule),
+    canActivate: [NavigationGuard]
   }
-  // ...cualquier otra ruta que necesites para el módulo raíz
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,25 +1,29 @@
-// NavbarComponent.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { PrivilegeService } from '../../../../services/privilege.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
   showSearch = false;
   showAdd = false;
   showAdmin = false;
-  showReports = false; // Nuevo estado para mostrar/ocultar reportes
-  isAdmin = false;
+  showReports = false;
   username: string | null = null;
+  privileges: number[] = [];
   currentLanguage: string;
+  isAdminExpanded = false;
+  menuOpen = false; // Solución: Declarar 'menuOpen'
+  isReportsExpanded = false;
 
   constructor(
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private privilegeService: PrivilegeService
   ) {
     this.currentLanguage = this.translate.getDefaultLang() || 'es';
     this.translate.setDefaultLang(this.currentLanguage);
@@ -30,41 +34,50 @@ export class NavbarComponent implements OnInit {
     if (userStatus) {
       const parsedStatus = JSON.parse(userStatus);
       this.username = parsedStatus.username;
-      this.isAdmin = parsedStatus.role === 'ADMIN' || parsedStatus.role === 'ADMIN JUNIOR';
+
+      this.privilegeService.fetchPrivileges(parsedStatus.role).subscribe((response) => {
+        if (response.body?.result && Array.isArray(response.body.result)) {
+          this.privileges = response.body.result.map(
+            (privilege: any) => privilege.privilege_id
+          );
+          this.privilegeService.setPrivileges(this.privileges);
+          this.determineVisibility();
+        }
+      });
     }
   }
 
-  toggleAdd(path: string) {
-    this.showAdd = !this.showAdd;
-    if (this.showAdd && this.showSearch) {
-      this.showSearch = false;
-    }
+  determineVisibility(): void {
+    const hasPrivilege = (id: number) => this.privileges.includes(id);
+    this.showAdmin = hasPrivilege(1) || hasPrivilege(3) || hasPrivilege(5);
+    this.showReports = hasPrivilege(7); // Mostrar reportes si tiene el privilegio 7
   }
 
-  toggleSearch(path: string) {
+  toggleAdmin(): void {
+    this.isAdminExpanded = !this.isAdminExpanded;
+    if (this.isAdminExpanded) {
+      this.isReportsExpanded = false;
+    }
+    this.closeMenuOnOptionClick();
+  }
+
+  toggleReports(): void {
+    this.isReportsExpanded = !this.isReportsExpanded;
+    if (this.isReportsExpanded) {
+      this.isAdminExpanded = false;
+    }
+    this.closeMenuOnOptionClick();
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenuOnOptionClick(): void {
+    this.menuOpen = false;
+  }
+
+  navigate(path: string): void {
     this.router.navigate([path]);
-    this.showSearch = !this.showSearch;
-    if (this.showAdd && this.showSearch) {
-      this.showAdd = false;
-    }
   }
-
-  toggleAdmin() {
-    this.showAdmin = !this.showAdmin;
-    if (this.showAdmin) {
-      this.showReports = false; // Oculta los reportes si se muestran las opciones de Admin
-    }
-  }
-
-  toggleReports() {
-    this.showReports = !this.showReports;
-    if (this.showReports) {
-      this.showAdmin = false; // Oculta las opciones de Admin si se muestran los reportes
-    }
-  }
-
-  navigate(path: string) {
-    this.router.navigate([path]);
-  }
-
 }

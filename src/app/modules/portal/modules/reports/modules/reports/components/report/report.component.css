@@ -1,0 +1,398 @@
+/* Título de la tabla */
+.reports-title {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Contenedor de la tabla */
+.report-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 20px;
+  background-color: #f9fafb; /* Fondo suave para el contenedor */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Cabecera */
+th {
+  background-color: #f0f4f8; /* Color de fondo para cabecera */
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+/* Filas */
+td {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Alternar color de filas */
+tr:nth-child(even) {
+  background-color: #f8f9fb;
+}
+
+/* Colores y estilo de burbujas para cada tipo de acción */
+.action-insert {
+  background-color: #e7f3ff;
+  color: #007bff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-update {
+  background-color: #fff6e6;
+  color: #ffae00;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-delete {
+  background-color: #ffe6e6;
+  color: #ff4d4d;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-restore {
+  background-color: #e6f7e6;
+  color: #28a745;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-physical-delete {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Espaciado y alineación */
+th, td {
+  vertical-align: middle;
+}
+
+/* Ajuste de fuente para mejorar legibilidad */
+body, table {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Contenedor principal del filtro */
+.report-filter-container {
+  padding: 20px;
+  background-color: #f9fafb;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Título del filtro */
+.report-filter-container h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Diseño de los grupos de campos */
+.report-filter-container div {
+  margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.report-filter-container label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* Estilo individual de los checkboxes */
+.report-filter-container input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Inputs de texto, número, y fechas */
+.report-filter-container input[type="text"],
+.report-filter-container input[type="number"],
+.report-filter-container input[type="date"],
+.report-filter-container select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.report-filter-container input[type="text"]:focus,
+.report-filter-container input[type="number"]:focus,
+.report-filter-container input[type="date"]:focus,
+.report-filter-container select:focus {
+  border-color: #007bff;
+}
+
+/* Custom styling for date inputs */
+.custom-date-input {
+  appearance: none;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5; /* Soft background color */
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Focus state */
+.custom-date-input:focus {
+  border-color: #ff8800; /* Orange border on focus */
+  box-shadow: 0 0 5px rgba(255, 136, 0, 0.3);
+}
+
+/* Date icon appearance inside input */
+.custom-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(50%) sepia(50%) saturate(300%) hue-rotate(20deg); /* Light orange icon */
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effect on the date picker icon */
+.custom-date-input:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+
+.field-pair {
+  display: flex;
+  gap: 15px;
+}
+
+.field-pair > div {
+  flex: 1;
+}
+/* Estilos para el botón */
+.report-filter-container button[type="submit"],
+.report-filter-container button[type="button"] {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.report-filter-container button[type="submit"] {
+  background-color: #d76b00;
+  margin-right: 10px;
+}
+
+.report-filter-container button[type="submit"]:hover {
+  background-color: #a87937;
+}
+
+.report-filter-container button[type="button"] {
+  background-color: #6c757d;
+}
+
+.report-filter-container button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+.botones {
+  display: flex;
+  justify-content:space-evenly;
+  margin-top: 20px;
+}
+
+/* Container for each checkbox */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for actions */
+  gap: 10px;
+  padding-top: 5px;
+}
+
+/* Individual checkbox styling */
+.check {
+  cursor: pointer;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px; /* Space between checkbox and label text */
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.check:before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34, 50, 84, 0.03);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+
+.check:hover:before {
+  opacity: 1;
+}
+
+.check:hover svg {
+  stroke: #ff8800; /* Orange color on hover */
+}
+
+input[type="checkbox"]:checked + .check svg {
+  stroke: #ff8800; /* Orange color when checked */
+}
+
+input[type="checkbox"]:checked + .check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+
+input[type="checkbox"]:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+
+/* Label text styling */
+.checkbox-group span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Custom Styled Button for Search */
+.button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.6em 2em;
+  border: #ff8800 solid 0.15em; /* Orange border */
+  border-radius: 0.25em;
+  color: #ff8800; /* Orange text */
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border 300ms, color 300ms;
+  user-select: none;
+}
+
+.button p {
+  z-index: 1;
+  margin: 0;
+}
+
+.button:hover {
+  color: #212121; /* Darker color on hover */
+}
+
+.button:active {
+  border-color: #a87937; /* Darker shade of orange on active */
+}
+
+.button::after,
+.button::before {
+  content: "";
+  position: absolute;
+  width: 9em;
+  aspect-ratio: 1;
+  background: #ff8800; /* Orange background on hover animation */
+  opacity: 0.5;
+  border-radius: 50%;
+  transition: transform 500ms, background 300ms;
+}
+
+.button::before {
+  left: 0;
+  transform: translateX(-8em);
+}
+
+.button::after {
+  right: 0;
+  transform: translateX(8em);
+}
+
+.button:hover:before {
+  transform: translateX(-1em);
+}
+
+.button:hover:after {
+  transform: translateX(1em);
+}
+
+.button:active:before,
+.button:active:after {
+  background: #a87937; /* Darker shade on active */
+}

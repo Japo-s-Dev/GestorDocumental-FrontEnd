@@ -11,45 +11,71 @@
   <header>
     <h2 class="users-title">{{ "users:title" | translate }}</h2>
   </header>
-  <button class="add-user-button" (click)="addUser()">
+  <button
+    class="add-user-button"
+    (click)="addUser()"
+    [disabled]="!hasPrivilege2">
     <i class="fa-solid fa-plus"></i> {{ "users:add_user" | translate }}
   </button>
 
-
-
-   <!-- Buscador -->
-   <div class="search-container">
+  <div class="search-container">
     <input
-    type="text"
-    [placeholder]="'users:search_placeholder' | translate"
-    [(ngModel)]="searchTerm"
-    class="search-input"
+      type="text"
+      [placeholder]="'users:search_placeholder' | translate"
+      [(ngModel)]="searchTerm"
+      class="search-input"
     />
   </div>
 
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Tabla de Usuarios -->
   <table>
     <thead>
       <tr>
-        <th>{{ "users:username" | translate }}</th>
-        <th>{{ "users:email" | translate }}</th>
-        <th>{{ "users:role" | translate }}</th>
+        <th (click)="sortBy('username')">
+          {{ "users:username" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('username')"></i>
+        </th>
+        <th (click)="sortBy('email')">
+          {{ "users:email" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('email')"></i>
+        </th>
+        <th (click)="sortBy('assigned_role')">
+          {{ "users:role" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('assigned_role')"></i>
+        </th>
         <th>{{ "users:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let user of filteredUsers(); let i = index"
-        [class.disabled]="user.assigned_role === 'ADMIN'"
-      >
+      <tr *ngFor="let user of filteredUsers()">
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.assigned_role }}</td>
         <td>
           <div class="actions-buttons">
-            <button class="edit" (click)="editUser(user)" [disabled]="user.assigned_role === 'ADMIN'">
+            <button
+              class="edit"
+              (click)="editUser(user)"
+              [disabled]="!hasPrivilege2">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="delete" (click)="deleteUser(user)" [disabled]="user.assigned_role === 'ADMIN' || user.username === loggedInUsername">
+            <button
+              class="delete"
+              (click)="deleteUser(user)"
+              [disabled]="!hasPrivilege2 || user.username === loggedInUsername">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -57,5 +83,17 @@
       </tr>
     </tbody>
   </table>
-</div>
 
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

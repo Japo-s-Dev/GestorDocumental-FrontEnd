@@ -15,6 +15,7 @@
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 8px;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en filas o columnas si es necesario */
 }
 
 .drag-drop {
@@ -30,37 +31,36 @@
   flex-direction: column;
 }
 
-.upload-label {
-  display: block;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.upload-placeholder {
-  font-size: 16px;
-  color: #757575;
-}
-
-.file-preview {
-  font-size: 16px;
-  color: #000;
-  background-color: #e0f7fa;
-  padding: 10px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .preview-document {
-  width: 48%;
+  width: 48%; /* Mantiene el 48% para que esté en línea con drag-drop */
   height: 300px;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   text-align: left;
   overflow: hidden;
+}
+
+.file-name-input-container {
+  margin-top: 20px;
+  width: 100%; /* El input toma todo el ancho disponible */
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name-label {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 5px;
+}
+
+.file-name-input {
+  width: 100%; /* Asegura que el input ocupe todo el ancho */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
 }
 
 .button-container {
@@ -102,9 +102,19 @@
   align-items: center;
   gap: 5px;
   margin-right: 1rem;
-
 }
 
 .back-button:hover {
   background-color: #5a6268;
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  .upload-box {
+    flex-direction: column; /* En pantallas pequeñas, mostrar en columnas */
+  }
+
+  .drag-drop, .preview-document {
+    width: 100%; /* Los elementos ocupan el 100% del ancho en pantallas pequeñas */
+  }
 }
