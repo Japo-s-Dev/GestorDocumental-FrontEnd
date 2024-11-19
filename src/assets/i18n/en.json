@@ -245,6 +245,10 @@
   "upload_document:preview": "Preview document",
   "upload_document:no_preview_available": "No preview available for this file type",
   "upload_document:save_button": "Save Document",
+  "upload_document:file_preview": "File Preview",
+  "upload_document:file_preview_validator": "No preview available for this file type.",
+  "upload_document:file_name": "File Name",
+  "upload_document:file_name_placeholder": "Enter the file name",
 
   "COMMENTS": "****************************************************COMMENTS****************************************************",
   "comments:no_yets": "No comments yet",
@@ -279,5 +283,11 @@
   "expedient-modal:save_expedient": "Save Expedient",
   "expedient-modal:add_expedient": "Add Expedient",
 
-  "REPORTS": "****************************************************REPORTS****************************************************"
+  "REPORTS": "****************************************************REPORTS****************************************************",
+
+  "PAGINATION": "****************************************************PAGINATION****************************************************",
+  "pagination:previous": "Previous",
+  "pagination:next": "Next",
+  "pagination:page": "Page",
+  "pagination:of": "of"
 }

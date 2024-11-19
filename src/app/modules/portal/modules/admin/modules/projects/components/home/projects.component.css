@@ -65,16 +65,14 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
-table, th, td {
-  border: 1px solid black;
-}
-
-th, td {
+th,
+td {
   padding: 10px;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 th {
@@ -92,18 +90,28 @@ td:last-child {
   text-align: center;
 }
 
+
 button {
   display: inline-block;
-  padding: 5px;
+  padding: 2px; /* Reduce el padding de los botones */
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+button.edit,
+button.delete {
+  width: 30px; /* Ajusta el ancho del botón */
+  height: 30px; /* Ajusta la altura del botón */
+}
+
+button.edit i,
+button.delete i {
+  font-size: 14px; /* Ajusta el tamaño del icono */
 }
 
 button.edit {
-  width: 36px;
-  height: 36px;
   background-color: #343a40;
   color: white;
 }
@@ -113,8 +121,6 @@ button.edit:hover {
 }
 
 button.delete {
-  width: 36px;
-  height: 36px;
   background-color: #dc3545;
   color: white;
 }
@@ -125,9 +131,9 @@ button.delete:hover {
 
 .actions-buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly; /* Ajusta el espaciado entre botones */
   padding: 0;
-  gap: 5px;
+  gap: 3px; /* Reduce el espacio entre los botones */
 }
 
 tbody tr:nth-child(odd) {
@@ -136,4 +142,47 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+/* Estilos para la paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #F1842C;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
+.pagination-button:hover {
+  background-color: #ce7125;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
+.pagination-button i {
+  margin: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

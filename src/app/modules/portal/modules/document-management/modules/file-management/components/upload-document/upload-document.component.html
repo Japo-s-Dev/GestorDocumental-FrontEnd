@@ -37,7 +37,7 @@
     </div>
 
     <div class="preview-document">
-      <p>Vista previa del documento</p>
+      <p>{{ "upload_document:file_preview" | translate }}</p>
       <iframe
         *ngIf="filePreviewUrl && selectedFile && selectedFile.type === 'application/pdf'"
         [src]="filePreviewUrl"
@@ -53,9 +53,20 @@
       <pre *ngIf="filePreviewContent">{{ filePreviewContent }}</pre>
 
       <p *ngIf="!filePreviewUrl && !filePreviewContent && fileUploaded">
-        No hay vista previa disponible para este tipo de archivo.
+        {{ "upload_document:file_preview_validator" | translate }}
       </p>
     </div>
+    <div class="file-name-input-container">
+      <label for="fileName" class="file-name-label">{{ "upload_document:file_name" | translate }}</label>
+      <input
+        type="text"
+        id="fileName"
+        [(ngModel)]="fileName"
+        placeholder="{{ 'upload_document:file_name_placeholder' | translate }}"
+        class="file-name-input"
+      />
+    </div>
+
   </div>
 
   <div class="button-container">
@@ -69,3 +80,4 @@
   </div>
 
 </div>
+

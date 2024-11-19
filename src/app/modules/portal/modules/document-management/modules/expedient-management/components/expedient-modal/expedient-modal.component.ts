@@ -56,7 +56,7 @@ export class ExpedientModalComponent implements OnInit {
 
       // Obtener y cargar los valores existentes
       this.servicesService.listValues().subscribe(valueResponse => {
-        const values = valueResponse.body.result.filter(
+        const values = valueResponse.body.result.items.filter(
           (value: any) => value.archive_id === this.expedientId
         );
         values.forEach((value: any) => {
@@ -108,7 +108,7 @@ export class ExpedientModalComponent implements OnInit {
 
   saveValues(expedientId: number): void {
     this.servicesService.listValues().subscribe(valueResponse => {
-      const existingValues: IValue[] = valueResponse.body.result.filter(
+      const existingValues: IValue[] = valueResponse.body.result.items.filter(
         (value: IValue) => value.archive_id === expedientId
       );
 

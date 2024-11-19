@@ -40,7 +40,7 @@
         <label>{{ field.index_name }}</label>
 
         <!-- Caso especial para los campos de tipo 'date' -->
-        <div *ngIf="field.datatype_id === 5" class="date-range">
+        <div *ngIf="field.datatype_id === 3" class="date-range">
           <input type="date" [formControlName]="replaceSpaces(field.index_name) + '_inicio'" class="custom-input-class">
           <span class="date-separator">al</span>
           <input type="date" [formControlName]="replaceSpaces(field.index_name) + '_fin'" class="custom-input-class">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Para campos numéricos con opción de rango -->
-        <div *ngIf="field.datatype_id === 4" class="input-range">
+        <div *ngIf="field.datatype_id === 2" class="input-range">
           <!-- Muestra un solo campo cuando no es rango -->
           <input
             *ngIf="!rangeActive[field.index_name]"
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Otros tipos de campos (ej. texto) -->
-        <div *ngIf="field.datatype_id === 3" class="input-range">
+        <div *ngIf="field.datatype_id === 1" class="input-range">
           <input [type]="getInputType(field.datatype_id)" [formControlName]="replaceSpaces(field.index_name)" class="custom-input-class" [placeholder]="'Ingrese ' + field.index_name">
         </div>
       </div> <!-- Cierra correctamente el *ngFor -->

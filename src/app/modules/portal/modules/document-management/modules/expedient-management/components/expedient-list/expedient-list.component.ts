@@ -13,7 +13,6 @@ import { ConfirmModalComponent } from '../../../../../../../../shared/confirm-mo
   styleUrls: ['./expedient-list.component.css']
 })
 export class ExpedientListComponent implements OnInit {
-
   alertVisible: boolean = false;
   alertTitle: string = '';
   alertMessage: string = '';
@@ -28,6 +27,12 @@ export class ExpedientListComponent implements OnInit {
   tableHeaders: string[] = [];
   tableData: { [key: string]: any }[] = [];
   filteredData: { [key: string]: any }[] = [];
+
+  // Paginación
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalExpedients: number = 0;
+  isLastPage: boolean = false;
 
   constructor(
     private loaderService: LoaderService,
@@ -53,18 +58,11 @@ export class ExpedientListComponent implements OnInit {
     this.fetchExpedients(this.selectedProject);
   }
 
-  reloadTableBasedOnIndices(): void {
-    const reloadCount = Math.floor(this.indices.length / 4) || 1;
-    for (let i = 0; i < reloadCount; i++) {
-      this.buildTable();
-    }
-  }
-
   loadProjects(): void {
     this.service.listProjects().subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.projects = response.body.result.map((project: any) => ({
+          this.projects = response.body.result.items.map((project: any) => ({
             id: Number(project.id),
             name: project.project_name,
           })) as IProject[];
@@ -85,7 +83,7 @@ export class ExpedientListComponent implements OnInit {
   fetchIndices(projectId: number): void {
     this.service.listIndices(Number(projectId)).subscribe((response) => {
       if (response && response.body.result) {
-        this.indices = response.body.result as IIndex[];
+        this.indices = response.body.result.items as IIndex[];
         this.tableHeaders = ['id', ...this.indices.map((index) => index.index_name)];
         this.loaderService.hideLoader();
       }
@@ -93,13 +91,11 @@ export class ExpedientListComponent implements OnInit {
   }
 
   fetchExpedients(projectId: number): void {
-    this.expedients = [];
-    this.values = [];
-    this.tableData = [];
-
-    this.service.listArchives(Number(projectId)).subscribe((response) => {
-      if (response && response.body.result && response.body.result.length > 0) {
-        this.expedients = response.body.result as IExpedient[];
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.service.listArchives(Number(projectId), this.pageSize, offset).subscribe((response) => {
+      if (response && response.body.result && response.body.result.items.length > 0) {
+        this.expedients = response.body.result.items as IExpedient[];
+        this.totalExpedients = response.body.result.total_count;
         this.fetchValues();
       } else {
         this.expedients = [];
@@ -117,7 +113,7 @@ export class ExpedientListComponent implements OnInit {
 
     this.service.listValues().subscribe((response) => {
       if (response && response.body.result) {
-        this.values = response.body.result as IValue[];
+        this.values = response.body.result.items as IValue[];
         this.buildTableData();
         setTimeout(() => {
           this.loaderService.hideLoader();
@@ -129,18 +125,36 @@ export class ExpedientListComponent implements OnInit {
   buildTableData(): void {
     this.tableData = this.expedients.map((expedient) => {
       const row: { [key: string]: any } = { id: expedient.id };
-
       this.indices.forEach((index) => {
         const value = this.values.find(
           (val) => val.index_id === index.id && val.archive_id === expedient.id
         );
         row[index.index_name] = value ? value.value : '';
       });
-
       return row;
     });
-
     this.filteredData = [...this.tableData];
+  }
+
+  // Paginación
+  totalPages(): number {
+    return Math.ceil(this.totalExpedients / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() && !this.isLastPage) {
+      this.currentPage++;
+      this.loaderService.showLoader();
+      this.buildTable();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loaderService.showLoader();
+      this.buildTable();
+    }
   }
 
   openExpedientModal(): void {
@@ -150,11 +164,10 @@ export class ExpedientListComponent implements OnInit {
 
     modalRef.result.then((newExpedient) => {
       if (newExpedient) {
-        this.reloadTableBasedOnIndices();
+        this.buildTable();
         this.showAlert('Creación', 'Expediente creado con éxito.', 'success');
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -167,11 +180,10 @@ export class ExpedientListComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result === 'updated') {
-        this.reloadTableBasedOnIndices();
+        this.buildTable();
         this.showAlert('Actualización', 'Expediente actualizado con éxito.', 'success');
       }
     }).catch((error) => {
-      console.log('Modal dismissed', error);
     });
   }
 
@@ -192,7 +204,7 @@ export class ExpedientListComponent implements OnInit {
             .then(() => {
               this.service.deleteArchive(expedientId).subscribe(
                 () => {
-                  this.reloadTableBasedOnIndices();
+                  this.buildTable();
                   this.showAlert('Eliminación', 'Expediente eliminado con éxito.', 'info');
                   this.loaderService.hideLoader();
                 },
@@ -211,7 +223,6 @@ export class ExpedientListComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log('Modal dismissed', error);
       });
   }
 

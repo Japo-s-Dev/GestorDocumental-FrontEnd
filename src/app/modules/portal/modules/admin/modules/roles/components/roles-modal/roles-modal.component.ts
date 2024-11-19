@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RolesCrudService } from '../../services/roles-crud.service';
 import { IRole } from '../../interfaces/role.interface';
@@ -15,6 +15,7 @@ export class RolesModalComponent implements OnInit {
   @Input() roleData: IRole | null = null;
 
   roleForm!: FormGroup;
+  privileges: any[] = []; // Lista de privilegios
   showWarningAlert = false;
   alertMessage = '';
   existingRoles: IRole[] = [];
@@ -27,13 +28,7 @@ export class RolesModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener todos los roles para las validaciones
-    this.rolesCrudService.listRoles().subscribe(response => {
-      if (response && response.body.result) {
-        this.existingRoles = response.body.result;
-      }
-    });
-
+    // Inicializar el formulario
     this.roleForm = this.fb.group({
       role_name: [
         this.roleData?.role_name || '',
@@ -42,12 +37,49 @@ export class RolesModalComponent implements OnInit {
       description: [
         this.roleData?.description || '',
         [Validators.required, Validators.maxLength(60)]
-      ]
+      ],
+      privileges: this.fb.array([]) // FormArray para los privilegios
+    });
+
+    // Cargar todos los privilegios
+    console.log('Cargando privilegios...');
+    this.rolesCrudService.listPrivileges().subscribe(response => {
+      console.log('Privilegios:', response.body.result);
+      if (response && response.body.result.items) {
+        this.privileges = response.body.result.items;
+
+        // Inicializa los controles en el FormArray para cada privilegio
+        this.privileges.forEach(() => {
+          this.privilegesArray.push(new FormControl(false));
+        });
+        console.log("Edicion", this.isEditMode);
+        // Si estamos en modo de edición, cargar los privilegios asociados al rol
+        if (this.isEditMode && this.roleData?.role_name) {
+          console.log('Cargando privilegios asociados al rol:', this.roleData.role_name);
+          this.rolesCrudService.listRolePrivileges(this.roleData.role_name).subscribe(rolePrivilegesResponse => {
+            console.log('Privilegios asociados al rol:', rolePrivilegesResponse.body.result);
+            if (rolePrivilegesResponse && rolePrivilegesResponse.body.result) {
+              const rolePrivileges = rolePrivilegesResponse.body.result;
+              console.log('Privilegios asociados al rol paso 2:', rolePrivileges);
+              // Actualizar los valores del FormArray según el estado de `is_enabled`
+              this.privileges.forEach((privilege, index) => {
+                const associatedPrivilege = rolePrivileges.find((p: any) => p.privilege_id === privilege.id);
+                if (associatedPrivilege) {
+                  this.privilegesArray.at(index).setValue(associatedPrivilege.is_enabled);
+                }
+              });
+            }
+          });
+        }
+      }
     });
   }
 
+  get privilegesArray(): FormArray<FormControl> {
+    return this.roleForm.get('privileges') as FormArray<FormControl>;
+  }
+
   save() {
-    // Marca todos los controles como tocados para activar las validaciones visuales al intentar guardar
     this.roleForm.markAllAsTouched();
 
     if (this.roleForm.valid) {
@@ -58,33 +90,55 @@ export class RolesModalComponent implements OnInit {
         description: formValue.description
       };
 
+      // Paso 1: Actualizar el rol
       if (this.isEditMode) {
-        this.rolesCrudService.updateRole(this.roleData!.id, roleData).subscribe(
-          () => {
-            this.activeModal.close('updated');
-          },
-          (error) => {
-            this.translate.get('roles:error_update_role').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
+        this.rolesCrudService.updateRole(this.roleData!.id, roleData).subscribe(() => {
+          // Después de actualizar, obtener el nombre actualizado del rol
+          const updatedRoleName = roleData.role_name;
+
+          // Obtener los IDs de los privilegios habilitados (marcados) y deshabilitados (desmarcados)
+          const enabledPrivilegeIds = this.privileges
+            .filter((_, index) => this.privilegesArray.at(index).value)
+            .map(privilege => privilege.id);
+          const disabledPrivilegeIds = this.privileges
+            .filter((_, index) => !this.privilegesArray.at(index).value)
+            .map(privilege => privilege.id);
+
+          // Paso 2: Llamar a `enableRole` para los privilegios marcados
+          if (enabledPrivilegeIds.length > 0) {
+            this.rolesCrudService.enableRole(updatedRoleName, enabledPrivilegeIds).subscribe(() => {
+              console.log('Privilegios habilitados:', enabledPrivilegeIds);
             });
-            console.error('Error al actualizar el rol', error);
           }
-        );
+
+          // Paso 3: Llamar a `disableRole` para los privilegios desmarcados
+          if (disabledPrivilegeIds.length > 0) {
+            this.rolesCrudService.disableRole(updatedRoleName, disabledPrivilegeIds).subscribe(() => {
+              console.log('Privilegios deshabilitados:', disabledPrivilegeIds);
+            });
+          }
+
+          // Cerrar el modal después de completar los cambios
+          this.activeModal.close('updated');
+        }, error => {
+          this.translate.get('roles:error_update_role').subscribe(translatedText => {
+            this.showAlert(translatedText);
+          });
+          console.error('Error al actualizar el rol', error);
+        });
       } else {
-        this.rolesCrudService.createRole(roleData).subscribe(
-          () => {
-            this.activeModal.close('created');
-          },
-          (error) => {
-            this.translate.get('roles:error_create_role').subscribe((translatedText: string) => {
-              this.showAlert(translatedText);
-            });
-            console.error('Error al crear el rol', error);
-          }
-        );
+        // Si no estamos en modo edición, crear el rol sin habilitar o deshabilitar privilegios
+        this.rolesCrudService.createRole(roleData).subscribe(() => {
+          this.activeModal.close('created');
+        }, error => {
+          this.translate.get('roles:error_create_role').subscribe(translatedText => {
+            this.showAlert(translatedText);
+          });
+          console.error('Error al crear el rol', error);
+        });
       }
     } else {
-      this.translate.get('roles:form_error').subscribe((translatedText: string) => {
+      this.translate.get('roles:form_error').subscribe(translatedText => {
         this.showAlert(translatedText);
       });
     }
@@ -107,22 +161,21 @@ export class RolesModalComponent implements OnInit {
     this.showWarningAlert = false;
   }
 
-  // Validación para no permitir "ADMIN" como nombre de rol
   private adminNameValidator(control: FormControl) {
-    if (control.value.toUpperCase() === 'ADMIN') {
+    if (control.value?.toUpperCase() === 'ADMIN') {
       return { adminNameNotAllowed: true };
     }
     return null;
   }
 
-  // Validación para evitar duplicados de nombres de roles
   private duplicateNameValidator(control: FormControl) {
-    if (
-      this.existingRoles.some(
-        role => role.role_name.toLowerCase() === control.value.toLowerCase() &&
-        this.roleData?.role_name !== control.value
-      )
-    ) {
+    if (this.isEditMode && this.roleData?.role_name.toLowerCase() === control.value.toLowerCase()) {
+      return null;
+    }
+
+    if (this.existingRoles.some(
+      role => role.role_name.toLowerCase() === control.value.toLowerCase()
+    )) {
       return { duplicateName: true };
     }
     return null;

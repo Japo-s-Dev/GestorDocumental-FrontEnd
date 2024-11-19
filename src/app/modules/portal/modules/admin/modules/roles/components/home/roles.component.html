@@ -1,22 +1,25 @@
+<!-- Alertas -->
 <app-alert
   *ngIf="alertVisible"
   [title]="alertTitle"
   [message]="alertMessage"
   [alertType]="alertType"
   [iconType]="alertIcon"
-  (closed)="handleAlertClosed()"
->
-</app-alert>
+  (closed)="alertVisible = false"
+></app-alert>
 
 <div class="roles-container">
   <header>
     <h2 class="roles-title">{{ "roles:title" | translate }}</h2>
   </header>
-  <button class="add-role-button" (click)="addRole()">
+  <button
+    class="add-role-button"
+    (click)="addRole()"
+    [disabled]="!hasPrivilege6"
+  >
     <i class="fa-solid fa-plus"></i> {{ "roles:add_role" | translate }}
   </button>
 
-  <!-- Buscador -->
   <div class="search-container">
     <input
       type="text"
@@ -26,52 +29,69 @@
     />
   </div>
 
+  <!-- Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages() || isLastPage">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+
   <table>
     <thead>
       <tr>
-        <th>
+        <th (click)="sortBy('role_name')">
           {{ "roles:role_name" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('role_name')"></i>
         </th>
-        <th>
+        <th (click)="sortBy('description')">
           {{ "roles:description" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('description')"></i>
         </th>
-        <th>
-          {{ "roles:actions" | translate }}
-        </th>
+        <th>{{ "roles:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let role of filteredRoles()"
-        [class.disabled]="
-          role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
-        "
-      >
+      <tr *ngFor="let role of filteredRoles()">
         <td>{{ role.role_name }}</td>
         <td>{{ role.description }}</td>
-        <td>
-          <div class="actions-buttons">
-            <button
-              class="edit"
-              (click)="editRole(role)"
-              [disabled]="
-                role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
-              "
-            >
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button
-              class="delete"
-              (click)="deleteRole(role)"
-              [disabled]="
-                role.role_name === 'ADMIN' || role.role_name === 'ADMIN JUNIOR'
-              "
-            >
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
+        <td class="actions-buttons">
+          <button
+            class="edit"
+            (click)="editRole(role)"
+            [disabled]="!hasPrivilege6 || isRestrictedRole(role)"
+          >
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button
+            class="delete"
+            (click)="deleteRole(role)"
+            [disabled]="!hasPrivilege6 || isRestrictedRole(role)"
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Paginación -->
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage >= totalPages() || isLastPage">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
 </div>

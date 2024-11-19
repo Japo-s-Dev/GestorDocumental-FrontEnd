@@ -44,7 +44,7 @@ export class CommentsEventsComponent implements OnInit {
     this.userCrudService.listUsers().subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.users = response.body.result;
+          this.users = response.body.result.items;
           this.loadCommentsAndEvents();
         }
       },
@@ -58,7 +58,7 @@ export class CommentsEventsComponent implements OnInit {
     if (this.archiveId !== null) {
       this.apiService.listComments().subscribe((response) => {
         if (response && response.body) {
-          const filteredComments = response.body.result.filter(
+          const filteredComments = response.body.result.items.filter(
             (comment: any) => comment.archive_id === this.archiveId
           );
 
@@ -73,7 +73,7 @@ export class CommentsEventsComponent implements OnInit {
           this.apiService.listEvents(this.archiveId!).subscribe(
             (eventResponse) => {
               if (eventResponse && eventResponse.body) {
-                const events = eventResponse.body.result.map((event: any) => {
+                const events = eventResponse.body.result.items.map((event: any) => {
                   const user = this.users.find((u) => u.id === event.user_id);
                   return {
                     ...event,

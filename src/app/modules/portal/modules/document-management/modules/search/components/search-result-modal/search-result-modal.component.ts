@@ -120,8 +120,8 @@ export class SearchResultModalComponent implements OnInit {
 
             if (this.isEditMode && existingValue) {
               this.servicesService.updateValue(existingValue.id, value).subscribe({
-                next: (res) => console.log('Valor actualizado:', res),
-                error: (err) => console.error('Error al actualizar el valor:', err)
+                next: (res) => console.log(''),
+                error: (err) => console.error('')
               });
             } else {
               const valueData: IValueRequest = {

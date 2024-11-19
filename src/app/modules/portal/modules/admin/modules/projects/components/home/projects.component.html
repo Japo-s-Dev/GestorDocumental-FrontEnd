@@ -5,18 +5,19 @@
   [alertType]="alertType"
   [iconType]="alertIcon"
   (closed)="handleAlertClosed()"
->
-</app-alert>
+></app-alert>
 
 <div class="projects-container">
   <header>
     <h2 class="projects-title">{{ "projects:title" | translate }}</h2>
   </header>
-  <button class="add-project-button" (click)="addProject()">
+  <button
+    class="add-project-button"
+    (click)="addProject()"
+    [disabled]="!hasPrivilege">
     <i class="fa-solid fa-plus"></i> {{ "projects:add_project" | translate }}
   </button>
 
-  <!-- Buscador -->
   <div class="search-container">
     <input
       type="text"
@@ -26,27 +27,54 @@
     />
   </div>
 
+  <!-- Tabla de Proyectos -->
   <table>
     <thead>
       <tr>
-        <th>{{ "projects:title_project" | translate }}</th>
-        <th class="actions-col">{{ "projects:actions" | translate }}</th>
+        <th (click)="sortBy('project_name')">
+          {{ "projects:nombre" | translate }}
+          <i class="fa" [ngClass]="getSortIcon('project_name')"></i>
+        </th>
+        <th>{{ "projects:actions" | translate }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let project of filteredProjects(); let i = index">
+      <tr *ngFor="let project of filteredProjects()">
         <td>{{ project.project_name }}</td>
-        <td>
-          <div class="actions-buttons">
-            <button class="edit" (click)="editProject(project)">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete" (click)="deleteProject(project)">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
+        <td class="actions-buttons">
+          <button
+            class="edit"
+            (click)="editProject(project)"
+            [disabled]="!hasPrivilege">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button
+            class="delete"
+            (click)="deleteProject(project)"
+            [disabled]="!hasPrivilege">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Controles de Paginación -->
+  <div class="pagination-container">
+    <button
+      class="pagination-button"
+      (click)="previousPage()"
+      [disabled]="currentPage === 1">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">
+      {{ "pagination:page" | translate }} {{ currentPage }} {{ "pagination:of" | translate }} {{ totalPages() }}
+    </span>
+    <button
+      class="pagination-button"
+      (click)="nextPage()"
+      [disabled]="currentPage >= totalPages()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
 </div>

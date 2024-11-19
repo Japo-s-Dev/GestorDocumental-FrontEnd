@@ -54,7 +54,6 @@ export class SearchResultComponent implements OnInit {
       this.selectedProject = Number(storedProjectId);
       this.buildTable();
     } else {
-      console.log('No se encontraron resultados.');
     }
   }
 
@@ -190,7 +189,6 @@ export class SearchResultComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log('Modal dismissed', error);
       });
   }
 

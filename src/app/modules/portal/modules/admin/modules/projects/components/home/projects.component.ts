@@ -16,6 +16,16 @@ export class ProjectsComponent implements OnInit {
   projects: IProject[] = [];
   searchTerm: string = '';
 
+  // Paginación
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalProjects: number = 0;
+  isLastPage: boolean = false;
+  orderBy: string = '!project_name';
+
+  // Privilegios
+  hasPrivilege: boolean = false;
+
   // Alert properties
   alertVisible: boolean = false;
   alertTitle: string = '';
@@ -32,18 +42,23 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaderService.showLoader();
+    const privileges = JSON.parse(localStorage.getItem('privileges') || '[]');
+    this.hasPrivilege = privileges.includes(4);
+    console.log(this.hasPrivilege);
+
     this.loadProjects();
-    setTimeout(() => {
-      this.loaderService.hideLoader();
-    }, 2000);
   }
 
   loadProjects(): void {
-    this.projectsCrudService.listProjects().subscribe(
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.projectsCrudService.listProjects(this.pageSize, offset, this.orderBy).subscribe(
       (response) => {
         if (response && response.body.result) {
-          this.projects = response.body.result;
+          this.projects = response.body.result.items;
+          this.totalProjects = response.body.result.total_count;
+          this.isLastPage = this.projects.length < this.pageSize;
         }
+        this.loaderService.hideLoader();
       },
       (error) => {
         this.translate.get('projects:error_loading_title').subscribe((title: string) => {
@@ -51,12 +66,44 @@ export class ProjectsComponent implements OnInit {
             this.showAlert({ title, message }, 'danger');
           });
         });
-        console.error('Error al obtener los proyectos:', error);
-      },
+        this.loaderService.hideLoader();
+      }
     );
   }
 
+  totalPages(): number {
+    return Math.ceil(this.totalProjects / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() && !this.isLastPage) {
+      this.currentPage++;
+      this.loaderService.showLoader();
+      this.loadProjects();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loaderService.showLoader();
+      this.loadProjects();
+    }
+  }
+
+  sortBy(field: string): void {
+    this.orderBy = this.orderBy === field ? `!${field}` : field;
+    this.loadProjects();
+  }
+
+  getSortIcon(field: string): string {
+    if (this.orderBy === field) return 'fa-sort-asc';
+    if (this.orderBy === `!${field}`) return 'fa-sort-desc';
+    return 'fa-sort';
+  }
+
   openProjectModal(project: IProject | null = null): void {
+    if (!this.hasPrivilege) return;
     const modalRef = this.modalService.open(ProjectsModalComponent);
     modalRef.componentInstance.projectData = project || {};
     modalRef.componentInstance.isEditMode = !!project;
@@ -65,32 +112,9 @@ export class ProjectsComponent implements OnInit {
       .then((result) => {
         if (result) {
           this.loadProjects();
-          if (result === 'created') {
-            this.translate.get('projects:add_success_title').subscribe((title: string) => {
-              this.translate.get('projects:add_success_message').subscribe((message: string) => {
-                this.showAlert({ title, message }, 'success');
-              });
-            });
-            this.loaderService.showLoader();
-            setTimeout(() => {
-              this.loaderService.hideLoader();
-            }, 1000);
-          } else if (result === 'updated') {
-            this.translate.get('projects:update_success_title').subscribe((title: string) => {
-              this.translate.get('projects:update_success_message').subscribe((message: string) => {
-                this.showAlert({ title, message }, 'warning');
-              });
-            });
-            this.loaderService.showLoader();
-            setTimeout(() => {
-              this.loaderService.hideLoader();
-            }, 1000);
-          }
         }
       })
-      .catch((error) => {
-        console.log('Modal dismissed', error);
-      });
+      .catch(() => {});
   }
 
   addProject(): void {
@@ -102,52 +126,25 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(project: IProject): void {
+    if (!this.hasPrivilege) return;
+    const modalRef = this.modalService.open(ConfirmModalComponent);
     this.translate.get('projects:confirm_delete', { projectName: project.project_name }).subscribe((translatedText: string) => {
-      const modalRef = this.modalService.open(ConfirmModalComponent);
       modalRef.componentInstance.message = translatedText;
 
-      modalRef.result
-        .then((result) => {
-          if (result === 'confirm') {
-            this.projectsCrudService.deleteProject(project.id).subscribe(
-              () => {
-                this.translate.get('projects:delete_success_title').subscribe((title: string) => {
-                  this.translate.get('projects:delete_success_message').subscribe((message: string) => {
-                    this.showAlert({ title, message }, 'info');
-                  });
-                });
-                this.loaderService.showLoader();
-                this.loadProjects();
-                setTimeout(() => {
-                  this.loaderService.hideLoader();
-                }, 1000);
-              },
-              (error) => {
-                this.translate.get('projects:error_deleting_title').subscribe((title: string) => {
-                  this.translate.get('projects:error_deleting_message').subscribe((message: string) => {
-                    this.showAlert({ title, message }, 'danger');
-                  });
-                });
-                this.loaderService.showLoader();
-                setTimeout(() => {
-                  this.loaderService.hideLoader();
-                }, 1000);
-              },
-            );
-          }
-        })
-        .catch((error) => {
-          console.log('Modal dismissed', error);
-        });
+      modalRef.result.then((result) => {
+        if (result === 'confirm') {
+          this.projectsCrudService.deleteProject(project.id).subscribe(() => {
+            this.loadProjects();
+          });
+        }
+      });
     });
   }
 
   filteredProjects(): IProject[] {
-    if (!this.searchTerm) {
-      return this.projects;
-    }
+    if (!this.searchTerm) return this.projects;
     return this.projects.filter((project) =>
-      project.project_name.toLowerCase().includes(this.searchTerm.toLowerCase()),
+      project.project_name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
@@ -155,9 +152,7 @@ export class ProjectsComponent implements OnInit {
     this.alertTitle = translatedText.title;
     this.alertMessage = translatedText.message;
     this.alertType = `alert-${type}`;
-    this.alertIcon = `fa-${
-      type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'
-    }`;
+    this.alertIcon = `fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}`;
     this.alertVisible = true;
 
     setTimeout(() => {
