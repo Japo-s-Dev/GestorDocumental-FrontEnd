@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   privileges: number[] = [];
   currentLanguage: string;
   isAdminExpanded = false;
+  menuOpen = false; // Solución: Declarar 'menuOpen'
   isReportsExpanded = false;
 
   constructor(
@@ -34,22 +35,22 @@ export class NavbarComponent implements OnInit {
       const parsedStatus = JSON.parse(userStatus);
       this.username = parsedStatus.username;
 
-      this.privilegeService.fetchPrivileges(parsedStatus.role).subscribe(
-        (response) => {
-          if (response.body?.result && Array.isArray(response.body.result)) {
-            this.privileges = response.body.result.map((privilege: any) => privilege.privilege_id);
-            this.privilegeService.setPrivileges(this.privileges);
-            this.determineVisibility();
-          }
+      this.privilegeService.fetchPrivileges(parsedStatus.role).subscribe((response) => {
+        if (response.body?.result && Array.isArray(response.body.result)) {
+          this.privileges = response.body.result.map(
+            (privilege: any) => privilege.privilege_id
+          );
+          this.privilegeService.setPrivileges(this.privileges);
+          this.determineVisibility();
         }
-      );
+      });
     }
   }
 
   determineVisibility(): void {
     const hasPrivilege = (id: number) => this.privileges.includes(id);
     this.showAdmin = hasPrivilege(1) || hasPrivilege(3) || hasPrivilege(5);
-    this.showReports = hasPrivilege(7);
+    this.showReports = hasPrivilege(7); // Mostrar reportes si tiene el privilegio 7
   }
 
   toggleAdmin(): void {
@@ -57,6 +58,7 @@ export class NavbarComponent implements OnInit {
     if (this.isAdminExpanded) {
       this.isReportsExpanded = false;
     }
+    this.closeMenuOnOptionClick();
   }
 
   toggleReports(): void {
@@ -64,6 +66,15 @@ export class NavbarComponent implements OnInit {
     if (this.isReportsExpanded) {
       this.isAdminExpanded = false;
     }
+    this.closeMenuOnOptionClick();
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenuOnOptionClick(): void {
+    this.menuOpen = false;
   }
 
   navigate(path: string): void {

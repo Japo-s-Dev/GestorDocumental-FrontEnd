@@ -1,24 +1,32 @@
-<div class="sidebar">
-  <img
-    src="../../../../../assets/images/EvolucionaLogo.jpeg"
-    alt="Logo empresa"
-    routerLink="/portal/"
-    class="logo"
-  />
+<div class="navbar-container">
+  <!-- Botón de menú que aparece en pantallas pequeñas
+  <button class="menu-toggle-btn" (click)="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  -->
 
-  <div class="spacer"></div>
+  <!-- El sidebar de navegación -->
+  <div class="sidebar" [ngClass]="{ 'menu-open': menuOpen }">
+    <img
+      src="../../../../../assets/images/EvolucionaLogo.jpeg"
+      alt="Logo empresa"
+      routerLink="/portal/"
+      class="logo"
+    />
 
-  <h4>{{ "navbar:menu" | translate }}</h4>
+    <div class="spacer"></div>
+
+    <h4>{{ "navbar:menu" | translate }}</h4>
 
   <div class="box" (click)="navigate('/portal/document-management/search')">
     <i class="fa-solid fa-magnifying-glass"></i>
     {{ "navbar:search" | translate }}
   </div>
 
-  <div class="box" (click)="navigate('/portal/document-management')">
-    <i class="fa-solid fa-folder-tree"></i>
-    {{ "navbar:document_manager" | translate }}
-  </div>
+    <div class="box" (click)="navigate('/portal/document-management')">
+      <i class="fa-solid fa-folder-tree"></i>
+      {{ "navbar:document_manager" | translate }}
+    </div>
 
   <!-- Sección para Administrador -->
   <div *ngIf="showAdmin" class="spacer"></div>
@@ -42,23 +50,9 @@
     </div>
   </div>
 
-  <!-- Nueva sección de Reportes -->
-  <div *ngIf="showReports" class="box" (click)="toggleReports()">
+  <!-- Nueva sección de Reportes (Opción única) -->
+  <div *ngIf="showReports" class="box" routerLink="/portal/reports">
     <i class="fa-solid fa-chart-line"></i>
     {{ "navbar:reports" | translate }}
-  </div>
-  <div *ngIf="isReportsExpanded">
-    <div class="sub-box" routerLink="/portal/reports/actions">
-      <i class="fa-solid fa-file-lines"></i>
-      {{ "navbar:actions_report" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/reports/structures">
-      <i class="fa-solid fa-building"></i>
-      {{ "navbar:structures_report" | translate }}
-    </div>
-    <div class="sub-box" routerLink="/portal/reports/users">
-      <i class="fa-solid fa-user"></i>
-      {{ "navbar:users_report" | translate }}
-    </div>
   </div>
 </div>

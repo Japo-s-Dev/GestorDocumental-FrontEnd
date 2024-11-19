@@ -29,6 +29,18 @@ export class DocumentViewerComponent implements OnInit {
 
   ngOnInit(): void {
     this.idExpediente = Number(localStorage.getItem('selectedExpedientId')) || null;
+    localStorage.removeItem('selectedDocumentId');
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+
+    // Eliminar selectedDocumentId y resetear valores si se selecciona la pestaña 'archivos'
+    if (tab === 'archivos') {
+      localStorage.removeItem('selectedDocumentId');
+      this.selectedDocumentUrl = null;
+      this.selectedDocumentName = null;
+    }
   }
 
   onFileSelected(file: { url: string, name: string, fileId: number }) {
