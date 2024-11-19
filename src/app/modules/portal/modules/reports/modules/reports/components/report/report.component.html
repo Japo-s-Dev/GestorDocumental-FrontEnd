@@ -1,0 +1,176 @@
+<div class="report-table-container">
+  <div class="report-filter-container">
+    <h3>{{ "reports:filter" | translate }}</h3>
+    <form (ngSubmit)="searchReports()">
+      <!-- Selección Múltiple para Acción usando Checkboxes -->
+      <div>
+        <label>
+          {{ "reports:action" | translate }}
+        </label>
+        <div class="action-grid">
+          <div *ngFor="let action of actionOptions" class="checkbox-group">
+            <input
+              type="checkbox"
+              id="{{ action }}_cbx"
+              style="display: none"
+              [value]="action"
+              (change)="toggleActionSelection(action, $event)"
+              [checked]="filters.action.includes(action)"
+            />
+            <label [for]="action + '_cbx'" class="check">
+              <svg width="18px" height="18px" viewBox="0 0 18 18">
+                <path
+                  d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                ></path>
+                <polyline points="1 9 7 14 15 4"></polyline>
+              </svg>
+            </label>
+            <span>{{ action }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro para Objeto e ID Objeto -->
+      <div class="field-pair">
+        <div>
+          <label>
+            {{ "reports:object" | translate }}
+          </label>
+          <input type="text" [(ngModel)]="filters.object" name="object" />
+        </div>
+        <div>
+          <label>
+            {{ "reports:object_id" | translate }}
+          </label>
+          <input
+            type="number"
+            [(ngModel)]="filters.object_id"
+            name="object_id"
+          />
+        </div>
+      </div>
+
+      <!-- Filtro de Rango de Fechas -->
+      <div class="field-pair">
+        <div>
+          <label>
+            {{ "reports:date_from" | translate }}
+          </label>
+          <input
+            type="date"
+            [(ngModel)]="filters.fechaDesde"
+            name="fechaDesde"
+            class="custom-date-input"
+          />
+        </div>
+        <div>
+          <label>
+            {{ "reports:date_to" | translate }}
+          </label>
+          <input
+            type="date"
+            [(ngModel)]="filters.fechaHasta"
+            name="fechaHasta"
+            class="custom-date-input"
+          />
+        </div>
+      </div>
+
+      <div class="field-pair">
+        <div>
+          <label>
+            {{ "reports:user" | translate }}
+          </label>
+          <input type="text" [(ngModel)]="filters.username" name="username" />
+        </div>
+        <div>
+          <label>
+            {{ "reports:order_bys" | translate }}
+          </label>
+          <select [(ngModel)]="filters.order_by" name="order_by">
+            <option value="username">
+              {{ "reports:order_options_user" | translate }}
+            </option>
+            <option value="object">
+              {{ "reports:order_options_object" | translate }}
+            </option>
+            <option value="action">
+              {{ "reports:order_options_action" | translate }}
+            </option>
+            <option value="timestamp">
+              {{ "reports:order_options_date" | translate }}
+            </option>
+            <option value="object_id">
+              {{ "reports:order_options_object_id" | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="botones">
+        <button class="button" type="submit">
+          <p>
+            {{ "reports:button_search" | translate }}
+          </p>
+        </button>
+        <button type="button" (click)="resetFilters()">
+          {{ "reports:button_clean" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <header>
+    <h2 class="reports-title">{{ "Reportes" }}</h2>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Usuario</th>
+        <th>Acción</th>
+        <th>Objeto</th>
+        <th>ID Objeto</th>
+        <th>Cambios</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.timestamp }}</td>
+        <td>{{ event.username }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'action-insert': event.action === 'INSERT',
+              'action-update': event.action === 'UPDATE',
+              'action-delete': event.action === 'DELETE',
+              'action-restore': event.action === 'RESTORE',
+              'action-physical-delete': event.action === 'PHYSICAL DELETE'
+            }"
+          >
+            {{ event.action }}
+          </span>
+        </td>
+        <td>{{ event.object }}</td>
+        <td>{{ event.object_id }}</td>
+        <td>
+          <ng-container *ngIf="event.action === 'UPDATE'; else insertOrDelete">
+            {{ formatChanges(event.old_data, event.new_data, event.object) }}
+          </ng-container>
+          <ng-template #insertOrDelete>
+            <span *ngIf="event.action === 'INSERT'">
+              {{ formatNewData(event.new_data, event.object) }}
+            </span>
+            <span
+              *ngIf="
+                event.action === 'DELETE' || event.action === 'PHYSICAL DELETE'
+              "
+            >
+              {{ formatOldData(event.old_data, event.object) }}
+            </span>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

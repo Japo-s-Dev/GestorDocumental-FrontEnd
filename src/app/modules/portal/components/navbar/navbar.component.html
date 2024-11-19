@@ -1,24 +1,32 @@
-<div class="sidebar">
-  <img
-    src="../../../../../assets/images/EvolucionaLogo.jpeg"
-    alt="Logo empresa"
-    routerLink="/portal/"
-    class="logo"
-  />
+<div class="navbar-container">
+  <!-- Botón de menú que aparece en pantallas pequeñas
+  <button class="menu-toggle-btn" (click)="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  -->
 
-  <div class="spacer"></div>
+  <!-- El sidebar de navegación -->
+  <div class="sidebar" [ngClass]="{ 'menu-open': menuOpen }">
+    <img
+      src="../../../../../assets/images/EvolucionaLogo.jpeg"
+      alt="Logo empresa"
+      routerLink="/portal/"
+      class="logo"
+    />
 
-  <h4>{{ "navbar:menu" | translate }}</h4>
+    <div class="spacer"></div>
+
+    <h4>{{ "navbar:menu" | translate }}</h4>
 
   <div class="box" (click)="navigate('/portal/document-management/search')">
     <i class="fa-solid fa-magnifying-glass"></i>
     {{ "navbar:search" | translate }}
   </div>
 
-  <div class="box" (click)="navigate('/portal/document-management')">
-    <i class="fa-solid fa-folder-tree"></i>
-    {{ "navbar:document_manager" | translate }}
-  </div>
+    <div class="box" (click)="navigate('/portal/document-management')">
+      <i class="fa-solid fa-folder-tree"></i>
+      {{ "navbar:document_manager" | translate }}
+    </div>
 
   <!-- Sección para Administrador -->
   <div *ngIf="showAdmin" class="spacer"></div>

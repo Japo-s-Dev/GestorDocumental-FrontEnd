@@ -57,6 +57,7 @@ export class NavbarComponent implements OnInit {
     if (this.isAdminExpanded) {
       this.isReportsExpanded = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   toggleReports(): void {
@@ -64,6 +65,7 @@ export class NavbarComponent implements OnInit {
     if (this.isReportsExpanded) {
       this.isAdminExpanded = false;
     }
+    this.closeMenuOnOptionClick(); // Cerrar menú al hacer clic
   }
 
   navigate(path: string): void {

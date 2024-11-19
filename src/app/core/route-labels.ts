@@ -6,6 +6,7 @@ export const RouteLabels: { [key: string]: string } = {
   '/portal/document-management/search/result': 'route:search_result',
   '/portal/search/result': 'route:search_result',
   '/portal/add/file-entry': 'route:add_file_entry',
+  '/portal/reports': 'route:reports',
   '/portal/reports/actions': 'route:actions_report',
   '/portal/reports/structures': 'route:structures_report',
   '/portal/reports/users': 'route:users_report',
